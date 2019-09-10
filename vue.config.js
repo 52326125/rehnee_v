@@ -1,0 +1,20 @@
+module.exports={
+    /*configureWebpack:{
+        devtool:'source-map',
+        devServer:{
+            port:8080,
+            open:true,
+            proxy:{
+                '/api':{
+                    target:'http://localhost:3000',
+                    changeOrigin:true,
+                    ws:true,
+                    pathRewrite:{
+                        '^/api':'/api'
+                    },
+                    'secure':false
+                }
+            }
+        }
+    }*/
+}
