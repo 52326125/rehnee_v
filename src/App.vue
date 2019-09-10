@@ -5,6 +5,8 @@
         <span>Vuetify</span>
         <span class="font-weight-light">MATERIAL DESIGN</span>
         <v-btn @click="test">test</v-btn>
+        <v-btn @click="set">tests</v-btn>
+        <v-btn @click="get">testg</v-btn>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn
@@ -34,11 +36,17 @@ export default {
   }),
   methods:{
     test:function(){
-      axios.get('/api/test').then((res)=>{
-        console.log(res.data[0].id)
-      }),(err)=>{
+      axios.get('/api/test',{params:{id:5}}).then(function(res){
+        console.log(res.data)
+      }).catch(function(error){
         console.log('eroo')        
-      }      
+      })
+    },
+    set:function(){
+      this.$cookies.set('test','content',1)
+    },
+    get:function(){
+      this.$cookies.get('test')      
     }
   }
 };

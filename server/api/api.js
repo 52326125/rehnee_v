@@ -21,12 +21,14 @@ var jsonWrite=function(res,ret){
 
 router.get('/api/test',(req,res)=>  {
     var sql=$sql.projectSql.test;
+    var temp=req.query;
     conn.query(sql,function(error,result){
         if(error){
             console.log("error");
         }
         if(result){
-            jsonWrite(res,result);
+            console.log(temp.id);
+            jsonWrite(res,temp.id);
         }
     })
 })
