@@ -3,3 +3,4 @@ var sqlMap={
         test:'select * from chat'
     }
 }
+module.exports=sqlMap;

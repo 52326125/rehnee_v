@@ -34,14 +34,11 @@ export default {
   }),
   methods:{
     test:function(){
-      /*axios.get('/api/test').then((res)=>{
-        console.log('success')
+      axios.get('/api/test').then((res)=>{
+        console.log(res.data[0].id)
       }),(err)=>{
         console.log('eroo')        
-      }*/
-      axios.get('http://localhost:8080/test/test.php').then(function(res){
-        console.log(res);
-      })
+      }      
     }
   }
 };

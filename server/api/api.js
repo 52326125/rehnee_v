@@ -30,3 +30,4 @@ router.get('/api/test',(req,res)=>  {
         }
     })
 })
+module.exports=router;
