@@ -39,7 +39,7 @@ export default {
       axios.get('/api/test',{params:{id:5}}).then(function(res){
         console.log(res.data)
       }).catch(function(error){
-        console.log('eroo')        
+        console.log('eroo')
       })
     },
     set:function(){
