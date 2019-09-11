@@ -8,10 +8,23 @@ import cookies from 'vue-cookies'
 
 Vue.config.productionTip = false
 Vue.use(cookies)
+//login check
+router.beforeEach((to, from, next) => {  
+  const temp=cookies.isKey('isLogin');
+  if(temp){
+    next();
+  }else{
+    if(to.path!=='/login'){
+      next('/login');
+    }else{
+      next();
+    }
+  }
+})
 
 new Vue({
   router,
   store,
-  vuetify,
+  vuetify,  
   render: h => h(App)
 }).$mount('#app')

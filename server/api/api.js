@@ -7,7 +7,7 @@ var $sql=require('../sql');
 
 var conn=mysql.createConnection(db.mysql);
 conn.connect();
-
+//解決
 var jsonWrite=function(res,ret){
     if (typeof ret ==='undefined'){
         res.json({
@@ -27,8 +27,22 @@ router.get('/api/test',(req,res)=>  {
             console.log("error");
         }
         if(result){
-            console.log(temp.id);
+            console.log(temp);
             jsonWrite(res,temp.id);
+        }
+    })
+})
+
+router.get('/api/login',(req,res)=>{
+    var sql=$sql.projectSql.login;
+    var user = req.body;
+    conn.query(sql,[user.account,user.password],function(error,result){
+        if(error){
+            alert('login error; worng ID or password!')
+        }
+        if(result){
+            console.log('login success!');
+            jsonWrite(res,result);
         }
     })
 })
