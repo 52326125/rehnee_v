@@ -15,6 +15,7 @@ var jsonWrite=function(res,ret){
             msg:'error'
         })
     }else{
+        console.log(ret);
         res.json(ret);
     }
 }
@@ -35,13 +36,13 @@ router.get('/api/test',(req,res)=>  {
 
 router.get('/api/login',(req,res)=>{
     var sql=$sql.projectSql.login;
-    var user = req.body;
+    var user = req.query;
     conn.query(sql,[user.account,user.password],function(error,result){
         if(error){
-            alert('login error; worng ID or password!')
+            console.log('login error; worng ID or password!')
         }
         if(result){
-            console.log('login success!');
+            console.log(user);
             jsonWrite(res,result);
         }
     })

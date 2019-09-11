@@ -36,8 +36,8 @@ export default {
         password: ""
       },
       showPassword: false,
-      valid: true
-    };
+      valid: true,
+    }
   },
   methods: {
     set: function(path) {
@@ -45,15 +45,21 @@ export default {
       this.$router.push(path);
     },
     login: function() {
-      axios.get("/api/login", this.user)
-        .then(function(res) {
-          //commit("LOGIN");
-          console.log(res);
+      axios.get("/api/login", {params:this.user})
+        .then((res)=> {
+          if (res.data.length){
+            alert("login success!")
+            this.$cookies.set('isLogin','yes')
+            this.$router.push('/home')
+          }else{
+            alert('error; worng ID or password')
+          }
+          console.log(res.data[0].dr_ID)
         })
-        .catch(function(error) {
-          console.log(error);
-        });
-    }
+        .catch((error) =>{
+          console.log(error)
+        })
+    },
   }
 };
 </script>
