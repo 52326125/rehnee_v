@@ -19,7 +19,7 @@
               @click:append="showPassword = !showPassword"
             ></v-text-field>
 
-            <v-btn color="#42A5F5" class="mr-4" @click="login">login</v-btn>
+            <v-btn color="#42A5F5" class="mr-4" @click="set">login</v-btn>
           </v-form>
         </v-card-text>
       </v-card>
@@ -40,16 +40,15 @@ export default {
     }
   },
   methods: {
-    set: function(path) {
-      this.$cookies.set("isLogin", "1212");
-      this.$router.push(path);
+    set: function() {
+      this.$store.dispatch('login',this.user)
     },
     login: function() {
       axios.get("/api/login", {params:this.user})
         .then((res)=> {
           if (res.data.length){
             alert("login success!")
-            this.$cookies.set('isLogin','yes')
+            this.$cookies.set('isLogin','1')
             this.$router.push('/home')
           }else{
             alert('error; worng ID or password')
