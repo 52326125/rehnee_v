@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Login from './views/login'
+import order from './views/order'
+import dashboard from './views/dashboard'
 
 Vue.use(Router)
 
@@ -18,6 +20,16 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/order',
+      name: 'order',
+      component: order
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: dashboard
     },
     {
       path: '/about',
