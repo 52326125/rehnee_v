@@ -7,6 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    host: 'http://127.0.0.1:3000/',
     user: {
       dr_ID: '',
       name: '',
@@ -38,8 +39,8 @@ export default new Vuex.Store({
       return state.user.name
     },
     getPic: function(state){
-      var path='assets/dr_pic/'+state.user.pic
-      return 'dr_pic/'+state.user.pic
+      //var path='assets/dr_pic/'+state.user.pic
+      return state.host+'dr_pic/'+state.user.pic
     }
   }
 })

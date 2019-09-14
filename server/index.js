@@ -10,11 +10,16 @@ const router=express.Router();
     name: 'loginID',
     secret: 
 }))*/
+app.use(session({
+    secret: 'recommand 128 bytes random string',
+    saveUninitialized: true,
+}))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended:false
 }));
 app.use('/',api);
+app.use(express.static('public'))
 //app.use('/',router)
 app.listen(3000);
 console.log('success')

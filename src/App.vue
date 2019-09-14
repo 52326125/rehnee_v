@@ -90,7 +90,7 @@ export default {
       return this.$store.getters.getName
     },
     dr_pic () {
-      return this.publicPath + this.$store.getters.getPic
+      return this.$store.getters.getPic
     }
   },
 

@@ -33,7 +33,22 @@ router.get('/api/test',(req,res)=>  {
         }
     })
 })
-
+/*router.get('/api/login',(req,res)=>{
+    var sql=$sql.projectSql.login;
+    var user=req.query;
+    conn.query(sql,[user.account,user.password],(error,result)=>{
+        if(error){
+            console.log('login error: '+error);
+        }
+        if(result){
+            req.session
+        }
+        if(result){
+            console.log(result);
+            jsonWrite(res,result);
+        }
+    })
+})*/
 router.get('/api/login',(req,res)=>{
     var sql=$sql.projectSql.login;
     var user = req.query;
@@ -42,7 +57,11 @@ router.get('/api/login',(req,res)=>{
             console.log('login error; worng ID or password!')
         }
         if(result){
-            console.log(user);
+            req.session.test=result;
+            if(req.session.test){
+                console.log(req.session.test[0].dr_ID);
+            }
+            console.log(req.session.test);
             jsonWrite(res,result);
         }
     })
