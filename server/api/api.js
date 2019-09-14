@@ -66,4 +66,48 @@ router.get('/api/login',(req,res)=>{
         }
     })
 })
+
+router.get('/api/newPatient',(req,res)=>{
+    var sql=$sql.projectSql.newPatient;
+    var patient=req.query;
+    conn.query(sql,[patient.name,patient.birth,patient.ID,patient.code],function(error,result){
+        if(error){
+            console.log('insert new patient error;');
+            jsonWrite(res,error)
+        }
+        if (result){
+            console.log('insert new patient success');
+            jsonWrite(res,patient.name)
+        }
+    })
+})
+
+router.get('/api/oldpatient',(req,res)=>{
+     var sql=$sql.projectSql.oldPatient;
+     var patient=req.query;
+     conn.query(sql,[patient.ID],function(error,result){
+         if(error){
+             console.log(error)
+             jsonWrite(res,error)
+         }
+         if(result){
+             console.log(patient)
+             jsonWrite(res,result)
+         }
+     })
+})
+
+router.get('/api/order',(req,res)=>{
+    var sql=$sql.projectSql.order;
+    var order=req.query;//session problem
+    conn.query(sql,['order.code','aaaa',order.date,order.content,order.medicalOrder,order.remark,order.time],function(error,result){
+        if(error){
+            console.log(error)
+            jsonWrite(res,error)
+        }
+        if(result){
+            console.log('success')
+        }
+    })
+})
 module.exports=router;

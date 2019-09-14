@@ -6,7 +6,7 @@
     width="250"
   >
   <v-img
-        src="../assets/hospital.png"
+        src="../../assets/hospital.png"
         height="200"
         width="250"
         >

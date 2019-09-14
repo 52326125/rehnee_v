@@ -16,9 +16,9 @@
     </v-row>
 </template>
 <script>
-import order from '../components/order-card'
-import dashboard from '../components/dashboard-card'
-import patientList from '../components/patientList-card'
+import order from '../components/home/order-card'
+import dashboard from '../components/home/dashboard-card'
+import patientList from '../components/home/patientList-card'
 
 export default {
     components:{

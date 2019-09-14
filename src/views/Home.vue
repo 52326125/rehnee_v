@@ -36,6 +36,9 @@ export default {
   methods: {
     goOtherPage:function(path){
       this.$router.push(path)
+      if(path=='/dashboard'){
+        this.$store.dispatch('getAllPatient')
+      }
     }
   }
 };

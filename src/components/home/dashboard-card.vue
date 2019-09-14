@@ -6,7 +6,7 @@
     width="200"
   >
     <v-img
-        src="../assets/Rehnee.jpg"
+        src="../../assets/Rehnee.jpg"
         height="100%"
         width="100%"
         >
