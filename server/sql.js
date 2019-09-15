@@ -5,7 +5,7 @@ var sqlMap={
         newPatient: 'insert into pdata(P_name,P_birthday,ID_code,P_code) values(?,?,?,?)',
         oldPatient: 'select medical_order.P_code as code , date_format(medical_order.date,"%Y-%m-%d") as date,medical_order.content ,medical_order.m_order as medicalOrder ,medical_order.remark ,pdata.P_name as name from pdata,medical_order where pdata.ID_code=? and pdata.P_code=medical_order.P_code order by medical_order.date DESC limit 1',
         order: 'insert into medical_order(P_code,dr_ID,date,content,m_order,remark,visit_back_date) values(?,?,?,?,?,?,?)',
-        getAllPatient: 'select * from'
+        getAllPatient: 'select pdata.P_name as name, pdata.P_birthday as birth, pdata.P_code as code, pdata.profi ,medical_order.date from pdata, medical_order where pdata.P_code=medical_order.P_code group by medical_order.P_code order by medical_order.date'
     }
 }
 module.exports=sqlMap;

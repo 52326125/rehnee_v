@@ -59,7 +59,7 @@ export default {
 
     computed:{
         patient (){
-            return this.$store.getters.getPatient
+            return this.$store.getters.getPatient//new轉過來時名字沒有更新
         }
     },
 
@@ -67,8 +67,10 @@ export default {
     validate() {
       if (this.$refs.form.validate()) {
         this.patient.code=btoa(this.patient.ID)
+        var temp=new Date()
+        this.patient.date=temp.getFullYear()+'-'+(temp.getMonth()+1)+'-'+temp.getDate()
         console.log(this.patient)
-        this.$store.dispatch('order',this.patient)
+        this.$store.dispatch('order',this.patient)//error是因為db中沒有P_code
         this.$store.dispatch('setOrderPage',{page:0})
       }
     },

@@ -15,6 +15,7 @@ export default new Vuex.Store({
     },
     patient: {
     },
+    patientList:[],
     orderIndex:0
   },
   mutations: {
@@ -25,10 +26,13 @@ export default new Vuex.Store({
       state.orderIndex=index
     },
     FETCHNEWPATIENT:function(state,name){
-      state.patient.name=name.data
+      state.patient.name=name
     },
     FETCHOLDPATIENT:function(state,patient){
       state.patient=Object.assign({},patient)
+    },
+    GETALLPATIENT:function(state,patientList){
+      state.patientList=patientList
     }
   },
   actions: {
@@ -62,7 +66,7 @@ export default new Vuex.Store({
     newPatient:function({commit},patient){
       Axios.get('/api/newPatient',{params:patient})
       .then((res)=>{
-        commit('FETCHNEWPATIENT',res)
+        commit('FETCHNEWPATIENT',res.data)
       })
       .catch((error)=>{
         
@@ -82,10 +86,10 @@ export default new Vuex.Store({
     getAllPatient({commit}){
       Axios.get('/api/getAllPatient')
       .then((res)=>{
-
+        commit('GETALLPATIENT',res.data)
       })
       .catch((error)=>{
-        
+
       })
     }
 
@@ -106,6 +110,9 @@ export default new Vuex.Store({
     },
     getPatient:function(state){
       return state.patient
+    },
+    getAllPatient:function(state){
+      return state.patientList
     }
   }
 })

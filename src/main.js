@@ -29,6 +29,9 @@ router.beforeEach((to, from, next) => {
       next();
     }
   }
+  if(from.path=='/order'){
+    store.state.orderIndex=0
+  }
 })
 
 new Vue({

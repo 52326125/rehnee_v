@@ -5,7 +5,7 @@
       <div class="flex-grow-1"></div>
       <v-text-field
         v-model="search"
-        append-icon="search"
+        append-icon="mdi-magnify"
         label="Search"
         single-line
         hide-details
@@ -13,7 +13,7 @@
     </v-card-title>
     <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="getAllPatient"
       :search="search"
     >
      <template v-slot:item.action="{ item }">
@@ -40,7 +40,7 @@
   export default {
       computed:{
           getAllPatient (){
-              return this.$store.getters. 
+              return this.$store.getters.getAllPatient
           }
       },
     data () {
@@ -51,12 +51,12 @@
             text: 'Profile picture',
             align: 'left',
             sortable: false,
-            value: 'name',
+            value: 'profi',
           },
-          { text: 'Name', value: 'calories' },
-          { text: 'Birth', value: 'carbs' },
-          { text: 'last Order', value: 'protein' },
-          { text: 'last MSG', value: 'iron' },
+          { text: 'Name', value: 'name' },
+          { text: 'Birth', value: 'date' },
+          { text: 'last Order', value: 'date' },
+          { text: 'Actions', value: 'action', sortable: false },
         ],
       }
     },
