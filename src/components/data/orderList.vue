@@ -19,7 +19,7 @@
 export default {
     computed: {
         list () {
-            return this.$store.getters.getOrderList
+            return this.$store.getters.getOrderList//建立orderlist
         }
     }
 };

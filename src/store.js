@@ -38,6 +38,12 @@ export default new Vuex.Store({
     },
     TURNPATIENTPAGE:function(state,patient){
       state.patient=Object.assign({},patient)
+    },
+    SETORDERLIST:function(state,list){
+      state.orderList=Object.assign({},list)
+    },
+    SETRECORDLIST:function(state,list){
+      state.recordList=Object.assign({},list)
     }
   },
   actions: {
@@ -105,7 +111,8 @@ export default new Vuex.Store({
     turnPatientPage({commit},patient){
       Axios.get('/api/getPatient',{params:patient})
       .then((res)=>{
-        //do
+        commit('SETORDERLIST',res.data[0])
+        commit('SETRECORDLIST',res.data[1])
       })
       commit('TURNPATIENTPAGE',patient)
       router.push('/data')
@@ -135,7 +142,7 @@ export default new Vuex.Store({
       return state.patientList
     },
     getOrderList:function(state){
-      
+      return state.orderList
     }
   }
 })

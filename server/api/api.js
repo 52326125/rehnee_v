@@ -124,14 +124,27 @@ router.get('/api/getAllPatient',(req,res)=>{
 })
 
 router.get('/api/getPatient',(req,res)=>{
+    var array=[];
     var sql=$sql.projectSql.getPatient;
     var code=req.query.code;
-    conn.query(sql,[code],function(error,reuslt){
+    conn.query(sql,[code],function(error,result){
         if(error){
             console.log(error)
         }
         if(result){
-            jsonWrite
+            console.log(result)
+            array.push(result);
+        }
+    })
+    sql=$sql.projectSql.getRecord;
+    code=req.query.id;
+    conn.query(sql,[code],function(error,result){
+        if(error){
+            console.log(error)
+        }
+        if(result){
+            array.push(result)
+            jsonWrite(res,array)
         }
     })
 })
