@@ -4,6 +4,7 @@ import Home from './views/home-card'
 import Login from './views/login'
 import order from './views/order'
 import dashboard from './views/dashboard'
+import data from './views/data'
 
 Vue.use(Router)
 
@@ -30,6 +31,11 @@ export default new Router({
       path: '/dashboard',
       name: 'dashboard',
       component: dashboard
+    },
+    {
+      path: '/data',
+      name: 'data',
+      component: data
     },
     {
       path: '/about',

@@ -16,19 +16,19 @@
       :items="getAllPatient"
       :search="search"
     >
+
+    <template v-slot:item.profi="{item}">
+        <v-avatar>
+            <img :src="item.profi" alt="avatar">
+        </v-avatar>
+    </template>
+
      <template v-slot:item.action="{ item }">
       <v-icon
-        small
         class="mr-2"
-        @click="editItem(item)"
+        @click="turnPatientPage(item)"
       >
-        edit
-      </v-icon>
-      <v-icon
-        small
-        @click="deleteItem(item)"
-      >
-        delete
+        mdi-arrow-right-bold
       </v-icon>
     </template>
     </v-data-table>
@@ -41,6 +41,11 @@
       computed:{
           getAllPatient (){
               return this.$store.getters.getAllPatient
+          }
+      },
+      methods: {
+          turnPatientPage: function(patient){
+              this.$store.dispatch('turnPatientPage',patient)
           }
       },
     data () {

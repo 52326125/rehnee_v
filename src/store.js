@@ -16,7 +16,9 @@ export default new Vuex.Store({
     patient: {
     },
     patientList:[],
-    orderIndex:0
+    orderIndex:0,
+    orderList:[],
+    recordList:[]
   },
   mutations: {
     LOGIN:function(state,user){
@@ -33,6 +35,9 @@ export default new Vuex.Store({
     },
     GETALLPATIENT:function(state,patientList){
       state.patientList=patientList
+    },
+    TURNPATIENTPAGE:function(state,patient){
+      state.patient=Object.assign({},patient)
     }
   },
   actions: {
@@ -86,15 +91,30 @@ export default new Vuex.Store({
     getAllPatient({commit}){
       Axios.get('/api/getAllPatient')
       .then((res)=>{
+        var i
+        for (i=0;i<res.data.length;i++){
+          res.data[i].profi=this.getters.getHost+'patient_pic/'+res.data[i].profi
+        }
         commit('GETALLPATIENT',res.data)
       })
       .catch((error)=>{
 
       })
-    }
+    },
 
+    turnPatientPage({commit},patient){
+      Axios.get('/api/getPatient',{params:patient})
+      .then((res)=>{
+        //do
+      })
+      commit('TURNPATIENTPAGE',patient)
+      router.push('/data')
+    }
   },
   getters: {
+    getHost:function(state){
+      return state.host
+    },
     getName: function(state){
       return state.user.name
     },
@@ -113,6 +133,9 @@ export default new Vuex.Store({
     },
     getAllPatient:function(state){
       return state.patientList
+    },
+    getOrderList:function(state){
+      
     }
   }
 })

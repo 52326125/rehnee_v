@@ -122,4 +122,17 @@ router.get('/api/getAllPatient',(req,res)=>{
         }
     })
 })
+
+router.get('/api/getPatient',(req,res)=>{
+    var sql=$sql.projectSql.getPatient;
+    var code=req.query.code;
+    conn.query(sql,[code],function(error,reuslt){
+        if(error){
+            console.log(error)
+        }
+        if(result){
+            jsonWrite
+        }
+    })
+})
 module.exports=router;
