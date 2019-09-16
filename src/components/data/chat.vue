@@ -16,8 +16,8 @@
       <div class="inputbox">
         <form onsubmit="return false;">
           <!--<input type="" id="input">--->
-          <textarea id="input"></textarea>
-          <button type="button" @click="alert('a')">留言</button>
+          <textarea id="input" v-model="message"></textarea>
+          <button type="button" @click="chatCommit">Send</button>
         </form>
       </div>
     </div>
@@ -27,25 +27,14 @@
 export default {
   components: {},
   methods: {
-    alert: function(a) {
-      alert(a);
+    chatCommit: function() {
+      console.log(this.message)
+      this.$store.dispatch('chatCommit',{id:this.patient.id,content:this.message})
     }
   },
   data() {
     return {
-      message: {
-        id: 0,
-        author: "person",
-        content: "x",
-        date: "16:30"
-      },
-      onNewOwnMessage: [
-        {
-          id: 1,
-          content: "a",
-          date: "15:30"
-        }
-      ]
+      message:''
     };
   },
   created() {

@@ -6,10 +6,9 @@ import store from './store'
 import vuetify from './plugins/vuetify';
 import cookies from 'vue-cookies'
 import Axios from 'axios'
-import chat from 'vue-beautiful-chat'
 
 Vue.config.productionTip = false
-Vue.use(cookies,chat)
+Vue.use(cookies)
 //login check
 Axios.defaults.withCredentials=true
 /*app.use(function(req, res, next) {
