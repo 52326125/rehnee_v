@@ -148,4 +148,18 @@ router.get('/api/getPatient',(req,res)=>{
         }
     })
 })
+
+router.get('/api/getChat',(req,res)=>{
+    var sql=$sql.projectSql.getChat;
+    var id=req.query.id;
+    console.log(id)
+    conn.query(sql,[id],function(error,result){
+        if(error){
+            console.log(error);
+        }
+        if(result){
+            jsonWrite(res,result)
+        }
+    })
+})
 module.exports=router;

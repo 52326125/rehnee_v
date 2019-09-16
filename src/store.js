@@ -18,7 +18,8 @@ export default new Vuex.Store({
     patientList:[],
     orderIndex:0,
     orderList:[],
-    recordList:[]
+    recordList:[],
+    charHistory:[]
   },
   mutations: {
     LOGIN:function(state,user){
@@ -40,10 +41,13 @@ export default new Vuex.Store({
       state.patient=Object.assign({},patient)
     },
     SETORDERLIST:function(state,list){
-      state.orderList=Object.assign({},list)
+      state.orderList=list
     },
     SETRECORDLIST:function(state,list){
-      state.recordList=Object.assign({},list)
+      state.recordList=list
+    },
+    SETCHATHISTORY:function(state,chat){
+      state.charHistory=chat
     }
   },
   actions: {
@@ -116,6 +120,14 @@ export default new Vuex.Store({
       })
       commit('TURNPATIENTPAGE',patient)
       router.push('/data')
+    },
+
+    getChat({commit},code){
+      Axios.get('/api/getChat',{params:{id:code}})
+      .then((res)=>{
+        console.log(res.data)
+        commit('SETCHATHISTORY',res.data)//do
+      })
     }
   },
   getters: {
@@ -141,8 +153,17 @@ export default new Vuex.Store({
     getAllPatient:function(state){
       return state.patientList
     },
+    getPatientID:function(state){
+      return state.patient.id
+    },
     getOrderList:function(state){
       return state.orderList
+    },
+    getRecordList:function(state){
+      return state.recordList
+    },
+    getChatHistory:function(state){
+      return state.charHistory
     }
   }
 })

@@ -3,12 +3,18 @@
     <v-expansion-panel>
       <v-expansion-panel-header>order list</v-expansion-panel-header>
       <v-expansion-panel-content>
-        <v-list >
-          <v-list-item
-            v-for="i in list"
-            :key="i"
-          >
-
+        <v-list>
+          <v-list-item>
+            <v-list-item-content>
+              <template>
+                <v-data-table
+                  :headers="headers"
+                  :items="list"
+                  :items-per-page="5"
+                  class="elevation-1"
+                ></v-data-table>
+              </template>
+            </v-list-item-content>
           </v-list-item>
         </v-list>
       </v-expansion-panel-content>
@@ -17,10 +23,24 @@
 </template>
 <script>
 export default {
-    computed: {
-        list () {
-            return this.$store.getters.getOrderList//建立orderlist
-        }
+  data (){
+    return {
+      headers:[
+        {
+          text:'order date',
+          align: 'left',
+          value: 'date'
+        },
+        {text:'symptom',sortable: false,value: 'm_order'},
+        {text: 'medical-order',sortable: false,value: 'content'},
+        {text: 'remark',sortable: false,value: 'remark'}
+      ]
     }
+  },
+  computed: {
+    list() {
+      return this.$store.getters.getOrderList; //建立orderlist
+    }
+  }
 };
 </script>

@@ -4,10 +4,16 @@
       <v-col cols="6">
         <patient />
       </v-col>
+        <chat/>      
     </v-row>
     <v-row>
       <v-col cols="6">
           <orderList />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="6">
+        <record/>
       </v-col>
     </v-row>
   </v-container>
@@ -25,6 +31,10 @@ export default {
     patient,
     record
   },
-  data() {}
+  data() {
+    return{
+
+    }
+  }
 };
 </script>

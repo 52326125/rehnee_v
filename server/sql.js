@@ -7,7 +7,8 @@ var sqlMap={
         order: 'insert into medical_order(P_code,dr_ID,date,content,m_order,remark,visit_back_date) values(?,?,?,?,?,?,?)',
         getAllPatient: 'select patient.P_ID as id , pdata.P_name as name, date_format(pdata.P_birthday,"%Y-%m-%d") as birth, pdata.P_code as code, pdata.profi ,date_format(medical_order.date,"%Y-%m-%d") as date from patient, pdata, medical_order where pdata.P_code=patient.P_code and pdata.P_code=medical_order.P_code group by medical_order.P_code order by medical_order.date',
         getPatient: 'select date_format(date,"%Y-%m-%d") as date, content , m_order , remark from medical_order where P_code=? order by date desc',
-        getRecord: 'select date_format(finish_date,"%Y-%m-%d") as date , date_format(finish_time,"%H:%i:%S") as time , spend_time from record where P_ID=?'
+        getRecord: 'select date_format(finish_date,"%Y-%m-%d") as date , date_format(finish_time,"%H:%i:%S") as time , spend_time from record where P_ID=?',
+        getChat: 'select * from chat where P_ID=?'
     }
 }
 module.exports=sqlMap;
