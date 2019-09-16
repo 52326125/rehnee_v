@@ -4,7 +4,8 @@
       <div id="chat">
         <div v-for="(item,index) in chatHistory" :key="index" class='chat'>
             <v-avatar>
-              <img :src="patient.profi" alt="avatar" />
+              <img :src="patient.profi" alt="avatar" v-if="item.sender==2"/>
+              <img :src="drPic" alt="avatar" v-else/>
             </v-avatar>
             <div class="content">
                 <pre>{{item.content}}</pre>
@@ -57,6 +58,9 @@ export default {
     },
     patient () {
         return this.$store.getters.getPatient
+    },
+    drPic () {
+        return this.$store.getters.getPic
     }
   }
 };
