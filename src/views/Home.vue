@@ -30,7 +30,7 @@ export default {
   },
   computed:{
     getDate () {
-      return '2019-09-12'//偷懶 記得改回取正確時間
+      return '2019-09-12'//偷懶 記得改回取正確時間//目前無用
     }
   },
   methods: {

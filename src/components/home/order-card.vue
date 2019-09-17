@@ -4,6 +4,7 @@
     @click="goOtherPage('/order')"
     height="200"
     width="250"
+    hover
   >
   <v-img
         src="../../assets/hospital.png"

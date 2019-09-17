@@ -57,11 +57,11 @@ router.get('/api/login',(req,res)=>{
             console.log('login error; worng ID or password!')
         }
         if(result){
-            req.session.test=result;
-            if(req.session.test){
-                console.log(req.session.test[0].dr_ID);
+            req.session.user=result;
+            if(req.session.user){
+                console.log(req.session.user[0].dr_ID);
             }
-            console.log(req.session.test);
+            console.log(req.session.user);
             jsonWrite(res,result);
         }
     })
@@ -151,9 +151,9 @@ router.get('/api/getPatient',(req,res)=>{
 
 router.get('/api/getChat',(req,res)=>{
     var sql=$sql.projectSql.getChat;
-    var id=req.query.id;
-    console.log(id)
-    conn.query(sql,[id],function(error,result){
+    var params=req.query;
+    console.log(params.lastChat)
+    conn.query(sql,[params.code,params.lastChat],function(error,result){
         if(error){
             console.log(error);
         }
@@ -181,5 +181,10 @@ router.get('/api/chatCommit',(req,res)=>{
             jsonWrite(res,result)
         }
     })
+})
+
+router.get('/api/getChatList',(req,res)=>{
+    var sql=$sql.projectSql.getChatList;
+    console.log(req.session.user[0].dr_ID)
 })
 module.exports=router;

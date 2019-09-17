@@ -2,6 +2,7 @@
   <v-card
     class="mx-auto justify-center"
     @click="goOtherPage('/dashboard')"
+    hover
     height="200"
     width="200"
   >

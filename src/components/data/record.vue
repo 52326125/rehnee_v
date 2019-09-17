@@ -1,7 +1,7 @@
 <template>
   <v-expansion-panels focusable>
     <v-expansion-panel>
-      <v-expansion-panel-header>order list</v-expansion-panel-header>
+      <v-expansion-panel-header>Rehabilitation list</v-expansion-panel-header>
       <v-expansion-panel-content>
         <v-list>
           <v-list-item>

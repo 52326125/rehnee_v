@@ -25,11 +25,12 @@
 </template>
 <script>
 export default {
-  components: {},
+  //should use real-time database
   methods: {
     chatCommit: function() {
       console.log(this.message)
       this.$store.dispatch('chatCommit',{id:this.patient.id,content:this.message})
+      this.message=''
     }
   },
   data() {
@@ -39,7 +40,7 @@ export default {
   },
   created() {
     console.log(this.$store.getters.getPatientID);
-    this.$store.dispatch("getChat", this.$store.getters.getPatientID);
+    this.$store.dispatch("getChat", {code:this.$store.getters.getPatientID,lastChat:0});
   },
   computed: {
     chatHistory() {
@@ -50,8 +51,22 @@ export default {
     },
     drPic () {
         return this.$store.getters.getPic
+    },
+    lastChat () {
+      return this.$store.getters.getLastChat
     }
-  }
+  },
+  watch:{
+      lastChat:{
+        handler(newVal,oldVal){
+          this.$nextTick(() => {
+            var container = this.$el.querySelector('#chat')
+            container.scrollTop = container.scrollHeight
+          })
+
+        }
+      }
+    }
 };
 </script>
 <style scoped>

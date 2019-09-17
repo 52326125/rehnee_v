@@ -57,7 +57,8 @@
           name:'',
           ID:'',
           birth: new Date().toISOString().substr(0, 10),
-          code: ''
+          code: '',
+          date: ''
       }
     }),
 

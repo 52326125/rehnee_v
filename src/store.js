@@ -3,11 +3,25 @@ import Vuex from 'vuex'
 import Axios from 'axios'
 import cookies from 'vue-cookies'
 import router from './router'
+import persistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  plugins:[persistedState({
+    storage:window.sessionStorage,
+    reducer(val){
+      return{
+        user:val.user,
+        patient:val.patient,
+        patientList:val.patientList,
+        orderList:val.orderList,
+        recordList:val.recordList,
+        isDark:val.isDark
+      }
+    }
+  })],
   state: {
-    host: 'http://127.0.0.1:3000/',
+    host: 'http://localhost:3000/',
     user: {
       dr_ID: '',
       name: '',
@@ -19,7 +33,9 @@ export default new Vuex.Store({
     orderIndex:0,
     orderList:[],
     recordList:[],
-    charHistory:[]
+    charHistory:[],
+    lastChat: 0,
+    isDark:true
   },
   mutations: {
     LOGIN:function(state,user){
@@ -30,6 +46,7 @@ export default new Vuex.Store({
     },
     FETCHNEWPATIENT:function(state,name){
       state.patient.name=name
+      state.patient.date=''
     },
     FETCHOLDPATIENT:function(state,patient){
       state.patient=Object.assign({},patient)
@@ -47,7 +64,16 @@ export default new Vuex.Store({
       state.recordList=list
     },
     SETCHATHISTORY:function(state,chat){
-      state.charHistory=chat
+      var i
+      for (i=0;i<chat.length;i++){
+        state.charHistory.push(chat[i])
+      }
+    },
+    SETLASTCHAT:function(state,index){
+      state.lastChat=index
+    },
+    SETDARK:function(state,isDark){
+      state.isDark=isDark
     }
   },
   actions: {
@@ -98,7 +124,7 @@ export default new Vuex.Store({
       })
     },
 
-    getAllPatient({commit}){
+    getAllPatient:function({commit}){
       Axios.get('/api/getAllPatient')
       .then((res)=>{
         var i
@@ -112,7 +138,7 @@ export default new Vuex.Store({
       })
     },
 
-    turnPatientPage({commit},patient){
+    turnPatientPage:function({commit},patient){
       Axios.get('/api/getPatient',{params:patient})
       .then((res)=>{
         commit('SETORDERLIST',res.data[0])
@@ -122,18 +148,44 @@ export default new Vuex.Store({
       router.push('/data')
     },
 
-    getChat({commit},code){
-      Axios.get('/api/getChat',{params:{id:code}})
-      .then((res)=>{
-        console.log(res.data)
-        commit('SETCHATHISTORY',res.data)//do
-      })
+    getChat:function({commit,getters},code){
+      var timer=window.setInterval(()=>{
+        if(code.lastChat<=getters.getLastChat) code.lastChat=getters.getLastChat
+        console.log(router)
+        router.beforeEach((to,from,next)=>{
+          if(to.path!=='/data'){
+            clearInterval(timer)
+            next()
+          }
+        })
+        Axios.get('/api/getChat',{params:code})
+        .then((res)=>{
+          console.log(res.data)
+          commit('SETLASTCHAT',res.data[res.data.length-1].id)
+          commit('SETCHATHISTORY',res.data)
+        })
+      },2000)
     },
 
-    chatCommit({commit},data){
+    chatCommit:function({commit},data){
       Axios.get('/api/chatCommit',{params:data})
       .then((res)=>{
         commit('SETCHATHISTORY',res.data)
+      })
+    },
+
+    setDark:function({commit},isDark){
+      commit('SETDARK',isDark)
+    },
+
+    logout:function(){
+      cookies.remove('isLogin')
+      router.push('/login')
+    },
+    getChatList:function(){
+      Axios.get('/api/getChatList')//try not send doctor id
+      .then((res)=>{
+        
       })
     }
   },
@@ -171,6 +223,12 @@ export default new Vuex.Store({
     },
     getChatHistory:function(state){
       return state.charHistory
+    },
+    getLastChat:function(state){
+      return state.lastChat
+    },
+    getDark:function(state){
+      return state.isDark
     }
   }
 })

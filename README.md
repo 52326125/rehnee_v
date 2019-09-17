@@ -1,3 +1,5 @@
+測試是否chatList可讀取
+
 # rehnee_v2
 
 ## Project setup
