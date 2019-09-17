@@ -1,7 +1,7 @@
 <template>
   <v-row align="center">
     <v-col cols="4">
-      <v-img src="../assets/Rehnee.jpg" max-width="100%"></v-img>
+      <v-img src="../assets/Rehnee.png" max-width="100%"></v-img>
     </v-col>
     <v-col cols="8" justify-end>
       <v-card height="500" max-width="50%" class="mx-auto" align="center">

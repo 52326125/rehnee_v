@@ -3,8 +3,13 @@
   <v-app>
     <v-app-bar app :dark="isDark">
       <v-toolbar-title class="headline text-uppercase">
-        <span @click="backHome">Rehnee_v2</span>
+
+        <v-card max-width="344" class="mx-auto" hover @click="backHome">
+          <v-card-title>Rehnee_v2</v-card-title>
+        </v-card>
+
       </v-toolbar-title>
+
       <v-spacer></v-spacer>
       <v-btn text v-if="isLogin" @click.stop="drawer = !drawer">
         <v-icon>mdi-menu</v-icon>
@@ -30,11 +35,15 @@
           </v-list-item>
 
           <v-divider></v-divider>
+          <v-card-title>Chat</v-card-title>
+          <v-list-item v-for="(item,index) in chatList" :key="index">
+            <v-list-item-avatar>
+              <v-img :src="item.profi"></v-img>
+            </v-list-item-avatar>
 
-          <v-list-item
-            v-for="(item,index) in "
-          >
-            
+            <v-list-item-content>
+              <v-list-item-title v-text="item.content"></v-list-item-title>
+            </v-list-item-content>
           </v-list-item>
 
           <v-divider></v-divider>
@@ -61,6 +70,8 @@ export default {
   }),
   created: function() {
     this.dark = this.isDark;
+    this.$store.dispatch("getChatList");
+    this.$forceUpdate();
   },
   watch: {
     dark: {
@@ -83,7 +94,7 @@ export default {
       return this.$store.getters.getDark;
     },
     chatList() {
-      return this.$store.getters.getChatList
+      return this.$store.getters.getChatList;
     }
   },
 

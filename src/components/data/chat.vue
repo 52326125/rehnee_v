@@ -3,13 +3,19 @@
     <div class="right_content">
       <div id="chat">
         <div v-for="(item,index) in chatHistory" :key="index" class='chat'>
+
             <v-avatar>
               <img :src="patient.profi" alt="avatar" v-if="item.sender==2"/>
-              <img :src="drPic" alt="avatar" v-else/>
             </v-avatar>
-            <div class="content">
+
+            <div class="content" v-if="item.sender==2">
                 <pre>{{item.content}}</pre>
             </div>
+
+            <div class="content rightR" v-else>
+                <pre>{{item.content}}</pre>
+            </div>
+
         </div>
         <footer style="display: none" id="bottom">111</footer>
       </div>
@@ -70,6 +76,10 @@ export default {
 };
 </script>
 <style scoped>
+.rightR{
+  float: right;
+
+}
 .body {
   position: relative;
   height: 100vh;
@@ -178,6 +188,7 @@ export default {
   background-color: #7d7d7d;
   border-radius: 10px;
   padding: 5px;
+  margin:5px
 }
 .content pre {
   margin: 0 0 0 0;

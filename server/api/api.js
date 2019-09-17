@@ -186,5 +186,13 @@ router.get('/api/chatCommit',(req,res)=>{
 router.get('/api/getChatList',(req,res)=>{
     var sql=$sql.projectSql.getChatList;
     console.log(req.session.user[0].dr_ID)
+    conn.query(sql,[req.session.user[0].dr_ID],function(error,result){
+        if (error){
+            console.log(error)
+        }
+        if(result){
+            jsonWrite(res,result)
+        }
+    })
 })
 module.exports=router;

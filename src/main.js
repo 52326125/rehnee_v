@@ -20,6 +20,7 @@ Axios.defaults.withCredentials=true
 });*/
 router.beforeEach((to, from, next) => {
   const temp=cookies.isKey('isLogin');
+  console.log(temp)
   if(temp){
     next();
   }else{

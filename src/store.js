@@ -35,7 +35,8 @@ export default new Vuex.Store({
     recordList:[],
     charHistory:[],
     lastChat: 0,
-    isDark:true
+    isDark:true,
+    chatList:[]
   },
   mutations: {
     LOGIN:function(state,user){
@@ -74,6 +75,13 @@ export default new Vuex.Store({
     },
     SETDARK:function(state,isDark){
       state.isDark=isDark
+    },
+    SETCHATLIST:function(state,chatList){
+      state.chatList=chatList
+    },
+
+    RESETPATIENT:function(state){
+      state.patient={};
     }
   },
   actions: {
@@ -182,11 +190,22 @@ export default new Vuex.Store({
       cookies.remove('isLogin')
       router.push('/login')
     },
-    getChatList:function(){
+
+    getChatList:function({commit,getters}){
       Axios.get('/api/getChatList')//try not send doctor id
       .then((res)=>{
-        
+        console.log(res.data)
+        var i
+        for (i=0;i<res.data.length;i++){
+          res.data[i].profi=getters.getHost+'patient_pic/'+res.data[i].profi
+          console.log(  )
+        }
+        commit('SETCHATLIST',res.data)
       })
+    },
+
+    resetPatient({commit}){
+      commit('RESETPATIENT')
     }
   },
   getters: {
@@ -229,6 +248,9 @@ export default new Vuex.Store({
     },
     getDark:function(state){
       return state.isDark
+    },
+    getChatList:function(state){
+      return state.chatList
     }
   }
 })

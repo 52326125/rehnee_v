@@ -21,7 +21,6 @@ app.all('*', function (req, res, next) {
     res.header('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-with, X_Requested_With');
     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
     res.header('X-Powered-By', '3.2.1');
-    res.header('Content-Type', 'application/json; charset=utf-8');
 
     if (req.method === 'OPTIONS') {
         res.end('options ok');
@@ -33,6 +32,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended:false
 }));
+
 app.use('/',api);
 app.use(express.static('public'))
 //app.use('/',router)

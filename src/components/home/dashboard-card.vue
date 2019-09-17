@@ -7,12 +7,12 @@
     width="200"
   >
     <v-img
-        src="../../assets/Rehnee.jpg"
+        src="../../assets/Rehnee.png"
         height="100%"
         width="100%"
         >
-        <v-card-title class="align-center fill-height">Rehnee system</v-card-title>
         </v-img>
+        <v-card-title class="align-center justify-center">Rehnee system</v-card-title>
   </v-card>
 </template>
 <script>

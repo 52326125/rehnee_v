@@ -30,7 +30,8 @@
 
         <v-row>
           <v-col cols="12">
-            <v-textarea no-resize solo label="symptom" v-model="patient.medicalOrder"></v-textarea>
+            <p>symptom</p>
+            <v-textarea no-resize solo v-model="patient.medicalOrder"></v-textarea>
           </v-col>
         </v-row>
 
@@ -62,7 +63,9 @@ export default {
             return this.$store.getters.getPatient//new轉過來時名字沒有更新
         }
     },
-
+  destroyed:function(){
+    this.$store.dispatch('resetPatient')
+  },
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
