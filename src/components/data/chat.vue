@@ -224,11 +224,13 @@ export default {
   width: calc(90% - 6px);
   height: 90%;
   resize: none;
+  border: 1px black solid
 }
 .inputbox button {
   float: right;
   margin: 0 0 0 0;
   width: 10%;
   height: 100%;
+  
 }
 </style>
