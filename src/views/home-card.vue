@@ -11,6 +11,10 @@
     </v-row>
         </v-col>
     <v-col cols="12">
+        <br>
+        <br>
+        <br>
+        <br>
         <patientList/>
     </v-col>
     </v-row>

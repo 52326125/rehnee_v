@@ -12,7 +12,7 @@
         width="100%"
         >
         </v-img>
-        <v-card-title class="align-center justify-center">Rehnee system</v-card-title>
+        <v-card-title class="font-weight-black align-center justify-center">Rehnee system</v-card-title>
   </v-card>
 </template>
 <script>

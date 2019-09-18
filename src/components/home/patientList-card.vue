@@ -2,8 +2,8 @@
   <v-simple-table>
     <thead>
       <tr>
-        <th class="text-left">Name</th>
-        <th class="text-left">Number</th>
+        <th class="text-left display-1">Name</th>
+        <th class="text-left display-1">Number</th>
       </tr>
     </thead>
     <tbody>

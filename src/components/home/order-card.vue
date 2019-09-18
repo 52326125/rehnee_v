@@ -12,7 +12,7 @@
         width="210"
         >
         </v-img>
-        <v-card-title class="font-weight-black align-end justify-center">medical system</v-card-title>
+        <v-card-title class="font-weight-black align-end justify-center">Medical system</v-card-title>
   </v-card>
 </template>
 <script>
