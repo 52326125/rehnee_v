@@ -69,7 +69,7 @@ export default {
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
-        this.patient.code=btoa(this.patient.ID)
+        //this.patient.code=btoa(this.patient.ID)
         var temp=new Date()
         this.patient.date=temp.getFullYear()+'-'+(temp.getMonth()+1)+'-'+temp.getDate()
         console.log(this.patient)

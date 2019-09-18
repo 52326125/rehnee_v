@@ -45,9 +45,8 @@ export default new Vuex.Store({
     SETORDERPAGE:function(state,index){
       state.orderIndex=index
     },
-    FETCHNEWPATIENT:function(state,name){
-      state.patient.name=name
-      state.patient.date=''
+    FETCHNEWPATIENT:function(state,patient){
+      state.patient=Object.assign({},patient)
     },
     FETCHOLDPATIENT:function(state,patient){
       state.patient=Object.assign({},patient)
@@ -115,6 +114,7 @@ export default new Vuex.Store({
     newPatient:function({commit},patient){
       Axios.get('/api/newPatient',{params:patient})
       .then((res)=>{
+        console.log(res.data)
         commit('FETCHNEWPATIENT',res.data)
       })
       .catch((error)=>{

@@ -69,6 +69,7 @@
       validate () {
         this.patient.code=btoa(this.patient.ID)
         this.$store.dispatch('newPatient',this.patient)
+        console.log(this.patient)
         this.$store.dispatch('setOrderPage',{page:2})
       },
     }

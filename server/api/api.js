@@ -77,7 +77,7 @@ router.get('/api/newPatient',(req,res)=>{
         }
         if (result){
             console.log('insert new patient success');
-            jsonWrite(res,patient.name)
+            jsonWrite(res,patient)
         }
     })
 })

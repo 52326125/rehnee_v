@@ -32,6 +32,7 @@ export default {
     },
     methods: {
         pageSearch:function(){
+            console.log(this.ID)
             this.$store.dispatch('setOrderPage',{page:2,ID:this.ID})
         },
         pageNew:function(){
