@@ -82,7 +82,7 @@ export default {
   },
   computed: {
     isLogin() {
-      return this.$cookies.isKey('isLogin')
+      return this.$store.getters.getCookie
     },
     dr_name() {
       return this.$store.getters.getName;

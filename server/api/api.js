@@ -194,5 +194,16 @@ router.get('/api/getChatList',(req,res)=>{
             jsonWrite(res,result)
         }
     })
+}),
+router.get('/api/getDiseaseName',(req,res)=>{
+    var sql=$sql.projectSql.getDiseaseName;
+    conn.query(sql,function(error,result){
+        if(error){
+            console.log(error)
+        }
+        if(result){
+            jsonWrite(res,result)
+        }
+    })
 })
 module.exports=router;

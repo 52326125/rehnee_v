@@ -10,7 +10,8 @@ var sqlMap={
         getRecord: 'select date_format(finish_date,"%Y-%m-%d") as date , date_format(finish_time,"%H:%i:%S") as time , spend_time from record where P_ID=?',
         getChat: 'select * from chat where P_ID=? and id>?',
         charCommit: 'insert into chat(P_ID,sender,content,date,time) values(?,1,?,date_format(now(),"%Y-%m-%d"),date_format(now(),"%H:%i:%S"))',
-        getChatList: 'select pdata.profi as profi,chat.content as content from chat, pdata, patient where chat.P_ID=patient.P_ID and patient.P_code=pdata.P_code and patient.dr_ID=? group by chat.P_ID order by chat.id desc'
+        getChatList: 'select pdata.profi as profi,chat.content as content from chat, pdata, patient where chat.P_ID=patient.P_ID and patient.P_code=pdata.P_code and patient.dr_ID=? group by chat.P_ID order by chat.id desc',
+        getDiseaseName: 'select name from disease'
     }
 }
 module.exports=sqlMap;

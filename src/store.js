@@ -35,8 +35,9 @@ export default new Vuex.Store({
     recordList:[],
     charHistory:[],
     lastChat: 0,
-    isDark:true,
-    chatList:[]
+    isDark:false,
+    chatList:[],
+    diseaseName:[]
   },
   mutations: {
     LOGIN:function(state,user){
@@ -78,9 +79,11 @@ export default new Vuex.Store({
     SETCHATLIST:function(state,chatList){
       state.chatList=chatList
     },
-
     RESETPATIENT:function(state){
       state.patient={};
+    },
+    SETDISEASENAME:function(state,diseaseName){
+      state.diseaseName=diseaseName
     }
   },
   actions: {
@@ -206,6 +209,16 @@ export default new Vuex.Store({
 
     resetPatient({commit}){
       commit('RESETPATIENT')
+    },
+
+    getDiseaseName:function({commit}){
+      Axios.get('/api/getDiseaseName')
+      .then((res)=>{
+        commit('SETDISEASENAME',res.data)
+      })
+      .catch((error)=>{
+        console.log(error)
+      })
     }
   },
   getters: {
@@ -251,6 +264,12 @@ export default new Vuex.Store({
     },
     getChatList:function(state){
       return state.chatList
+    },
+    getCookie:function(){
+      return cookies.isKey('isLogin')
+    },
+    getDiseaseName:function(state){
+      return state.diseaseName
     }
   }
 })

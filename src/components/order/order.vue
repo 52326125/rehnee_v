@@ -30,6 +30,7 @@
 
         <v-row>
           <v-col cols="12">
+            <!--插入點-->
             <p>symptom</p>
             <v-textarea no-resize solo v-model="patient.medicalOrder"></v-textarea>
           </v-col>
@@ -40,10 +41,9 @@
             <v-select v-model="patient.content" :items="items" label="order" required></v-select>
           </v-col>
           <v-col cols="6">
-              <v-text-field v-model="patient.remark" label="remark" required></v-text-field>
+            <v-text-field v-model="patient.remark" label="remark" required></v-text-field>
           </v-col>
         </v-row>
-
       </v-form>
     </v-card-text>
     <v-card-actions class="justify-center">
@@ -55,32 +55,42 @@
 export default {
   data: () => ({
     valid: true,
-    items: ['1,20,5','3,20,5']
+    items: ["1,20,5", "3,20,5"]
   }),
-
-    computed:{
-        patient (){
-            return this.$store.getters.getPatient//new轉過來時名字沒有更新
-        }
+  created() {
+    this.$store.dispatch("getDiseaseName");
+  },
+  computed: {
+    patient() {
+      return this.$store.getters.getPatient; //new轉過來時名字沒有更新
     },
-  destroyed:function(){
-    this.$store.dispatch('resetPatient')
+    diseaseName(){
+      return this.$store.getters.getDiseaseName
+    }
+  },
+  destroyed: function() {
+    this.$store.dispatch("resetPatient");
   },
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
         //this.patient.code=btoa(this.patient.ID)
-        var temp=new Date()
-        this.patient.date=temp.getFullYear()+'-'+(temp.getMonth()+1)+'-'+temp.getDate()
-        console.log(this.patient)
-        this.$store.dispatch('order',this.patient)//error是因為db中沒有P_code
-        this.$store.dispatch('setOrderPage',{page:0})
+        var temp = new Date();
+        this.patient.date =
+          temp.getFullYear() +
+          "-" +
+          (temp.getMonth() + 1) +
+          "-" +
+          temp.getDate();
+        console.log(this.patient);
+        this.$store.dispatch("order", this.patient); //error是因為db中沒有P_code
+        this.$store.dispatch("setOrderPage", { page: 0 });
       }
     },
     back() {
-        //alert(this.patient.time)
-      this.$store.dispatch('setOrderPage',{page:0})
-    },
+      //alert(this.patient.time)
+      this.$store.dispatch("setOrderPage", { page: 0 });
+    }
   }
 };
 </script>
