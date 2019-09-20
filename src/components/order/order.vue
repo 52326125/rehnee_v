@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto">
+  <v-card class="mx-auto" max-width="500">
     <v-card-title>
       <v-btn color="warning" @click="back">
         <v-icon>mdi-keyboard-backspace</v-icon>
@@ -31,14 +31,67 @@
         <v-row>
           <v-col cols="12">
             <!--插入點-->
-            <p>symptom</p>
-            <v-textarea no-resize solo v-model="patient.medicalOrder"></v-textarea>
+            <v-autocomplete
+              v-model="patient.patientDisease"
+              :items="diseaseName"
+              filled
+              chips
+              label="Syptom"
+              item-text="name"
+              item-value="name"
+              multiple
+            >
+              <template v-slot:selection="data">
+                <v-chip
+                  color="primary"
+                  v-bind="data.name"
+                  :input-value="data.selected"
+                  close
+                  @click="data.select"
+                  @click:close="remove(data.item)"
+                >
+                  {{ data.item.name }}
+                </v-chip>
+              </template>
+              <template v-slot:item="data">
+                <template v-if="typeof data.item !== 'object'">
+                  <v-list-item-content v-text="data.item"></v-list-item-content>
+                </template>
+                <template v-else>
+                  <v-list-item-content>
+                    <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                    <v-list-item-subtitle v-html="data.item.group"></v-list-item-subtitle>
+                  </v-list-item-content>
+                </template>
+              </template>
+            </v-autocomplete>
+            <!--插入點-->
+            <!--<p>symptom</p>
+            <v-textarea no-resize solo v-model="patient.medicalOrder"></v-textarea>-->
           </v-col>
         </v-row>
 
         <v-row>
-          <v-col cols="6">
-            <v-select v-model="patient.content" :items="items" label="order" required></v-select>
+          <v-col cols="12">
+            <!--插入點-->
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col cols="4">
+            <!--<v-select v-model="patient.content" :items="items" label="order" required></v-select>-->
+          <v-text-field label="Action"></v-text-field>
+          </v-col>
+          <v-col cols="3">
+            <v-text-field label="Angle"></v-text-field>
+          </v-col>
+          <v-col cols="3">
+            <v-text-field label="Times"></v-text-field>
+          </v-col>
+          <v-col cols="2">
+            <v-btn fab>
+               <v-icon>mdi-plus</v-icon>
+            </v-btn>
           </v-col>
           <v-col cols="6">
             <v-text-field v-model="patient.remark" label="remark" required></v-text-field>
@@ -55,7 +108,7 @@
 export default {
   data: () => ({
     valid: true,
-    items: ["1,20,5", "3,20,5"]
+    items: ["1,20,5", "3,20,5"],
   }),
   created() {
     this.$store.dispatch("getDiseaseName");
@@ -90,7 +143,11 @@ export default {
     back() {
       //alert(this.patient.time)
       this.$store.dispatch("setOrderPage", { page: 0 });
-    }
+    },
+    remove (item) {
+      const index = this.patient.patientDisease.indexOf(item.name)
+      if (index >= 0) this.patient.patientDisease.splice(index, 1)
+    },
   }
 };
 </script>

@@ -126,6 +126,8 @@ export default new Vuex.Store({
     },
 
     order:function({commit},patient){
+      patient.patientDisease=patient.patientDisease.join(',')
+      console.log(patient.patientDisease)
       Axios.get('/api/order',{params:patient})
       .then((res)=>{
         

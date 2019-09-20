@@ -6,9 +6,10 @@ import store from './store'
 import vuetify from './plugins/vuetify';
 import cookies from 'vue-cookies'
 import Axios from 'axios'
+import vCahrt from 'v-charts-v2'
 
 Vue.config.productionTip = false
-Vue.use(cookies)
+Vue.use(cookies,vCahrt)
 //login check
 Axios.defaults.withCredentials=true
 /*app.use(function(req, res, next) {
