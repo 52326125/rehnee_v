@@ -30,7 +30,6 @@
 
         <v-row>
           <v-col cols="12">
-            <!--插入點-->
             <v-autocomplete
               v-model="patient.patientDisease"
               :items="diseaseName"
@@ -65,7 +64,6 @@
                 </template>
               </template>
             </v-autocomplete>
-            <!--插入點-->
             <!--<p>symptom</p>
             <v-textarea no-resize solo v-model="patient.medicalOrder"></v-textarea>-->
           </v-col>
