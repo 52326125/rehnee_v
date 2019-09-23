@@ -127,6 +127,7 @@ router.get('/api/getPatient',(req,res)=>{
     var array=[];
     var sql=$sql.projectSql.getPatient;
     var code=req.query.code;
+    console.log(code)
     conn.query(sql,[code],function(error,result){
         if(error){
             console.log(error)
@@ -153,6 +154,7 @@ router.get('/api/getChat',(req,res)=>{
     var sql=$sql.projectSql.getChat;
     var params=req.query;
     console.log(params.lastChat)
+    if(!params.lastChat) params.lastChat=0
     conn.query(sql,[params.code,params.lastChat],function(error,result){
         if(error){
             console.log(error);

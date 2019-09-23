@@ -9,7 +9,8 @@ import Axios from 'axios'
 import vCahrt from 'v-charts-v2'
 
 Vue.config.productionTip = false
-Vue.use(cookies,vCahrt)
+Vue.use(cookies)
+Vue.use(vCahrt)
 //login check
 Axios.defaults.withCredentials=true
 /*app.use(function(req, res, next) {
@@ -33,6 +34,13 @@ router.beforeEach((to, from, next) => {
   }
   if(from.path=='/order'){
     store.state.orderIndex=0
+  }
+  if(cookies.get('isLogin')=='doctor'){
+    next()
+  }else if(cookies.get('isLogin')=='case'){
+    if(to.path!=='/dashboard' && to.path!=='/data'){
+      next('/dashboard')
+    }
   }
 })
 

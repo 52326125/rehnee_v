@@ -13,6 +13,7 @@
             <v-text-field
               v-model="user.password"
               label="Password"
+              @keyup.native.enter="set"
               required
               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               :type="showPassword ? 'text' : 'password'"

@@ -71,23 +71,30 @@
 
         <v-row>
           <v-col cols="12">
-            <!--插入點-->
+            <v-chip v-for="(item,index) in orders" :key="index">
+              {{item}}
+            </v-chip>
           </v-col>
         </v-row>
+
+        <v-divider></v-divider>
 
         <v-row>
           <v-col cols="4">
             <!--<v-select v-model="patient.content" :items="items" label="order" required></v-select>-->
-          <v-text-field label="Action"></v-text-field>
+          <v-text-field label="Action" v-model="order[0]"></v-text-field>
           </v-col>
           <v-col cols="3">
-            <v-text-field label="Angle"></v-text-field>
+            <v-text-field label="Angle" v-model="order[1]"></v-text-field>
           </v-col>
           <v-col cols="3">
-            <v-text-field label="Times"></v-text-field>
+            <v-text-field label="Times" 
+              v-model="order[2]"
+              @keyup.native.enter="addOrder"
+            ></v-text-field>
           </v-col>
           <v-col cols="2">
-            <v-btn fab>
+            <v-btn fab @click="addOrder">
                <v-icon>mdi-plus</v-icon>
             </v-btn>
           </v-col>
@@ -106,7 +113,8 @@
 export default {
   data: () => ({
     valid: true,
-    items: ["1,20,5", "3,20,5"],
+    orders: [],
+    order:[]
   }),
   created() {
     this.$store.dispatch("getDiseaseName");
@@ -123,6 +131,11 @@ export default {
     this.$store.dispatch("resetPatient");
   },
   methods: {
+    addOrder(){
+      let temp=this.order.join(',')
+      this.orders.push(temp)
+      this.order=[]
+    },
     validate() {
       if (this.$refs.form.validate()) {
         //this.patient.code=btoa(this.patient.ID)
@@ -133,6 +146,7 @@ export default {
           (temp.getMonth() + 1) +
           "-" +
           temp.getDate();
+        this.patient.content=this.orders.join('-')
         console.log(this.patient);
         this.$store.dispatch("order", this.patient); //error是因為db中沒有P_code
         this.$store.dispatch("setOrderPage", { page: 0 });

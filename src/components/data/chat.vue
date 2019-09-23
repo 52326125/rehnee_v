@@ -88,7 +88,7 @@ export default {
 }
 .inline {
   display: inline-block;
-  width: 50%;
+  width: 50vw;
   height: 100%;
 }
 .left {
@@ -104,8 +104,11 @@ export default {
 }
 .right_content {
   padding-left: 5%;
-  height: 100%;
-  width: 90%;
+  height: 90vh;
+  width: 50vw;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
 }
 .drawer {
   border-radius: 15px;

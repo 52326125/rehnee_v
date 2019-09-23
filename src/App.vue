@@ -42,7 +42,7 @@
             </v-list-item-avatar>
 
             <v-list-item-content>
-              <v-list-item-title v-text="item.content"></v-list-item-title>
+              <v-list-item-title v-text="item.content" @click="chat(item)"></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -99,6 +99,10 @@ export default {
   },
 
   methods: {
+    chat:function(item){
+      console.log(item)
+      this.$store.dispatch('getPatientFromChat',item)
+    },
     backHome: function() {
       this.$router.push("/");
     },

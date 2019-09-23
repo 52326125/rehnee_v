@@ -4,6 +4,7 @@ import Axios from 'axios'
 import cookies from 'vue-cookies'
 import router from './router'
 import persistedState from 'vuex-persistedstate'
+import { async } from 'q'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -92,8 +93,13 @@ export default new Vuex.Store({
       .then((res)=>{
         if (res.data.length){
           commit('LOGIN',res.data[0])
-          cookies.set('isLogin','1')
-          router.push('/home')
+          if(res.data[0].role){
+            cookies.set('isLogin','case')
+            router.push('/dashboard')
+          }else{
+            cookies.set('isLogin','doctor')
+            router.push('/home')
+          }
         }
       })
       .catch(function(error){
@@ -151,14 +157,16 @@ export default new Vuex.Store({
       })
     },
 
-    turnPatientPage:function({commit},patient){
-      Axios.get('/api/getPatient',{params:patient})
+    turnPatientPage: async function({commit},patient){
+      await Axios.get('/api/getPatient',{params:patient})
       .then((res)=>{
         commit('SETORDERLIST',res.data[0])
         commit('SETRECORDLIST',res.data[1])
+        commit('TURNPATIENTPAGE',patient)
+        console.log('1')
       })
-      commit('TURNPATIENTPAGE',patient)
       router.push('/data')
+      console.log('2')
     },
 
     getChat:function({commit,getters},code){
@@ -168,6 +176,8 @@ export default new Vuex.Store({
         router.beforeEach((to,from,next)=>{
           if(to.path!=='/data'){
             clearInterval(timer)
+            next()
+          }else{
             next()
           }
         })
@@ -221,6 +231,10 @@ export default new Vuex.Store({
       .catch((error)=>{
         console.log(error)
       })
+    },
+    getPatientFromChat:async function({dispatch,commit},item){
+      await commit('FETCHNEWPATIENT',item)
+      await dispatch('turnPatientPage',item)
     }
   },
   getters: {

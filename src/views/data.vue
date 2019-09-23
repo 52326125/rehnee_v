@@ -4,7 +4,7 @@
       <v-col cols="6">
         <patient />
       </v-col>
-        <chat/>      
+        <chat/>
     </v-row>
     <v-row>
       <v-col cols="6">
@@ -33,7 +33,6 @@ export default {
   },
   data() {
     return{
-
     }
   }
 };
