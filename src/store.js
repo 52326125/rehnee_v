@@ -38,11 +38,16 @@ export default new Vuex.Store({
     lastChat: 0,
     isDark:false,
     chatList:[],
-    diseaseName:[]
+    diseaseName:[],
+    isLogin:false,
   },
   mutations: {
     LOGIN:function(state,user){
       state.user=Object.assign({},user)
+      state.isLogin=true
+    },
+    LOGUOUT:function(state){
+      state.isLogin=false
     },
     SETORDERPAGE:function(state,index){
       state.orderIndex=index
@@ -201,7 +206,8 @@ export default new Vuex.Store({
       commit('SETDARK',isDark)
     },
 
-    logout:function(){
+    logout:function({commit}){
+      commit('LOGOUT')
       cookies.remove('isLogin')
       router.push('/login')
     },
@@ -281,8 +287,8 @@ export default new Vuex.Store({
     getChatList:function(state){
       return state.chatList
     },
-    getCookie:function(){
-      return cookies.isKey('isLogin')
+    getCookie:function(state){
+      return state.isLogin
     },
     getDiseaseName:function(state){
       return state.diseaseName

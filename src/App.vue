@@ -48,7 +48,7 @@
 
           <v-divider></v-divider>
 
-          <v-switch v-model="dark" :label="`dark mode`"></v-switch>
+          <v-switch v-model="isDark" :label="`dark mode`"></v-switch>
           <v-btn @click="logout" width="100%">logout</v-btn>
         </v-navigation-drawer>
       </v-sheet>
@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import cookies from 'vue-cookies'
 export default {
   name: "App",
   data: () => ({
@@ -70,6 +71,8 @@ export default {
   }),
   created: function() {
     this.dark = this.isDark;
+  },
+  mounted:function(){
     this.$store.dispatch("getChatList");
     this.$forceUpdate();
   },
