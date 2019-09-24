@@ -70,6 +70,9 @@ export default {
   }),
   created: function() {
     this.dark = this.isDark;
+    
+  },
+  mounted:function(){
     this.$store.dispatch("getChatList");
     this.$forceUpdate();
   },
