@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/home-card'
 import Login from './views/login'
-import order from './views/order'
+import order from './components/home/patientList-card'
 import dashboard from './views/dashboard'
 import data from './views/data'
 

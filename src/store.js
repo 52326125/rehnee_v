@@ -4,7 +4,6 @@ import Axios from 'axios'
 import cookies from 'vue-cookies'
 import router from './router'
 import persistedState from 'vuex-persistedstate'
-import { async } from 'q'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -17,7 +16,8 @@ export default new Vuex.Store({
         patientList:val.patientList,
         orderList:val.orderList,
         recordList:val.recordList,
-        isDark:val.isDark
+        isDark:val.isDark,
+        isLogin:val.isLogin
       }
     }
   })],
@@ -38,11 +38,16 @@ export default new Vuex.Store({
     lastChat: 0,
     isDark:false,
     chatList:[],
-    diseaseName:[]
+    diseaseName:[],
+    isLogin:false,
   },
   mutations: {
     LOGIN:function(state,user){
       state.user=Object.assign({},user)
+      state.isLogin=true
+    },
+    LOGOUT:function(state){
+      state.isLogin=false
     },
     SETORDERPAGE:function(state,index){
       state.orderIndex=index
@@ -88,10 +93,11 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    login: function({commit},user){
+    login: function({commit,state},user){
       Axios.get('/api/login',{params:user})
       .then((res)=>{
         if (res.data.length){
+          res.data[0].pic=state.host+'dr_pic/'+res.data[0].pic
           commit('LOGIN',res.data[0])
           if(res.data[0].role){
             cookies.set('isLogin','case')
@@ -201,7 +207,8 @@ export default new Vuex.Store({
       commit('SETDARK',isDark)
     },
 
-    logout:function(){
+    logout:function({commit}){
+      commit('LOGOUT')
       cookies.remove('isLogin')
       router.push('/login')
     },
@@ -281,8 +288,8 @@ export default new Vuex.Store({
     getChatList:function(state){
       return state.chatList
     },
-    getCookie:function(){
-      return cookies.isKey('isLogin')
+    getCookie:function(state){
+      return state.isLogin
     },
     getDiseaseName:function(state){
       return state.diseaseName

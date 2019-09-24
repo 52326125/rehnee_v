@@ -65,6 +65,7 @@ export default {
   methods:{
     change:function(){
       var i
+      this.chartData.rows=[]
       for (i=0;i<this.list.length;i++){
         this.chartData.rows.push({date:(this.list[i].date+'-'+this.list[i].time), spend_time:this.list[i].spend_time})
       }

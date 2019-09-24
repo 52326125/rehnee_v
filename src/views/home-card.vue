@@ -22,13 +22,11 @@
 <script>
 import order from '../components/home/order-card'
 import dashboard from '../components/home/dashboard-card'
-import patientList from '../components/home/patientList-card'
 
 export default {
     components:{
         order,
         dashboard,
-        patientList
     },
 }
 </script>
