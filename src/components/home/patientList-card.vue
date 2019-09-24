@@ -1,24 +1,29 @@
+
 <template>
-  <v-simple-table>
-    <thead>
-      <tr>
-        <th class="text-left display-1">Name</th>
-        <th class="text-left display-1">Number</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="item in desserts" :key="item.name">
-        <td>{{ item.name }}</td>
-        <td>{{ item.calories }}</td>
-      </tr>
-    </tbody>
-  </v-simple-table>
+  <v-data-table
+    :headers="headers"
+    :items="desserts"
+    :items-per-page="5"
+    class="elevation-1"
+  ></v-data-table>
 </template>
 <script>
   export default {
       //掛號系統 on ?
     data () {
-      return {
+      return {headers: [
+          {
+            text: 'Dessert (100g serving)',
+            align: 'left',
+            sortable: false,
+            value: 'name',
+          },
+          { text: 'Calories', value: 'calories' },
+          { text: 'Fat (g)', value: 'fat' },
+          { text: 'Carbs (g)', value: 'carbs' },
+          { text: 'Protein (g)', value: 'protein' },
+          { text: 'Iron (%)', value: 'iron' },
+        ],
         desserts: [
           {
             name: 'Frozen Yogurt',
