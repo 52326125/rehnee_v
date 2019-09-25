@@ -1,13 +1,15 @@
 <template>
   <v-card class="mx-auto" max-width="500">
+
     <v-card-title>
       <v-btn color="warning" @click="back">
         <v-icon>mdi-keyboard-backspace</v-icon>
       </v-btn>Medical-order system
+     
     </v-card-title>
 
     <v-card-text>
-      <v-form ref="form" v-model="valid" lazy-validation>
+      <v-form ref="form" v-model="valid" >
         <v-row justify="center">
           <v-col cols="6">
             <v-text-field disabled v-model="patient.name" label="Name" required></v-text-field>
@@ -21,7 +23,7 @@
           <v-col cols="6">
             <v-menu offset-y>
               <template v-slot:activator="{ on }">
-                <v-text-field v-on="on" label="Next order date" required v-model="patient.time"></v-text-field>
+                <v-text-field v-on="on" label="Next order date" required v-model="patient.time" :rules="rule"></v-text-field>
               </template>
               <v-date-picker v-model="patient.time"></v-date-picker>
             </v-menu>
@@ -31,10 +33,11 @@
         <v-row>
           <v-col cols="12">
             <v-autocomplete
-              v-model="patient.patientDisease"
+              v-model="patient.medicalOrder"
               :items="diseaseName"
               filled
               chips
+              :rules="rule"
               label="Syptom"
               item-text="name"
               item-value="name"
@@ -70,6 +73,9 @@
         </v-row>
 
         <v-row>
+          <v-col cols="12">
+            <p>Medical order</p>
+          </v-col>
           <v-col cols="12">
             <v-chip v-for="(item,index) in orders" :key="index">
               {{item}}
@@ -110,27 +116,40 @@
   </v-card>
 </template>
 <script>
+import {mapState,mapActions} from 'vuex'
 export default {
   data: () => ({
     valid: true,
     orders: [],
-    order:[]
+    order:[],
+    rule: [v=> !!v || 'Cannot be null'],
   }),
   created() {
-    this.$store.dispatch("getDiseaseName");
+    this.getDiseaseName()
   },
   computed: {
-    patient() {
-      return this.$store.getters.getPatient; //new轉過來時名字沒有更新
-    },
-    diseaseName(){
-      return this.$store.getters.getDiseaseName
+    ...mapState([
+      'patient',
+      'diseaseName',
+    ]),
+    overlay:{
+      get:function(){
+        return this.$store.state.overlay
+      },
+      set:function(newVal){
+        this.setOverlay(newVal)
+      }
     }
   },
   destroyed: function() {
-    this.$store.dispatch("resetPatient");
+    this.resetPatient()
   },
   methods: {
+    ...mapActions([
+      'setOverlay',
+      'resetPatient',
+      'getDiseaseName'
+    ]),
     addOrder(){
       let temp=this.order.join(',')
       this.orders.push(temp)
@@ -149,16 +168,15 @@ export default {
         this.patient.content=this.orders.join('-')
         console.log(this.patient);
         this.$store.dispatch("order", this.patient); //error是因為db中沒有P_code
-        this.$store.dispatch("setOrderPage", { page: 0 });
+        back()
       }
     },
     back() {
-      //alert(this.patient.time)
-      this.$store.dispatch("setOrderPage", { page: 0 });
+      this.overlay=!this.overlay
     },
     remove (item) {
-      const index = this.patient.patientDisease.indexOf(item.name)
-      if (index >= 0) this.patient.patientDisease.splice(index, 1)
+      const index = this.patient.medicalOrder.indexOf(item.name)
+      if (index >= 0) this.patient.medicalOrder.splice(index, 1)
     },
   }
 };

@@ -6,7 +6,7 @@ import store from './store'
 import vuetify from './plugins/vuetify';
 import cookies from 'vue-cookies'
 import Axios from 'axios'
-import vCahrt from 'v-charts-v2'
+import vCahrt from 'v-charts'
 
 Vue.config.productionTip = false
 Vue.use(cookies)

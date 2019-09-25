@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/home-card'
 import Login from './views/login'
-import order from './views/order'
+import order from './components/home/patientList-card'
 import dashboard from './views/dashboard'
 import data from './views/data'
 
@@ -36,14 +36,6 @@ export default new Router({
       path: '/data',
       name: 'data',
       component: data
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
     {
       path: '*',
