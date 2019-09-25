@@ -168,16 +168,15 @@ export default {
         this.patient.content=this.orders.join('-')
         console.log(this.patient);
         this.$store.dispatch("order", this.patient); //error是因為db中沒有P_code
+        back()
       }
     },
     back() {
-      //alert(this.patient.time)
-      //this.$store.dispatch("setOrderPage", { page: 0 });
       this.overlay=!this.overlay
     },
     remove (item) {
-      const index = this.patient.patientDisease.indexOf(item.name)
-      if (index >= 0) this.patient.patientDisease.splice(index, 1)
+      const index = this.patient.medicalOrder.indexOf(item.name)
+      if (index >= 0) this.patient.medicalOrder.splice(index, 1)
     },
   }
 };

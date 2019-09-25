@@ -34,7 +34,7 @@ export default new Vuex.Store({
     orderIndex:0,
     orderList:[],
     recordList:[],
-    charHistory:[],
+    chatHistory:[],
     lastChat: 0,
     isDark:false,
     chatList:[],
@@ -49,21 +49,12 @@ export default new Vuex.Store({
     },
     LOGOUT:function(state){
       state.isLogin=false
-    },
-    SETORDERPAGE:function(state,index){
-      state.orderIndex=index
-    },
-    FETCHNEWPATIENT:function(state,patient){
+    },    
+    FETCHPATIENT:function(state,patient){
       state.patient=Object.assign({},patient)
     },
-    FETCHOLDPATIENT:function(state,patient){
-      state.patient=Object.assign({},patient)
-    },
-    GETALLPATIENT:function(state,patientList){
+    SETALLPATIENT:function(state,patientList){
       state.patientList=patientList
-    },
-    TURNPATIENTPAGE:function(state,patient){
-      state.patient=Object.assign({},patient)
     },
     SETORDERLIST:function(state,list){
       state.orderList=list
@@ -72,9 +63,8 @@ export default new Vuex.Store({
       state.recordList=list
     },
     SETCHATHISTORY:function(state,chat){
-      var i
-      for (i=0;i<chat.length;i++){
-        state.charHistory.push(chat[i])
+      for (let i=0;i<chat.length;i++){
+        state.chatHistory.push(chat[i])
       }
     },
     SETLASTCHAT:function(state,index){
@@ -123,27 +113,16 @@ export default new Vuex.Store({
         .then((res)=>{
           if(res.data.length){
             res.data[0].medicalOrder=res.data[0].medicalOrder.split(',')
-            commit('FETCHOLDPATIENT',res.data[0])
+            commit('FETCHPATIENT',res.data[0])
             console.log(res.data[0])
           }else{
-            commit('FETCHOLDPATIENT',patient)
+            commit('FETCHPATIENT',patient)
           }
         })
         .catch((error)=>{
           
         })
       }
-    },
-
-    newPatient:function({commit},patient){
-      Axios.get('/api/newPatient',{params:patient})
-      .then((res)=>{
-        console.log(res.data)
-        commit('FETCHNEWPATIENT',res.data)
-      })
-      .catch((error)=>{
-        
-      })
     },
 
     order:function({dispatch},patient){
@@ -157,14 +136,14 @@ export default new Vuex.Store({
       })
     },
 
-    getAllPatient:function({commit}){
+    getAllPatient:function({commit,state}){
       Axios.get('/api/getAllPatient')
       .then((res)=>{
         var i
         for (i=0;i<res.data.length;i++){
-          res.data[i].profi=this.getters.getHost+'patient_pic/'+res.data[i].profi
+          res.data[i].profi=state.host+'patient_pic/'+res.data[i].profi
         }
-        commit('GETALLPATIENT',res.data)
+        commit('SETALLPATIENT',res.data)
       })
       .catch((error)=>{
 
@@ -176,16 +155,16 @@ export default new Vuex.Store({
       .then((res)=>{
         commit('SETORDERLIST',res.data[0])
         commit('SETRECORDLIST',res.data[1])
-        commit('TURNPATIENTPAGE',patient)
+        commit('FETCHPATIENT',patient)
         console.log('1')
       })
       router.push('/data')
       console.log('2')
     },
 
-    getChat:function({commit,getters},code){
+    getChat:function({commit,state},code){
       var timer=window.setInterval(()=>{
-        if(code.lastChat<=getters.getLastChat) code.lastChat=getters.getLastChat
+        if(code.lastChat<=state.lastChat) code.lastChat=state.lastChat
         console.log(router)
         router.beforeEach((to,from,next)=>{
           if(to.path!=='/data'){
@@ -198,8 +177,10 @@ export default new Vuex.Store({
         Axios.get('/api/getChat',{params:code})
         .then((res)=>{
           console.log(res.data)
-          commit('SETLASTCHAT',res.data[res.data.length-1].id)
-          commit('SETCHATHISTORY',res.data)
+          if(res.data.length){
+            commit('SETLASTCHAT',res.data[res.data.length-1].id)
+            commit('SETCHATHISTORY',res.data)
+          }
         })
       },2000)
     },
@@ -222,22 +203,19 @@ export default new Vuex.Store({
     },
 
     getChatList:function({commit,state}){
-      Axios.get('/api/getChatList')//try not send doctor id
+      Axios.get('/api/getChatList',{params:state.user})//try not send doctor id
       .then((res)=>{
         console.log(res.data)
-        var i
-        for (i=0;i<res.data.length;i++){
+        for (let i=0;i<res.data.length;i++){
           res.data[i].profi=state.host+'patient_pic/'+res.data[i].profi
           console.log()
         }
         commit('SETCHATLIST',res.data)
       })
     },
-
     resetPatient({commit}){
       commit('RESETPATIENT')
     },
-
     getDiseaseName:function({commit}){
       Axios.get('/api/getDiseaseName')
       .then((res)=>{
@@ -248,15 +226,19 @@ export default new Vuex.Store({
       })
     },
     getPatientFromChat:async function({dispatch,commit},item){
-      await commit('FETCHNEWPATIENT',item)
+      await commit('FETCHPATIENT',item)
       await dispatch('turnPatientPage',item)
     },
     setOverlay:function({commit},val){
       commit('SETOVERLAY',val)
+    },
+    resetChat:function({state}){
+      state.chatHistory=[]
+      state.lastChat=0
     }
   },
   getters: {
-    getChatHistory:function(state){
+    /*getChatHistory:function(state){
       return state.charHistory
     },
     /*getHost:function(state){

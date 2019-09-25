@@ -105,11 +105,11 @@ export default {
   },
 
   methods: {
-    ...mapActions(
+    ...mapActions([
       'getPatientFromChat',
       'logout',
       'setDark'
-    ),
+    ]),
     chat:function(item){
       console.log(item)
       this.getPatientFromChat(item)

@@ -6,13 +6,11 @@
         <v-list>
           <v-list-item>
             <v-list-item-content>
-              <v-btn @click="change">
-                {{title}}
-              </v-btn>
+              <v-btn @click="change">{{title}}</v-btn>
 
               <template v-if="graphicMode">
-                <ve-line
-                  :data="chartData"
+                <ve-line :data="chartData"
+                  :colors="color"
                 ></ve-line>
               </template>
 
@@ -24,7 +22,6 @@
                   class="elevation-1"
                 ></v-data-table>
               </template>
-
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -33,50 +30,54 @@
   </v-expansion-panels>
 </template>
 <script>
-import {mapState} from 'vuex'
+import { mapState } from "vuex";
+
 export default {
-  data (){
+  data() {
     return {
+      color:['#66DD00','#FF0000'],
       chartData: {
-        columns: ['date','spend_time','standard'],
-        rows: [],
+        columns: ["date", "spend_time", "standard"],
+        rows: []
         //(this.list.date+'-'+this.list.time),this.list.spend_time
       },
-      graphicMode:false,
-      headers:[
+      graphicMode: false,
+      headers: [
         {
-          text:'Rehabilitation date',
-          align: 'left',
-          value: 'date'
+          text: "Rehabilitation date",
+          align: "left",
+          value: "date"
         },
-        {text: 'Type',value: 'type'},
-        {text:'Rehabilitation time',sortable: false,value: 'time'},
-        {text: 'Spend time',sortable: false,value: 'spend_time'}
+        { text: "Type", value: "type" },
+        { text: "Rehabilitation time", sortable: false, value: "time" },
+        { text: "Spend time", sortable: false, value: "spend_time" }
       ]
-    }
+    };
   },
   computed: {
     ...mapState({
-      list:'recordList'
+      list: "recordList"
     }),
     /*list() {
       return this.$store.getters.getRecordList; //建立orderlist
     },*/
-    title(){
-      return this.graphicMode ? 'Data table' : 'Graphic table'
-    },
+    title() {
+      return this.graphicMode ? "Data table" : "Graphic table";
+    }
   },
-  methods:{
-    change:function(){
-      this.chartData.rows=[]
-      let standard=8
-      for (let i=0;i<this.list.length;i++){
-        
-        this.chartData.rows.push({date:(this.list[i].date+'-'+this.list[i].time), spend_time:this.list[i].spend_time,standard:8*(this.list.length-i)})
+  methods: {
+    change: function() {
+      this.chartData.rows = [];
+      for (let i = 0; i < this.list.length; i++) {
+        this.chartData.rows.push({
+          date: this.list[i].date + "-" + this.list[i].time,
+          spend_time: this.list[i].spend_time,
+          standard: 120
+        });
       }
       //this.chartData.rows=
-      console.log(this.chartData.rows)
-      this.graphicMode=!this.graphicMode
+      console.log(this.chartData.rows);
+      this.graphicMode = !this.graphicMode;
     }
   }
 };

@@ -187,8 +187,9 @@ router.get('/api/chatCommit',(req,res)=>{
 
 router.get('/api/getChatList',(req,res)=>{
     var sql=$sql.projectSql.getChatList;
-    console.log(req.session.user[0].dr_ID)
-    conn.query(sql,[req.session.user[0].dr_ID],function(error,result){
+    var id=req.query.dr_ID
+    console.log(id)
+    conn.query(sql,[id],function(error,result){
         if (error){
             console.log(error)
         }

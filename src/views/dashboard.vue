@@ -37,11 +37,13 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
   export default {
       computed:{
-          getAllPatient (){
-              return this.$store.getters.getAllPatient
-          }
+        ...mapState({
+          getAllPatient:'patientList'
+        })
+
       },
       methods: {
           turnPatientPage: function(patient){
