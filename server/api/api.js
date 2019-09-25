@@ -100,7 +100,7 @@ router.get('/api/oldpatient',(req,res)=>{
 router.get('/api/order',(req,res)=>{
     var sql=$sql.projectSql.order;
     var order=req.query;//session problem
-    conn.query(sql,[order.code,'aaaa',order.date,order.content,order.patientDisease,order.remark,order.time],function(error,result){
+    conn.query(sql,[order.code,'aaaa',order.date,order.content,order.medicalOrder,order.remark,order.time],function(error,result){
         if(error){
             console.log(error)
             jsonWrite(res,error)

@@ -30,6 +30,7 @@
   </div>
 </template>
 <script>
+import {mapState} from 'vuex'
 export default {
   //should use real-time database
   methods: {
@@ -45,14 +46,19 @@ export default {
     };
   },
   created() {
-    console.log(this.$store.getters.getPatientID);
-    this.$store.dispatch("getChat", {code:this.$store.getters.getPatientID,lastChat:0});
+    console.log(this.patient.id);
+    this.$store.dispatch("getChat", {code:this.patient.id,lastChat:0});
   },
   computed: {
+    ...mapState([
+      //'chatHistory',
+      'patient',
+      'lastChat'
+    ]),
     chatHistory() {
       return this.$store.getters.getChatHistory;
     },
-    patient () {
+    /*patient () {
         return this.$store.getters.getPatient
     },
     drPic () {
@@ -60,7 +66,7 @@ export default {
     },
     lastChat () {
       return this.$store.getters.getLastChat
-    }
+    }*/
   },
   watch:{
       lastChat:{

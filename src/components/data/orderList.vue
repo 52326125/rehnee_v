@@ -22,6 +22,7 @@
   </v-expansion-panels>
 </template>
 <script>
+import {mapState} from 'vuex'
 export default {
   data (){
     return {
@@ -38,9 +39,9 @@ export default {
     }
   },
   computed: {
-    list() {
-      return this.$store.getters.getOrderList; //建立orderlist
-    }
+    ...mapState({
+      list:'orderList'
+    })
   }
 };
 </script>

@@ -40,6 +40,7 @@ export default new Vuex.Store({
     chatList:[],
     diseaseName:[],
     isLogin:false,
+    overlay:false
   },
   mutations: {
     LOGIN:function(state,user){
@@ -90,6 +91,9 @@ export default new Vuex.Store({
     },
     SETDISEASENAME:function(state,diseaseName){
       state.diseaseName=diseaseName
+    },
+    SETOVERLAY:function(state,overlay){
+      state.overlay=overlay
     }
   },
   actions: {
@@ -113,17 +117,22 @@ export default new Vuex.Store({
       })
     },
 
-    setOrderPage:function({commit},params){
-      if(params.ID){
-        Axios.get('/api/oldPatient',{params:{ID:params.ID}})//now
+    setOrderPage:function({commit},patient){
+      if(patient.id){
+        Axios.get('/api/oldPatient',{params:{ID:patient.id}})//now
         .then((res)=>{
-          commit('FETCHOLDPATIENT',res.data[0])
+          if(res.data.length){
+            res.data[0].medicalOrder=res.data[0].medicalOrder.split(',')
+            commit('FETCHOLDPATIENT',res.data[0])
+            console.log(res.data[0])
+          }else{
+            commit('FETCHOLDPATIENT',patient)
+          }
         })
         .catch((error)=>{
           
         })
       }
-      commit('SETORDERPAGE',params.page)
     },
 
     newPatient:function({commit},patient){
@@ -137,12 +146,11 @@ export default new Vuex.Store({
       })
     },
 
-    order:function({commit},patient){
-      patient.patientDisease=patient.patientDisease.join(',')
-      console.log(patient.patientDisease)
+    order:function({dispatch},patient){
+      patient.medicalOrder=patient.medicalOrder.join(',')
       Axios.get('/api/order',{params:patient})
       .then((res)=>{
-        
+        dispatch('setOverlay',false)
       })
       .catch((error)=>{
 
@@ -213,14 +221,14 @@ export default new Vuex.Store({
       router.push('/login')
     },
 
-    getChatList:function({commit,getters}){
+    getChatList:function({commit,state}){
       Axios.get('/api/getChatList')//try not send doctor id
       .then((res)=>{
         console.log(res.data)
         var i
         for (i=0;i<res.data.length;i++){
-          res.data[i].profi=getters.getHost+'patient_pic/'+res.data[i].profi
-          console.log(  )
+          res.data[i].profi=state.host+'patient_pic/'+res.data[i].profi
+          console.log()
         }
         commit('SETCHATLIST',res.data)
       })
@@ -242,10 +250,16 @@ export default new Vuex.Store({
     getPatientFromChat:async function({dispatch,commit},item){
       await commit('FETCHNEWPATIENT',item)
       await dispatch('turnPatientPage',item)
+    },
+    setOverlay:function({commit},val){
+      commit('SETOVERLAY',val)
     }
   },
   getters: {
-    getHost:function(state){
+    getChatHistory:function(state){
+      return state.charHistory
+    },
+    /*getHost:function(state){
       return state.host
     },
     getName: function(state){
@@ -293,6 +307,6 @@ export default new Vuex.Store({
     },
     getDiseaseName:function(state){
       return state.diseaseName
-    }
+    }*/
   }
 })

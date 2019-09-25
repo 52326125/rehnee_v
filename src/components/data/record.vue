@@ -33,11 +33,12 @@
   </v-expansion-panels>
 </template>
 <script>
+import {mapState} from 'vuex'
 export default {
   data (){
     return {
       chartData: {
-        columns: ['date','spend_time'],
+        columns: ['date','spend_time','standard'],
         rows: [],
         //(this.list.date+'-'+this.list.time),this.list.spend_time
       },
@@ -55,19 +56,23 @@ export default {
     }
   },
   computed: {
-    list() {
+    ...mapState({
+      list:'recordList'
+    }),
+    /*list() {
       return this.$store.getters.getRecordList; //建立orderlist
-    },
+    },*/
     title(){
       return this.graphicMode ? 'Data table' : 'Graphic table'
     },
   },
   methods:{
     change:function(){
-      var i
       this.chartData.rows=[]
-      for (i=0;i<this.list.length;i++){
-        this.chartData.rows.push({date:(this.list[i].date+'-'+this.list[i].time), spend_time:this.list[i].spend_time})
+      let standard=8
+      for (let i=0;i<this.list.length;i++){
+        
+        this.chartData.rows.push({date:(this.list[i].date+'-'+this.list[i].time), spend_time:this.list[i].spend_time,standard:8*(this.list.length-i)})
       }
       //this.chartData.rows=
       console.log(this.chartData.rows)

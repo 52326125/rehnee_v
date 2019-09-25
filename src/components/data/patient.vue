@@ -16,11 +16,12 @@
   </v-card>
 </template>
 <script>
+import {mapState} from 'vuex'
 export default {
     computed: {
-        patient (){
-            return this.$store.getters.getPatient
-        }
+        ...mapState([
+          'patient'
+        ])
     }
 }
 </script>
