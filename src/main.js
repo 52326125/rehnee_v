@@ -22,7 +22,7 @@ Axios.defaults.baseURL='https://rehnee-backend.azurewebsites.net/'
   next();
 });*/
 router.beforeEach((to, from, next) => {
-  const temp=cookies.isKey('isLogin');
+  const temp=store.state.isLogin
   console.log(temp)
   if(temp){
     next();
