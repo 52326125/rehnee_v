@@ -11,7 +11,7 @@
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
-      <v-btn text v-if="isLogin" @click.stop="drawer = !drawer">
+      <v-btn text v-if="isLogin" @click.stop="open">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
     </v-app-bar>
@@ -68,8 +68,8 @@ export default {
     this.dark = this.isDark;
   },
   mounted:function(){
-    this.$store.dispatch("getChatList");
-    this.$forceUpdate();
+    //this.$store.dispatch("getChatList");
+    //this.$forceUpdate();
   },
   watch: {
     dark: {
@@ -108,8 +108,14 @@ export default {
     ...mapActions([
       'getPatientFromChat',
       'logout',
-      'setDark'
+      'setDark',
+      'getChatList'
     ]),
+    open:async function(){
+      await this.getChatList()
+      this.drawer = !this.drawer
+      
+    },
     chat:function(item){
       console.log(item)
       this.getPatientFromChat(item)

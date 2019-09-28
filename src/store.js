@@ -160,6 +160,7 @@ export default new Vuex.Store({
         console.log('1')
       })
       router.push('/data')
+      router.go(0)
       console.log('2')
     },
 
