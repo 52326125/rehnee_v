@@ -35,15 +35,23 @@ router.beforeEach((to, from, next) => {
       next();
     }
   }
-  if(from.path=='/order'){
-    store.state.orderIndex=0
-  }
   if(cookies.get('isLogin')=='doctor'){
     next()
   }else if(cookies.get('isLogin')=='case'){
     if(to.path!=='/dashboard' && to.path!=='/data'){
       next('/dashboard')
     }
+  }
+
+  if(to.path=='/order'){
+    store.dispatch('setTitle','medical order system')
+    next();
+  }else if(to.path=='/dashboard' || to.path=='/data'){
+    store.dispatch('setTitle','Rehnee system')
+    next();
+  }else{
+    store.dispatch('setTitle','home')
+    next();
   }
 })
 

@@ -23,7 +23,6 @@
     "vue": "^2.6.10",
     "vue-beautiful-chat": "^2.3.1",
     "vue-cookies": "^1.5.13",
-    "vue-navigation": "^1.1.4",
     "vue-quick-chat": "^0.3.1",
     "vue-router": "^3.0.3",
     "vuetify": "^2.0.0",

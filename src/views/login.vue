@@ -44,7 +44,7 @@ export default {
     set: function() {
       this.$store.dispatch('login',this.user)
     },
-    login: function() {
+    /*login: function() {
       axios.get("/api/login", {params:this.user})
         .then((res)=> {
           if (res.data.length){
@@ -59,7 +59,7 @@ export default {
         .catch((error) =>{
           console.log(error)
         })
-    },
+    },*/
   }
 };
 </script>

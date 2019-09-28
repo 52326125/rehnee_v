@@ -4,8 +4,8 @@
     <v-app-bar app :dark="isDark">
       <v-toolbar-title class="headline text-uppercase">
 
-        <v-card max-width="344" class="mx-auto" hover @click="backHome">
-          <v-card-title>Rehnee_v2</v-card-title>
+        <v-card class="mx-auto" hover @click="backHome">
+          <v-card-title>Rehnee_v2-{{title}}</v-card-title>
         </v-card>
 
       </v-toolbar-title>
@@ -84,7 +84,8 @@ export default {
       user:state=> state.user,
       isDark:state=>state.isDark,
       chatList:state=>state.chatList,
-      isLogin:state=>state.isLogin
+      isLogin:state=>state.isLogin,
+      title:state=>state.title
   }),
 
     /*isLogin() {

@@ -23,6 +23,7 @@ export default new Vuex.Store({
   })],
   state: {
     host: 'https://rehnee-backend.azurewebsites.net/',
+    title:'home',
     user: {
       dr_ID: '',
       name: '',
@@ -100,6 +101,8 @@ export default new Vuex.Store({
             cookies.set('isLogin','doctor')
             router.push('/home')
           }
+        }else{
+          alert('Login error,worng account or password!')
         }
       })
       .catch(function(error){
@@ -160,7 +163,6 @@ export default new Vuex.Store({
         console.log('1')
       })
       router.push('/data')
-      router.go(0)
       console.log('2')
     },
 
@@ -239,6 +241,9 @@ export default new Vuex.Store({
     resetChat:function({state}){
       state.chatHistory=[]
       state.lastChat=0
+    },
+    setTitle:function({state},title){
+      state.title=title
     }
   },
   getters: {
