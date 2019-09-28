@@ -50,7 +50,7 @@ export default {
   },
   created() {
     console.log(this.patient.id);
-    this.$store.dispatch("getChat", {code:this.patient.id,lastChat:0});
+    //this.$store.dispatch("getChat", {code:this.patient.id,lastChat:0});
   },
   computed: {
     ...mapState([

@@ -150,21 +150,22 @@ export default new Vuex.Store({
       })
     },
 
-    turnPatientPage: async function({commit},patient){
+    turnPatientPage: async function({commit,dispatch,state},patient){
       await Axios.get('/api/getPatient',{params:patient})
       .then((res)=>{
         commit('SETORDERLIST',res.data[0])
         commit('SETRECORDLIST',res.data[1])
         commit('FETCHPATIENT',patient)
+        dispatch('getChat',{code:state.patient.id,lastChat:0})
         console.log('1')
       })
       router.push('/data')
       console.log('2')
     },
 
-    getChat:function({commit,state},code){
+    getChat:function({commit,state},params){
       var timer=window.setInterval(()=>{
-        if(code.lastChat<=state.lastChat) code.lastChat=state.lastChat
+        if(params.lastChat<=state.lastChat) params.lastChat=state.lastChat
         console.log(router)
         router.beforeEach((to,from,next)=>{
           if(to.path!=='/data'){
@@ -174,7 +175,7 @@ export default new Vuex.Store({
             next()
           }
         })
-        Axios.get('/api/getChat',{params:code})
+        Axios.get('/api/getChat',{params:params})
         .then((res)=>{
           console.log(res.data)
           if(res.data.length){
@@ -226,8 +227,10 @@ export default new Vuex.Store({
       })
     },
     getPatientFromChat:async function({dispatch,commit},item){
+      dispatch('resetChat')
       await commit('FETCHPATIENT',item)
       await dispatch('turnPatientPage',item)
+      
     },
     setOverlay:function({commit},val){
       commit('SETOVERLAY',val)
