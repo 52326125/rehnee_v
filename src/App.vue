@@ -57,38 +57,38 @@
 </template>
 
 <script>
-import {mapState,mapActions} from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
-  name: "App",
+  name: 'App',
   data: () => ({
     drawer: null,
-    dark: true,
+    dark: true
   }),
-  created: function() {
-    this.dark = this.isDark;
+  created: function () {
+    this.dark = this.isDark
   },
-  mounted:function(){
-    //this.$store.dispatch("getChatList");
-    //this.$forceUpdate();
+  mounted: function () {
+    // this.$store.dispatch("getChatList");
+    // this.$forceUpdate();
   },
   watch: {
     dark: {
-      handler(newVal, oldVal) {
-        this.$store.dispatch("setDark", newVal);
+      handler (newVal, oldVal) {
+        this.$store.dispatch('setDark', newVal)
       }
     }
   },
   computed: {
     ...mapState({
-      //dr_name: state => state.user.name
-      user:state=> state.user,
-      isDark:state=>state.isDark,
-      chatList:state=>state.chatList,
-      isLogin:state=>state.isLogin,
-      title:state=>state.title
-  }),
+      // dr_name: state => state.user.name
+      user: state => state.user,
+      isDark: state => state.isDark,
+      chatList: state => state.chatList,
+      isLogin: state => state.isLogin,
+      title: state => state.title
+    })
 
-    /*isLogin() {
+    /* isLogin() {
       return this.$store.getters.getCookie
     },
     dr_name() {
@@ -102,7 +102,7 @@ export default {
     },
     chatList() {
       return this.$store.getters.getChatList;
-    }*/
+    } */
   },
 
   methods: {
@@ -112,21 +112,20 @@ export default {
       'setDark',
       'getChatList'
     ]),
-    open:async function(){
+    open: async function () {
       await this.getChatList()
       this.drawer = !this.drawer
-      
     },
-    chat:function(item){
+    chat: function (item) {
       console.log(item)
       this.getPatientFromChat(item)
     },
-    backHome: function() {
-      this.$router.push("/");
+    backHome: function () {
+      this.$router.push('/')
     },
-    logout: function() {
-      this.$store.dispatch("logout");
-    },
+    logout: function () {
+      this.$store.dispatch('logout')
+    }
   }
-};
+}
 </script>

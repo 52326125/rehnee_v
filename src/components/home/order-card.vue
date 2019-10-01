@@ -17,10 +17,10 @@
 </template>
 <script>
 export default {
-    methods: {
-        goOtherPage(path){
-            this.$router.push(path);
-        }
+  methods: {
+    goOtherPage (path) {
+      this.$router.push(path)
     }
+  }
 }
 </script>

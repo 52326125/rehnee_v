@@ -30,35 +30,35 @@
   </div>
 </template>
 <script>
-import {mapState,mapActions} from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
-  //should use real-time database
+  // should use real-time database
   methods: {
     ...mapActions([
       'resetChat'
     ]),
-    chatCommit: function() {
+    chatCommit: function () {
       console.log(this.message)
-      this.$store.dispatch('chatCommit',{id:this.patient.id,content:this.message})
-      this.message=''
+      this.$store.dispatch('chatCommit', { id: this.patient.id, content: this.message })
+      this.message = ''
     }
   },
-  data() {
+  data () {
     return {
-      message:''
-    };
+      message: ''
+    }
   },
-  created() {
-    console.log(this.patient.id);
-    //this.$store.dispatch("getChat", {code:this.patient.id,lastChat:0});
+  created () {
+    console.log(this.patient.id)
+    // this.$store.dispatch("getChat", {code:this.patient.id,lastChat:0});
   },
   computed: {
     ...mapState([
       'chatHistory',
       'patient',
       'lastChat'
-    ]),
-    /*chatHistory() {
+    ])
+    /* chatHistory() {
       return this.$store.getters.getChatHistory;
     },
     /*patient () {
@@ -69,23 +69,22 @@ export default {
     },
     lastChat () {
       return this.$store.getters.getLastChat
-    }*/
+    } */
   },
-  destroyed:function(){
+  destroyed: function () {
     this.resetChat()
   },
-  watch:{
-      lastChat:{
-        handler(newVal,oldVal){
-          this.$nextTick(() => {
-            var container = this.$el.querySelector('#chat')
-            container.scrollTop = container.scrollHeight
-          })
-
-        }
+  watch: {
+    lastChat: {
+      handler (newVal, oldVal) {
+        this.$nextTick(() => {
+          var container = this.$el.querySelector('#chat')
+          container.scrollTop = container.scrollHeight
+        })
       }
     }
-};
+  }
+}
 </script>
 <style scoped>
 .rightR{
@@ -246,6 +245,6 @@ export default {
   margin: 0 0 0 0;
   width: 10%;
   height: 100%;
-  
+
 }
 </style>

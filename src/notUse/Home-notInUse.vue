@@ -23,23 +23,23 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      events:[]
-    };
+      events: []
+    }
   },
-  computed:{
+  computed: {
     getDate () {
-      return '2019-09-12'//偷懶 記得改回取正確時間//目前無用
+      return '2019-09-12'// 偷懶 記得改回取正確時間//目前無用
     }
   },
   methods: {
-    goOtherPage:function(path){
+    goOtherPage: function (path) {
       this.$router.push(path)
-      if(path=='/dashboard'){
+      if (path == '/dashboard') {
         this.$store.dispatch('getAllPatient')
       }
     }
   }
-};
+}
 </script>

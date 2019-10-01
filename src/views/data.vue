@@ -19,10 +19,10 @@
   </v-container>
 </template>
 <script>
-import chat from "../components/data/chat";
-import orderList from "../components/data/orderList";
-import patient from "../components/data/patient";
-import record from "../components/data/record";
+import chat from '../components/data/chat'
+import orderList from '../components/data/orderList'
+import patient from '../components/data/patient'
+import record from '../components/data/record'
 
 export default {
   components: {
@@ -31,9 +31,9 @@ export default {
     patient,
     record
   },
-  data() {
-    return{
+  data () {
+    return {
     }
   }
-};
+}
 </script>

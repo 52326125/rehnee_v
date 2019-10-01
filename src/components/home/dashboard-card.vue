@@ -17,11 +17,11 @@
 </template>
 <script>
 export default {
-    methods: {
-        goOtherPage(path){
-            this.$store.dispatch('getAllPatient')
-            this.$router.push(path);
-        }
+  methods: {
+    goOtherPage (path) {
+      this.$store.dispatch('getAllPatient')
+      this.$router.push(path)
     }
+  }
 }
 </script>

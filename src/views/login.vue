@@ -29,22 +29,22 @@
 </template>
 <script>
 export default {
-  name: "login",
-  data() {
+  name: 'login',
+  data () {
     return {
       user: {
-        account: "",
-        password: ""
+        account: '',
+        password: ''
       },
       showPassword: false,
-      valid: true,
+      valid: true
     }
   },
   methods: {
-    set: function() {
-      this.$store.dispatch('login',this.user)
-    },
-    /*login: function() {
+    set: function () {
+      this.$store.dispatch('login', this.user)
+    }
+    /* login: function() {
       axios.get("/api/login", {params:this.user})
         .then((res)=> {
           if (res.data.length){
@@ -59,7 +59,7 @@ export default {
         .catch((error) =>{
           console.log(error)
         })
-    },*/
+    }, */
   }
-};
+}
 </script>

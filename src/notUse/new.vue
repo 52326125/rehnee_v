@@ -3,7 +3,7 @@
     class="mx-auto"
     min-width="400"
   >
-    
+
     <v-card-title>
         <v-btn color="warning" @click="back">
         <v-icon>mdi-keyboard-backspace</v-icon>
@@ -50,28 +50,28 @@
   </v-card>
 </template>
 <script>
-  export default {
-    data: () => ({
-      valid: true,
-      patient:{
-          name:'',
-          ID:'',
-          birth: new Date().toISOString().substr(0, 10),
-          code: '',
-          date: ''
-      }
-    }),
+export default {
+  data: () => ({
+    valid: true,
+    patient: {
+      name: '',
+      ID: '',
+      birth: new Date().toISOString().substr(0, 10),
+      code: '',
+      date: ''
+    }
+  }),
 
-    methods: {
-        back:function(){
-            this.$store.dispatch('setOrderPage',{page:0})
-        },
-      validate () {
-        this.patient.code=btoa(this.patient.ID)
-        this.$store.dispatch('newPatient',this.patient)
-        console.log(this.patient)
-        this.$store.dispatch('setOrderPage',{page:2})
-      },
+  methods: {
+    back: function () {
+      this.$store.dispatch('setOrderPage', { page: 0 })
+    },
+    validate () {
+      this.patient.code = btoa(this.patient.ID)
+      this.$store.dispatch('newPatient', this.patient)
+      console.log(this.patient)
+      this.$store.dispatch('setOrderPage', { page: 2 })
     }
   }
+}
 </script>

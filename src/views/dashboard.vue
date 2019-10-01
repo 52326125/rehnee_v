@@ -33,39 +33,39 @@
     </template>
     </v-data-table>
   </v-card>
-  
+
 </template>
 
 <script>
-import {mapState} from 'vuex'
-  export default {
-      computed:{
-        ...mapState({
-          getAllPatient:'patientList'
-        })
+import { mapState } from 'vuex'
+export default {
+  computed: {
+    ...mapState({
+      getAllPatient: 'patientList'
+    })
 
-      },
-      methods: {
-          turnPatientPage: function(patient){
-              this.$store.dispatch('turnPatientPage',patient)
-          }
-      },
-    data () {
-      return {
-        search: '',
-        headers: [
-          {
-            text: 'Profile picture',
-            align: 'left',
-            sortable: false,
-            value: 'profi',
-          },
-          { text: 'Name', value: 'name' },
-          { text: 'Birth', value: 'date' },
-          { text: 'last Order', value: 'date' },
-          { text: 'Actions', value: 'action', sortable: false },
-        ],
-      }
-    },
+  },
+  methods: {
+    turnPatientPage: function (patient) {
+      this.$store.dispatch('turnPatientPage', patient)
+    }
+  },
+  data () {
+    return {
+      search: '',
+      headers: [
+        {
+          text: 'Profile picture',
+          align: 'left',
+          sortable: false,
+          value: 'profi'
+        },
+        { text: 'Name', value: 'name' },
+        { text: 'Birth', value: 'date' },
+        { text: 'last Order', value: 'date' },
+        { text: 'Actions', value: 'action', sortable: false }
+      ]
+    }
   }
+}
 </script>

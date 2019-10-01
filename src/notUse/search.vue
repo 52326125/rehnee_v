@@ -25,19 +25,19 @@
 </template>
 <script>
 export default {
-    data () {
-        return {
-            ID:''
-        }//aa
+  data () {
+    return {
+      ID: ''
+    }// aa
+  },
+  methods: {
+    pageSearch: function () {
+      console.log(this.ID)
+      this.$store.dispatch('setOrderPage', { page: 2, ID: this.ID })
     },
-    methods: {
-        pageSearch:function(){
-            console.log(this.ID)
-            this.$store.dispatch('setOrderPage',{page:2,ID:this.ID})
-        },
-        pageNew:function(){
-            this.$store.dispatch('setOrderPage',{page:1})
-        }
+    pageNew: function () {
+      this.$store.dispatch('setOrderPage', { page: 1 })
     }
+  }
 }
 </script>

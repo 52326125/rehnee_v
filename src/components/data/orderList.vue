@@ -22,26 +22,26 @@
   </v-expansion-panels>
 </template>
 <script>
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 export default {
-  data (){
+  data () {
     return {
-      headers:[
+      headers: [
         {
-          text:'order date',
+          text: 'order date',
           align: 'left',
           value: 'date'
         },
-        {text:'symptom',sortable: false,value: 'm_order'},
-        {text: 'medical-order',sortable: false,value: 'content'},
-        {text: 'remark',sortable: false,value: 'remark'}
+        { text: 'symptom', sortable: false, value: 'm_order' },
+        { text: 'medical-order', sortable: false, value: 'content' },
+        { text: 'remark', sortable: false, value: 'remark' }
       ]
     }
   },
   computed: {
     ...mapState({
-      list:'orderList'
+      list: 'orderList'
     })
   }
-};
+}
 </script>

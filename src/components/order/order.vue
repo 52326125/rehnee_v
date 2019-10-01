@@ -5,7 +5,7 @@
       <v-btn color="warning" @click="back">
         <v-icon>mdi-keyboard-backspace</v-icon>
       </v-btn>Medical-order system
-     
+
     </v-card-title>
 
     <v-card-text>
@@ -94,7 +94,7 @@
             <v-text-field label="Angle" v-model="order[1]"></v-text-field>
           </v-col>
           <v-col cols="3">
-            <v-text-field label="Times" 
+            <v-text-field label="Times"
               v-model="order[2]"
               @keyup.native.enter="addOrder"
             ></v-text-field>
@@ -116,32 +116,32 @@
   </v-card>
 </template>
 <script>
-import {mapState,mapActions} from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   data: () => ({
     valid: true,
     orders: [],
-    order:[],
-    rule: [v=> !!v || 'Cannot be null'],
+    order: [],
+    rule: [v => !!v || 'Cannot be null']
   }),
-  created() {
+  created () {
     this.getDiseaseName()
   },
   computed: {
     ...mapState([
       'patient',
-      'diseaseName',
+      'diseaseName'
     ]),
-    overlay:{
-      get:function(){
+    overlay: {
+      get: function () {
         return this.$store.state.overlay
       },
-      set:function(newVal){
+      set: function (newVal) {
         this.setOverlay(newVal)
       }
     }
   },
-  destroyed: function() {
+  destroyed: function () {
     this.resetPatient()
   },
   methods: {
@@ -150,34 +150,34 @@ export default {
       'resetPatient',
       'getDiseaseName'
     ]),
-    addOrder(){
-      let temp=this.order.join(',')
+    addOrder () {
+      let temp = this.order.join(',')
       this.orders.push(temp)
-      this.order=[]
+      this.order = []
     },
-    validate() {
+    validate () {
       if (this.$refs.form.validate()) {
-        //this.patient.code=btoa(this.patient.ID)
-        var temp = new Date();
+        // this.patient.code=btoa(this.patient.ID)
+        var temp = new Date()
         this.patient.date =
           temp.getFullYear() +
-          "-" +
+          '-' +
           (temp.getMonth() + 1) +
-          "-" +
-          temp.getDate();
-        this.patient.content=this.orders.join('-')
-        console.log(this.patient);
-        this.$store.dispatch("order", this.patient); //error是因為db中沒有P_code
+          '-' +
+          temp.getDate()
+        this.patient.content = this.orders.join('-')
+        console.log(this.patient)
+        this.$store.dispatch('order', this.patient) // error是因為db中沒有P_code
         back()
       }
     },
-    back() {
-      this.overlay=!this.overlay
+    back () {
+      this.overlay = !this.overlay
     },
     remove (item) {
       const index = this.patient.medicalOrder.indexOf(item.name)
       if (index >= 0) this.patient.medicalOrder.splice(index, 1)
-    },
+    }
   }
-};
+}
 </script>

@@ -17,9 +17,9 @@ import order from '../components/home/order-card'
 import dashboard from '../components/home/dashboard-card'
 
 export default {
-    components:{
-        order,
-        dashboard,
-    },
+  components: {
+    order,
+    dashboard
+  }
 }
 </script>

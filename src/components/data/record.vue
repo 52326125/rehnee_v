@@ -30,55 +30,55 @@
   </v-expansion-panels>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex'
 
 export default {
-  data() {
+  data () {
     return {
-      color:['#66DD00','#FF0000'],
+      color: ['#66DD00', '#FF0000'],
       chartData: {
-        columns: ["date", "spend_time", "standard"],
+        columns: ['date', 'spend_time', 'standard'],
         rows: []
-        //(this.list.date+'-'+this.list.time),this.list.spend_time
+        // (this.list.date+'-'+this.list.time),this.list.spend_time
       },
       graphicMode: false,
       headers: [
         {
-          text: "Rehabilitation date",
-          align: "left",
-          value: "date"
+          text: 'Rehabilitation date',
+          align: 'left',
+          value: 'date'
         },
-        { text: "Type", value: "type" },
-        { text: "Rehabilitation time", sortable: false, value: "time" },
-        { text: "Spend time", sortable: false, value: "spend_time" }
+        { text: 'Type', value: 'type' },
+        { text: 'Rehabilitation time', sortable: false, value: 'time' },
+        { text: 'Spend time', sortable: false, value: 'spend_time' }
       ]
-    };
+    }
   },
   computed: {
     ...mapState({
-      list: "recordList"
+      list: 'recordList'
     }),
-    /*list() {
+    /* list() {
       return this.$store.getters.getRecordList; //建立orderlist
-    },*/
-    title() {
-      return this.graphicMode ? "Data table" : "Graphic table";
+    }, */
+    title () {
+      return this.graphicMode ? 'Data table' : 'Graphic table'
     }
   },
   methods: {
-    change: function() {
-      this.chartData.rows = [];
+    change: function () {
+      this.chartData.rows = []
       for (let i = 0; i < this.list.length; i++) {
         this.chartData.rows.push({
-          date: this.list[i].date + "-" + this.list[i].time,
+          date: this.list[i].date + '-' + this.list[i].time,
           spend_time: this.list[i].spend_time,
           standard: 120
-        });
+        })
       }
-      //this.chartData.rows=
-      console.log(this.chartData.rows);
-      this.graphicMode = !this.graphicMode;
+      // this.chartData.rows=
+      console.log(this.chartData.rows)
+      this.graphicMode = !this.graphicMode
     }
   }
-};
+}
 </script>
