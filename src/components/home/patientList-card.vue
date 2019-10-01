@@ -96,6 +96,7 @@ export default {
     openOrder: function (patient) {
       this.setOrderPage(patient)
       this.overlay = !this.overlay
+      this.patients.shift()
     }
   }
 }
