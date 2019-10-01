@@ -6,7 +6,7 @@ module.exports={
             open:true,
             proxy:{
                 '/api':{
-                    target:'https://rehnee-backend.azurewebsites.net',
+                    target:'localhost:3000',
                     changeOrigin:true,
                     ws:true,
                     pathRewrite:{
