@@ -22,7 +22,7 @@ export default new Vuex.Store({
     }
   })],
   state: {
-    host: 'https://rehnee-backend.azurewebsites.net/',
+    host: 'http://49.158.32.227:3000/',
     title: 'home',
     user: {
       dr_ID: '',

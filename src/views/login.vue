@@ -1,12 +1,9 @@
 <template>
   <v-row align="center">
-    <v-col cols="4">
-      <v-img src="../assets/Rehnee.png" max-width="500"></v-img>
-    </v-col>
-    <v-col cols="8" justify-end>
-      <v-card height="500" max-width="50%" class="mx-auto" align="center">
+      <v-card height="500" width="500" max-height="50%" max-width="50%" class="mx-auto" align="center">
         <v-card-title class="title">Rehnee-login</v-card-title>
         <v-card-text>
+
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-text-field autofocus v-model="user.account" type="text" label="Account" required></v-text-field>
 
@@ -22,9 +19,9 @@
 
             <v-btn color="#42A5F5" class="mr-4" @click="set">login</v-btn>
           </v-form>
+          
         </v-card-text>
       </v-card>
-    </v-col>
   </v-row>
 </template>
 <script>

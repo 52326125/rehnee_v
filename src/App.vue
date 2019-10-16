@@ -17,7 +17,7 @@
     </v-app-bar>
     <v-content>
       <v-sheet height="100%" class="overflow-hidden" :dark="isDark">
-        <v-container class="fill-height" fluid>
+        <v-container class="fill-height background" fluid>
           <v-row align="center" justify="center">
             <router-view />
           </v-row>
@@ -129,3 +129,10 @@ export default {
   }
 }
 </script>
+<style>
+  .background{
+    background-image:url("../public/background.png");
+    background-size:contain;
+    background-position:center;
+  }
+</style>

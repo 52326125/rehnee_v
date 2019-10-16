@@ -1,33 +1,55 @@
 <template>
-  <v-expansion-panels focusable>
-    <v-expansion-panel>
-      <v-expansion-panel-header>Rehabilitation list</v-expansion-panel-header>
-      <v-expansion-panel-content>
-        <v-list>
-          <v-list-item>
-            <v-list-item-content>
-              <v-btn @click="change">{{title}}</v-btn>
+  <v-card
+    class="mx-auto"
+    outlined
+  >
+    <v-list-item three-line>
+    <v-list-item-title class="headline mb-1">Rehabilitation list</v-list-item-title>
+      <v-list-item-content>
+        <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
+      </v-list-item-content>
 
-              <template v-if="graphicMode">
-                <ve-line :data="chartData"
-                  :colors="color"
-                ></ve-line>
-              </template>
+      <v-list-item-avatar
+        tile
+        size="80"
+        color="grey"
+      ></v-list-item-avatar>
+    </v-list-item>
 
-              <template v-else>
-                <v-data-table
-                  :headers="headers"
-                  :items="list"
-                  :items-per-page="5"
-                  class="elevation-1"
-                ></v-data-table>
-              </template>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-expansion-panel-content>
-    </v-expansion-panel>
-  </v-expansion-panels>
+    <v-card-actions>
+      <v-btn text>Button</v-btn>
+      <v-btn text>Button</v-btn>
+    </v-card-actions>
+  </v-card>
+</template>
+
+
+<template>
+  <v-list>
+    <v-list-item-title>
+      Rehnee
+    </v-list-item-title>
+    <v-list-item>
+      <v-list-item-content>
+        <v-btn @click="change">{{title}}</v-btn>
+
+        <template v-if="graphicMode">
+          <ve-line :data="chartData"
+            :colors="color"
+          ></ve-line>
+        </template>
+
+        <template v-else>
+          <v-data-table
+            :headers="headers"
+            :items="list"
+            :items-per-page="5"
+            class="elevation-1"
+          ></v-data-table>
+        </template>
+      </v-list-item-content>
+    </v-list-item>
+  </v-list>
 </template>
 <script>
 import { mapState } from 'vuex'
@@ -41,7 +63,7 @@ export default {
         rows: []
         // (this.list.date+'-'+this.list.time),this.list.spend_time
       },
-      graphicMode: false,
+      graphicMode: true,
       headers: [
         {
           text: 'Rehabilitation date',

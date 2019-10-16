@@ -2,11 +2,11 @@ module.exports = {
   configureWebpack: {
     devtool: 'source-map',
     devServer: {
-      port: process.env.port,
+      port: '8081',
       open: true,
       proxy: {
         '/api': {
-          target: 'https://rehnee-backend.azurewebsites.net',
+          target: 'http://49.158.32.227:3000',
           changeOrigin: true,
           ws: true,
           pathRewrite: {

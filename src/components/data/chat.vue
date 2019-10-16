@@ -21,7 +21,7 @@
       </div>
       <div class="inputbox">
         <form onsubmit="return false;">
-          <!--<input type="" id="input">--->
+          <!--<input type="" id="input">-->
           <textarea id="input" v-model="message"></textarea>
           <button type="button" @click="chatCommit">Send</button>
         </form>
