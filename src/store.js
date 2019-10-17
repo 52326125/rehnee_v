@@ -23,7 +23,6 @@ export default new Vuex.Store({
   })],
   state: {
     host: 'http://49.158.32.227:3000/',
-    title: 'home',
     user: {
       dr_ID: '',
       name: '',
@@ -41,7 +40,7 @@ export default new Vuex.Store({
     diseaseName: [],
     isLogin: false,
     overlay: false,
-    LoadSystem: false
+    loadSystem: false
   },
   mutations: {
     LOGIN: function (state, user) {
@@ -244,9 +243,12 @@ export default new Vuex.Store({
     setTitle: function ({ state }, title) {
       state.title = title
     },
-    setLoadSystem: function({state},system){
-      state.LoadSystem=system
-      console.log(state.LoadSystem)
+    setLoadSystem: function({state, dispatch},system){
+      state.loadSystem=system
+      if (system) {
+        dispatch('getAllPatient')
+      }
+      console.log(system)
     }
   },
   getters: {

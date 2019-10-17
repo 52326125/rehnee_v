@@ -5,22 +5,26 @@
       <v-toolbar-title class="headline text-uppercase">
 
         <v-card class="mx-auto" hover @click="backHome">
-          <v-card-title>Rehnee_v2-{{title}}</v-card-title>
+          <v-card-title>Rehnee_v3</v-card-title>
         </v-card>
 
       </v-toolbar-title>
 
       <v-spacer/>
-      <v-select
-        v-if="isLogin"
-        :items="system"
-        item-text="name"
-        item-value="value"
-        label="System select"
-        :click="setLoadSystem(system.value)"
-        outlined
-      ></v-select>
-      <!--error-->
+      <v-row align="center" justify="end">
+        <v-col cols="6">
+          <v-select
+            v-if="isLogin"
+            v-model="select"
+            :items="system"
+            item-text="name"
+            item-value="value"
+            label="System select"
+            :change="setLoadSystem(select)"
+            outlined
+          ></v-select>
+        </v-col>
+      </v-row>
       <v-btn text v-if="isLogin" @click.stop="open">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
@@ -77,13 +81,10 @@ export default {
       {name: 'Medical System', value: false},
       {name: 'Rehnee System', value: true}
     ],
+    select: false
   }),
   created: function () {
     this.dark = this.isDark
-  },
-  mounted: function () {
-    // this.$store.dispatch("getChatList");
-    // this.$forceUpdate();
   },
   watch: {
     dark: {
@@ -99,8 +100,7 @@ export default {
       isDark: state => state.isDark,
       chatList: state => state.chatList,
       isLogin: state => state.isLogin,
-      title: state => state.title,
-      loadSystem: state => state.loadSystem
+      title: state => state.title
     })
 
     /* isLogin() {

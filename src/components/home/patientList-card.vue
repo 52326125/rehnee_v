@@ -27,14 +27,14 @@ export default {
       headers: [
         {
           text: 'Number',
-          align: 'left',
+          align: 'center',
           value: 'index'
         },
-        { text: 'ID', value: 'id' },
+        { text: 'ID', value: 'id', align: 'center'},
         { text: 'Name', value: 'name', align: 'center' },
-        { text: 'Sex', value: 'sex' },
-        { text: 'Remark', value: 'remark', sortable: false },
-        { text: 'Order', value: 'action', sortable: false }
+        { text: 'Sex', value: 'sex', align: 'center' },
+        { text: 'Remark', value: 'remark', sortable: false, align: 'center' },
+        { text: 'Order', value: 'action', sortable: false, align: 'center' }
       ],
       patients: [
         {
