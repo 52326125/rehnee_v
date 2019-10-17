@@ -29,8 +29,7 @@ export default new Vuex.Store({
       name: '',
       pic: ''
     },
-    patient: {
-    },
+    patient: {},
     patientList: [],
     orderIndex: 0,
     orderList: [],
@@ -41,7 +40,8 @@ export default new Vuex.Store({
     chatList: [],
     diseaseName: [],
     isLogin: false,
-    overlay: false
+    overlay: false,
+    LoadSystem: false
   },
   mutations: {
     LOGIN: function (state, user) {
@@ -243,6 +243,10 @@ export default new Vuex.Store({
     },
     setTitle: function ({ state }, title) {
       state.title = title
+    },
+    setLoadSystem: function({state},system){
+      state.LoadSystem=system
+      console.log(state.LoadSystem)
     }
   },
   getters: {

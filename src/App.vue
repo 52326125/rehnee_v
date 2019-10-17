@@ -10,7 +10,17 @@
 
       </v-toolbar-title>
 
-      <v-spacer></v-spacer>
+      <v-spacer/>
+      <v-select
+        v-if="isLogin"
+        :items="system"
+        item-text="name"
+        item-value="value"
+        label="System select"
+        :click="setLoadSystem(system.value)"
+        outlined
+      ></v-select>
+      <!--error-->
       <v-btn text v-if="isLogin" @click.stop="open">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
@@ -62,7 +72,11 @@ export default {
   name: 'App',
   data: () => ({
     drawer: null,
-    dark: true
+    dark: true,
+    system: [
+      {name: 'Medical System', value: false},
+      {name: 'Rehnee System', value: true}
+    ],
   }),
   created: function () {
     this.dark = this.isDark
@@ -74,7 +88,7 @@ export default {
   watch: {
     dark: {
       handler (newVal, oldVal) {
-        this.$store.dispatch('setDark', newVal)
+        this.setDark(newVal)
       }
     }
   },
@@ -85,7 +99,8 @@ export default {
       isDark: state => state.isDark,
       chatList: state => state.chatList,
       isLogin: state => state.isLogin,
-      title: state => state.title
+      title: state => state.title,
+      loadSystem: state => state.loadSystem
     })
 
     /* isLogin() {
@@ -110,7 +125,8 @@ export default {
       'getPatientFromChat',
       'logout',
       'setDark',
-      'getChatList'
+      'getChatList',
+      'setLoadSystem'
     ]),
     open: async function () {
       await this.getChatList()
