@@ -17,7 +17,8 @@ export default new Vuex.Store({
         orderList: val.orderList,
         recordList: val.recordList,
         isDark: val.isDark,
-        isLogin: val.isLogin
+        isLogin: val.isLogin,
+        chatList: val.chatList
       }
     }
   })],
@@ -84,10 +85,16 @@ export default new Vuex.Store({
     },
     SETOVERLAY: function (state, overlay) {
       state.overlay = overlay
+    },
+    SETMEDICALRECORD:function (state, medicalRecord){
+      state.patient.medicalRecord=medicalRecord
+    },
+    SETOVERLAY:function(state){
+      state.overlay=!state.overlay
     }
   },
   actions: {
-    login: function ({ commit, state }, user) {
+    login: function ({ commit, state, dispatch }, user) {
       Axios.get('/api/login', { params: user })
         .then((res) => {
           if (res.data.length) {
@@ -103,28 +110,43 @@ export default new Vuex.Store({
           } else {
             alert('Login error,worng account or password!')
           }
+          dispatch('getChatList')
         })
         .catch(function (error) {
           console.log(error)
         })
     },
 
-    setOrderPage: function ({ commit }, patient) {
-      if (patient.id) {
-        Axios.get('/api/oldPatient', { params: { ID: patient.id } })// now
-          .then((res) => {
-            if (res.data.length) {
-              res.data[0].medicalOrder = res.data[0].medicalOrder.split(',')
-              commit('FETCHPATIENT', res.data[0])
-              console.log(res.data[0])
-            } else {
-              commit('FETCHPATIENT', patient)
-            }
-          })
-          .catch((error) => {
+    setOrderPage: async function ({ commit, dispatch }, patient) {
+      await Axios.get('/api/oldPatient', { params: { ID: patient.id } })// now
+        .then((res) => {
+          if (res.data.length) {
+            res.data[0].medicalOrder = res.data[0].medicalOrder.split(',')
+            commit('FETCHPATIENT', res.data[0])
+            console.log(res.data[0])
+          } else {
+            commit('FETCHPATIENT', patient)
+          }
+        })
+        .catch((error) => {
+        })
+        dispatch('getMedicalRecord')
+    },
 
-          })
-      }
+    getMedicalRecord: function({state, commit}) {
+      Axios.get('/api/getMedicalRecord', 
+      {params: {P_code: state.patient.code, dr_ID: state.user.dr_ID}})
+      .then((res) => {
+        for (let i=0;i<res.data.length;i++){
+          res.data[i].syptom = res.data[i].syptom.split(',')
+          res.data[i].medical_order = res.data[i].medical_order.split('-')
+        }
+        commit('SETMEDICALRECORD',res.data)
+        commit('SETOVERLAY')
+      })
+      .catch((error) => {
+        console.log(error)
+      })
     },
 
     order: function ({ dispatch }, patient) {
@@ -206,6 +228,7 @@ export default new Vuex.Store({
     },
 
     getChatList: function ({ commit, state }) {
+      console.log(state.user)
       Axios.get('/api/getChatList', { params: state.user })// try not send doctor id
         .then((res) => {
           console.log(res.data)

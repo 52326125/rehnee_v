@@ -77,25 +77,16 @@ export default {
   },
   computed: {
     ...mapState([
-      'isDark'
-    ]),
-    overlay: {
-      get: function () {
-        return this.$store.state.overlay
-      },
-      set: function (newVal) {
-        this.setOverlay(newVal)
-      }
-    }
+      'isDark',
+      'overlay'
+    ])
   },
   methods: {
     ...mapActions([
-      'setOrderPage',
-      'setOverlay'
+      'setOrderPage'
     ]),
     openOrder: function (patient) {
       this.setOrderPage(patient)
-      this.overlay = !this.overlay
       this.patients.shift()
     }
   }

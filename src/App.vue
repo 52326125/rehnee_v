@@ -66,14 +66,20 @@
           <v-btn @click="logout" width="100%">logout</v-btn>
         </v-navigation-drawer>
       </v-sheet>
+      <chat/>
     </v-content>
+    <!--<v-footer absolute fixed><chat/></v-footer>-->
   </v-app>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import chat from './components/chat'
 export default {
   name: 'App',
+  components: {
+    chat
+  },
   data: () => ({
     drawer: null,
     dark: true,
@@ -125,11 +131,9 @@ export default {
       'getPatientFromChat',
       'logout',
       'setDark',
-      'getChatList',
       'setLoadSystem'
     ]),
-    open: async function () {
-      await this.getChatList()
+    open: function () {
       this.drawer = !this.drawer
     },
     chat: function (item) {
