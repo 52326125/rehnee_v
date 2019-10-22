@@ -61,7 +61,7 @@ export default {
           value: 'profi'
         },
         { text: 'Name', value: 'name' },
-        { text: 'Birth', value: 'date' },
+        { text: 'Birth', value: 'birth' },
         { text: 'last Order', value: 'date' },
         { text: 'Actions', value: 'action', sortable: false }
       ]

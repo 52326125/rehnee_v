@@ -3,17 +3,19 @@
     <v-btn
       v-if="close"
       fab
+      :dark="isDark"
       color="primary"
       @click="close=!close">
       <v-icon>mdi-message-text-outline</v-icon>
     </v-btn>
     <v-card
+      :dark="isDark"
       width="600"
       height="500"
       max-height="50vh"
       max-width="40vw"
       v-else>
-      <v-banner single-line color="primary">
+      <!--<v-banner single-line color="primary">
         <v-chip color="primary">Chat List</v-chip>
         <template v-slot:actions>
           <v-btn
@@ -24,7 +26,18 @@
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </template>
-      </v-banner>
+      </v-banner>-->
+      <v-app-bar color="primary">
+        <v-toolbar-title>Chat</v-toolbar-title>
+        <v-spacer/>
+        <v-btn
+          text
+          fab
+          small
+          @click="close=!close">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </v-app-bar>
       <v-row class="test">
         <v-col cols="5">
           <!--<v-tabs 
@@ -66,26 +79,27 @@
         <v-row>
           <v-col cols="11">
             <div class="chat">
-              <div v-for="(item1,index1) in chatHistory" :key="index1">
+              <div v-for="(item,index) in chatHistory" :key="index">
                 <v-avatar>
-                  <img :src="patient.profi" alt="avatar" v-if="item1.sender==2"/>
+                  <img :src="profi" alt="avatar" v-if="item.sender==2"/>
                 </v-avatar>
-                <div v-if="item1.sender==2" class="d-inline">
+                <div v-if="item.sender==2" class="d-inline">
                     <v-chip>
-                      {{item1.content}}
+                      {{item.content}}
                     </v-chip>
                 </div>
                 <div class="right" v-else>
                     <v-chip>
-                      {{item1.content}}
+                      {{item.content}}
                     </v-chip>
                 </div>
               </div>
             </div>
             <v-text-field
+              v-model="msg"
               append-icon="mdi-send"
-              
-            ></v-text-field>
+              @keydown.native.enter="commitChat()"
+              @click:append="commitChat()"></v-text-field>
           </v-col>
         </v-row>
       </v-row>
@@ -93,25 +107,53 @@
   </div>
 </template>
 <script>
-import {mapState} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 export default {
     data() {
       return {
-        close:false
+        close:true,
+        profi:null,
+        id:null,
+        msg: null
       }
     },
     computed: {
       ...mapState({
         chatList: state =>state.chatList,
         chatHistory: state => state.chatHistory,
-        patient: state => state.patient
+        patient: state => state.patient,
+        lastChat: state => state.lastChat,
+        isDark: state => state.isDark
       })
     },
     methods: {
+      ...mapActions([
+        'getChat',
+        'chatCommit'
+      ]),
       showChat(item) {
-        
+        this.profi=item.profi
+        this.id=item.id
+        this.msg=null
+        this.getChat({code: item.id,lastChat: 0})
+      },
+      commitChat(){
+        if (this.msg==null || this.msg=='' || this.id==null)return
+        this.chatCommit({id: this.id, content: this.msg})
+        this.msg=''
+      }
+    },
+    watch: {
+    lastChat: {
+      handler (newVal, oldVal) {
+        this.$nextTick(() => {
+          let container = this.$el.querySelector('.chat')
+          console.log(container)
+          container.scrollTop = container.scrollHeight
+        })
       }
     }
+  }
 }
 </script>
 <style scoped>
@@ -124,7 +166,7 @@ export default {
   right:5%;
 }
 .chat {
-  height: 85%;
+  height: calc(40vh - 57px);
   max-height: calc(50vh - 57px);
   width: 100%;
   overflow: auto;

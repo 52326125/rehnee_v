@@ -35,50 +35,14 @@ export default {
         { text: 'Sex', value: 'sex', align: 'center' },
         { text: 'Remark', value: 'remark', sortable: false, align: 'center' },
         { text: 'Order', value: 'action', sortable: false, align: 'center' }
-      ],
-      patients: [
-        {
-          index: 1,
-          id: 'A123456001',
-          name: '測試員001',
-          sex: 'Male',
-          remark: ''
-        },
-        {
-          index: 2,
-          id: 'A123456002',
-          name: '測試員002',
-          sex: 'Male',
-          remark: ''
-        },
-        {
-          index: 3,
-          id: 'A123456003',
-          name: '測試員003',
-          sex: 'Male',
-          remark: ''
-        },
-        {
-          index: 4,
-          id: 'A123456004',
-          name: '測試員004',
-          sex: 'Female',
-          remark: ''
-        },
-        {
-          index: 5,
-          id: 'A123456005',
-          name: '測試員005',
-          sex: 'Female',
-          remark: 'will be ten minutes late!'
-        }
       ]
     }
   },
   computed: {
     ...mapState([
       'isDark',
-      'overlay'
+      'overlay',
+      'patients'
     ])
   },
   methods: {
@@ -87,7 +51,7 @@ export default {
     ]),
     openOrder: function (patient) {
       this.setOrderPage(patient)
-      this.patients.shift()
+      
     }
   }
 }

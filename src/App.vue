@@ -11,23 +11,46 @@
       </v-toolbar-title>
 
       <v-spacer/>
-      <v-row align="center" justify="end">
-        <v-col cols="6">
-          <v-select
-            v-if="isLogin"
-            v-model="select"
-            :items="system"
-            item-text="name"
-            item-value="value"
-            label="System select"
-            :change="setLoadSystem(select)"
-            outlined
-          ></v-select>
-        </v-col>
-      </v-row>
-      <v-btn text v-if="isLogin" @click.stop="open">
+      <div class="appbarRight">
+        <v-select
+          v-if="isLogin"
+          v-model="select"
+          :items="system"
+          item-text="name"
+          item-value="value"
+          label="System select"
+          :change="setLoadSystem(select)"
+          outlined
+        ></v-select>
+      </div>
+      <!--<v-btn text v-if="isLogin" @click.stop="open">
         <v-icon>mdi-menu</v-icon>
-      </v-btn>
+      </v-btn>-->
+      <v-menu offset-y>
+        <template v-slot:activator="{on}">
+          <v-btn text v-if="isLogin" v-on="on">
+            <v-icon>mdi-menu</v-icon>
+          </v-btn>
+        </template>
+        <v-list width="250" max-width="100%" :dark="isDark">
+          <v-list-item>
+            <v-list-item-avatar>
+              <v-img :src="user.pic"></v-img>
+            </v-list-item-avatar>
+
+            <v-list-item-content>
+              <v-list-item-title>{{user.name}}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-divider></v-divider>
+
+          <v-divider></v-divider>
+
+          <v-switch v-model="dark" :label="`dark mode`"></v-switch>
+          <v-btn @click="logout" width="100%">logout</v-btn>
+        </v-list>
+      </v-menu>
     </v-app-bar>
     <v-content>
       <v-sheet height="100%" class="overflow-hidden" :dark="isDark">
@@ -37,7 +60,7 @@
           </v-row>
         </v-container>
 
-        <v-navigation-drawer :dark="isDark" v-model="drawer" absolute temporary right>
+        <!--<v-navigation-drawer :dark="isDark" v-model="drawer" absolute temporary right clipped>
           <v-list-item>
             <v-list-item-avatar>
               <v-img :src="user.pic"></v-img>
@@ -64,7 +87,7 @@
 
           <v-switch v-model="dark" :label="`dark mode`"></v-switch>
           <v-btn @click="logout" width="100%">logout</v-btn>
-        </v-navigation-drawer>
+        </v-navigation-drawer>-->
       </v-sheet>
       <chat/>
     </v-content>
@@ -155,5 +178,9 @@ export default {
     /*background-image:url("../public/background.png");
     background-size:contain;
     background-position:center;*/
+  }
+  .appbarRight{
+    width: 300px;
+    height: 100%;
   }
 </style>

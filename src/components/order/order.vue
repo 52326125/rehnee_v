@@ -82,7 +82,12 @@
                 <p>Medical order</p>
               </v-col>
               <v-col cols="12">
-                <v-chip v-for="(item,index) in orders" :key="index">
+                <v-chip
+                  v-for="(item,index) in ordersE"
+                  :key="index"
+                  close
+                  @click:close="removeOrder(item)"
+                  color="primary">
                   {{item}}
                 </v-chip>
               </v-col>
@@ -93,7 +98,14 @@
             <v-row>
               <v-col cols="4">
                 <!--<v-select v-model="patient.content" :items="items" label="order" required></v-select>-->
-              <v-text-field label="Action" v-model="order[0]"></v-text-field>
+              <!--<v-text-field label="Action" v-model="order[0]"></v-text-field>-->
+                <v-select
+                  :items="actions"
+                  item-text="name"
+                  item-value="value"
+                  v-model="order[0]"
+                  label="Action">
+                </v-select>
               </v-col>
               <v-col cols="3">
                 <v-text-field label="Angle" v-model="order[1]"></v-text-field>
@@ -146,7 +158,7 @@
             <v-divider/>
               <p>Medical Order</p>
             </v-col>
-            <v-col cols="12">
+            <v-col cols="12" class="ma-2">
               <v-chip
                 v-for="(item,index) in record[recordIndex].medical_order "
                 :key="index"
@@ -181,9 +193,16 @@ export default {
   data: () => ({
     valid: true,
     orders: [],
+    ordersE: [],
     order: [],
     rule: [v => !!v || 'Cannot be null'],
-    recordIndex:-1
+    //ruleA: [v=> v.length>0 || 'Cannot be null'],
+    recordIndex:-1,
+    actions: [
+      {name: '屈膝抬腿', value: 1},
+      {name: '直膝抬腿', value: 2},
+      {name: '靠牆半蹲', value: 3}
+    ]
   }),
   created () {
     this.getDiseaseName()
@@ -193,7 +212,8 @@ export default {
   computed: {
     ...mapState([
       'patient',
-      'diseaseName'
+      'diseaseName',
+      'patients'
     ]),
     ...mapState({
       record : state => state.patient.medicalRecord
@@ -217,14 +237,16 @@ export default {
       'getDiseaseName'
     ]),
     addOrder () {
-      console.log(this.record)
       this.orders.push(this.order.join(','))
+      this.ordersE.push('Aciton:' + this.actions[this.order[0]].name + ', ' + this.order[1] + ' times per day, each time ' + this.order[2] + 'degrees')
       this.order = []
     },
     validate () {
       if (this.$refs.form.validate()) {
         // this.patient.code=btoa(this.patient.ID)
-        var temp = new Date()
+        if(this.patient.remark==null) this.patient.remark=''
+        if(this.orders.length==0) return alert('not order yet')
+        let temp = new Date()
         this.patient.date =
           temp.getFullYear() +
           '-' +
@@ -234,6 +256,9 @@ export default {
         this.patient.content = this.orders.join('-')
         console.log(this.patient)
         this.$store.dispatch('order', this.patient) // error是因為db中沒有P_code
+        let currentPatient=this.patients.filter(item => item.code==this.patient.code)
+        console.log(currentPatient)
+        this.patients.splice(this.patients.indexOf(currentPatient[0]),1)
         this.back()
       }
     },
@@ -243,6 +268,10 @@ export default {
     remove (item) {
       const index = this.patient.medicalOrder.indexOf(item.name)
       if (index >= 0) this.patient.medicalOrder.splice(index, 1)
+    },
+    removeOrder (item) {
+      this.orders.splice(this.orders.indexOf(item),1)
+      this.ordersE.splice(this.ordersE.indexOf(item),1)
     },
     changeRecord (command) {
       if (command === 'pre'){

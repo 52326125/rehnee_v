@@ -41,7 +41,50 @@ export default new Vuex.Store({
     diseaseName: [],
     isLogin: false,
     overlay: false,
-    loadSystem: false
+    loadSystem: false,
+    timer: null,
+    patients: [
+      {
+        index: 1,
+        id: 'A123456001',
+        name: '測試員001',
+        sex: 'Male',
+        remark: '',
+        code: 'tes001'
+      },
+      {
+        index: 2,
+        id: 'A123456002',
+        name: '測試員002',
+        sex: 'Male',
+        remark: '',
+        code: 'tes002'
+      },
+      {
+        index: 3,
+        id: 'A123456003',
+        name: '測試員003',
+        sex: 'Male',
+        remark: '',
+        code: 'tes003'
+      },
+      {
+        index: 4,
+        id: 'A123456004',
+        name: '測試員004',
+        sex: 'Female',
+        remark: '',
+        code: 'tes004'
+      },
+      {
+        index: 5,
+        id: 'A123456005',
+        name: '測試員005',
+        sex: 'Female',
+        remark: 'will be ten minutes late!',
+        code: 'tes005'
+      }
+    ]
   },
   mutations: {
     LOGIN: function (state, user) {
@@ -91,6 +134,10 @@ export default new Vuex.Store({
     },
     SETOVERLAY:function(state){
       state.overlay=!state.overlay
+    },
+    RESETCHAT:function(state){
+      state.chatHistory=[]
+      state.lastChat=0
     }
   },
   actions: {
@@ -188,31 +235,25 @@ export default new Vuex.Store({
     },
 
     getChat: function ({ commit, state }, params) {
-      var timer = window.setInterval(() => {
+      clearInterval(state.timer)
+      commit('RESETCHAT')
+      state.timer = window.setInterval(() => {
         if (params.lastChat <= state.lastChat) params.lastChat = state.lastChat
-        console.log(router)
-        router.beforeEach((to, from, next) => {
-          if (to.path !== '/data') {
-            clearInterval(timer)
-            next()
-          } else {
-            next()
-          }
-        })
         Axios.get('/api/getChat', { params: params })
           .then((res) => {
-            console.log(res.data)
             if (res.data.length) {
               commit('SETLASTCHAT', res.data[res.data.length - 1].id)
               commit('SETCHATHISTORY', res.data)
             }
           })
-      }, 2000)
+      }, 500)
     },
+
 
     chatCommit: function ({ commit }, data) {
       Axios.get('/api/chatCommit', { params: data })
         .then((res) => {
+          console.log(res)
           commit('SETCHATHISTORY', res.data)
         })
     },
