@@ -7,11 +7,13 @@ import vuetify from './plugins/vuetify'
 import cookies from 'vue-cookies'
 import Axios from 'axios'
 import vCahrt from 'v-charts'
+import chat from 'vue-beautiful-chat'
 // import navigation from 'vue-navigation'
 
 Vue.config.productionTip = false
 Vue.use(cookies)
 Vue.use(vCahrt)
+Vue.use(chat)
 // Vue.use(navigation,{router,store})
 // login check
 Axios.defaults.withCredentials = true

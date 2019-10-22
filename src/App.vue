@@ -87,7 +87,8 @@ export default {
       {name: 'Medical System', value: false},
       {name: 'Rehnee System', value: true}
     ],
-    select: false
+    select: false,
+    
   }),
   created: function () {
     this.dark = this.isDark
@@ -151,8 +152,8 @@ export default {
 </script>
 <style>
   .background{
-    background-image:url("../public/background.png");
+    /*background-image:url("../public/background.png");
     background-size:contain;
-    background-position:center;
+    background-position:center;*/
   }
 </style>
