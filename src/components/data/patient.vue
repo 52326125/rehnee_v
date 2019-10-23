@@ -1,11 +1,9 @@
 <template>
   <v-card
-    class="mx-auto"
-    flat
-  >
+    class="mx-auto">
     <v-card-title class="justify-center">
         <v-avatar height="150" width="150">
-            <img :src="patient.profi" alt="avatar" height="300" width="300">
+            <img :src="patient.profi" alt="avatar" height="300" width="300" ondragstart="return false">
         </v-avatar>
     </v-card-title>
 

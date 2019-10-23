@@ -7,6 +7,7 @@
           <v-btn @click="change">{{title}}</v-btn>
           <template v-if="graphicMode">
             <v-row>
+              <v-spacer/>
               <v-col cols="4">
                 <v-select
                   v-model="action"
@@ -17,15 +18,35 @@
                   label="Action">
                 </v-select>
               </v-col>
-              <v-spacer/>
-              <v-col cols="4">
+              <v-col cols="3">
                 <v-menu offset-y>
                   <template v-slot:activator="{ on }">
-                    <v-text-field v-on="on" label="Date range" v-model="dateRange" readonly prepend-icon="mdi-calendar"></v-text-field>
+                    <v-text-field 
+                      v-on="on"
+                      label="Start Date" 
+                      v-model="preDate" 
+                      readonly 
+                      prepend-icon="mdi-calendar">
+                    </v-text-field>
                   </template>
-                  <v-date-picker v-model="dateRange"></v-date-picker>
+                  <v-date-picker v-model="preDate"></v-date-picker>
                 </v-menu>
               </v-col>
+              <v-col cols="3">
+                <v-menu offset-y>
+                  <template v-slot:activator="{ on }">
+                    <v-text-field 
+                      v-on="on"
+                      label="End Date" 
+                      v-model="reDate" 
+                      readonly 
+                      prepend-icon="mdi-calendar">
+                    </v-text-field>
+                  </template>
+                  <v-date-picker v-model="reDate"></v-date-picker>
+                </v-menu>
+              </v-col>
+              <v-spacer/>
             </v-row>
             <div style="position:relative">
               <ve-line :data="filter"
@@ -98,7 +119,8 @@ export default {
         //{name: '不指定', value: 4}
       ],
       action: null,
-      dateRange: null
+      preDate: '2019-09-08',
+      reDate: null
     }
   },
   computed: {
@@ -124,7 +146,10 @@ export default {
     filter(){
       let temp = this.list
       this.re.rows = temp.map((item) => {
-        if (item.type == this.action ) {
+        if(this.reDate==null) this.getToday()
+        if(this.preDate==null) this.getlastMonth()
+        console.log(this.preDate)
+        if (item.type == this.action && item.date>=this.preDate && item.date <= this.reDate) {
           let date=item.date + ' ' + item.time
           return {date: date, spend_time: item.spend_time, standard: '120'}
         } else {
@@ -142,6 +167,14 @@ export default {
       // this.chartData.rows=
       console.log(this.chartData.rows)
       this.graphicMode = !this.graphicMode
+    },
+    getToday:function(){
+      let temp=new Date()
+      this.reDate=temp.getFullYear() +
+          '-' +
+          (temp.getMonth() + 1) +
+          '-' +
+          temp.getDate()
     }
   }
 }

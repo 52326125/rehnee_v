@@ -163,6 +163,7 @@ export default {
   position: fixed;
   bottom: 5%;
   right:5%;
+  z-index: 2147483647;
 }
 .chat {
   height: calc(40vh - 57px);
