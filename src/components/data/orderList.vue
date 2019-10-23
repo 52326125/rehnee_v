@@ -1,5 +1,16 @@
 <template>
-  <v-expansion-panels focusable>
+  <v-card>
+    <v-card-title><span>Order list</span></v-card-title>
+    <v-card-text>
+      <v-data-table
+        :headers="headers"
+        :items="list"
+        :items-per-page="5"
+        class="elevation-1"
+      ></v-data-table>
+    </v-card-text>
+  </v-card>
+  <!--<v-expansion-panels focusable>
     <v-expansion-panel>
       <v-expansion-panel-header>order list</v-expansion-panel-header>
       <v-expansion-panel-content>
@@ -19,7 +30,7 @@
         </v-list>
       </v-expansion-panel-content>
     </v-expansion-panel>
-  </v-expansion-panels>
+  </v-expansion-panels>-->
 </template>
 <script>
 import { mapState } from 'vuex'

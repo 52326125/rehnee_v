@@ -27,14 +27,13 @@
           </v-btn>
         </template>
       </v-banner>-->
-      <v-app-bar color="primary">
+      <v-app-bar color="primary" @click="close=!close" style="cursor:pointer;">
         <v-toolbar-title>Chat</v-toolbar-title>
         <v-spacer/>
         <v-btn
           text
           fab
-          small
-          @click="close=!close">
+          small>
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-app-bar>

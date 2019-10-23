@@ -227,11 +227,8 @@ export default new Vuex.Store({
           commit('SETORDERLIST', res.data[0])
           commit('SETRECORDLIST', res.data[1])
           commit('FETCHPATIENT', patient)
-          dispatch('getChat', { code: state.patient.id, lastChat: 0 })
-          console.log('1')
         })
       router.push('/data')
-      console.log('2')
     },
 
     getChat: function ({ commit, state }, params) {
