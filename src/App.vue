@@ -1,5 +1,4 @@
 <template>
-  <!-- <a href="https://pngtree.com/free-backgrounds">free background photos from pngtree.com</a>-->
   <v-app>
     <v-app-bar app :dark="isDark">
       <v-toolbar-title class="headline text-uppercase">
@@ -54,7 +53,7 @@
     </v-app-bar>
     <v-content>
       <v-sheet height="100%" class="overflow-hidden" :dark="isDark">
-        <v-container class="fill-height background" fluid>
+        <v-container class="fill-height" fluid>
           <v-row align="center" justify="center">
             <router-view/>
           </v-row>
@@ -96,7 +95,6 @@ export default {
   },
   computed: {
     ...mapState({
-      // dr_name: state => state.user.name
       user: state => state.user,
       isDark: state => state.isDark,
       chatList: state => state.chatList,
@@ -104,36 +102,16 @@ export default {
       title: state => state.title
     })
 
-    /* isLogin() {
-      return this.$store.getters.getCookie
-    },
-    dr_name() {
-      return this.$store.getters.getName;
-    },
-    dr_pic() {
-      return this.$store.getters.getPic;
-    },
-    isDark() {
-      return this.$store.getters.getDark;
-    },
-    chatList() {
-      return this.$store.getters.getChatList;
-    } */
   },
 
   methods: {
     ...mapActions([
-      'getPatientFromChat',
       'logout',
       'setDark',
       'setLoadSystem'
     ]),
     open: function () {
       this.drawer = !this.drawer
-    },
-    chat: function (item) {
-      console.log(item)
-      this.getPatientFromChat(item)
     },
     backHome: function () {
       this.$router.push('/')
@@ -145,11 +123,6 @@ export default {
 }
 </script>
 <style>
-  .background{
-    /*background-image:url("../public/background.png");
-    background-size:contain;
-    background-position:center;*/
-  }
   .appbarRight{
     width: 300px;
     height: 100%;

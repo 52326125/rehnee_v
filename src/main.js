@@ -46,17 +46,6 @@ router.beforeEach((to, from, next) => {
       next('/dashboard')
     }
   }
-
-  if (to.path == '/order') {
-    store.dispatch('setTitle', 'medical order system')
-    next()
-  } else if (to.path == '/dashboard' || to.path == '/data') {
-    store.dispatch('setTitle', 'Rehnee system')
-    next()
-  } else {
-    store.dispatch('setTitle', 'home')
-    next()
-  }
 })
 
 new Vue({

@@ -266,21 +266,10 @@ export default new Vuex.Store({
       router.push('/login')
     },
 
-    getChatList: function ({ commit, state }) {
-      console.log(state.user)
-      Axios.get('/api/getChatList', { params: state.user })// try not send doctor id
-        .then((res) => {
-          console.log(res.data)
-          for (let i = 0; i < res.data.length; i++) {
-            res.data[i].profi = state.host + 'patient_pic/' + res.data[i].profi
-            console.log()
-          }
-          commit('SETCHATLIST', res.data)
-        })
-    },
     resetPatient ({ commit }) {
       commit('RESETPATIENT')
     },
+
     getDiseaseName: function ({ commit }) {
       Axios.get('/api/getDiseaseName')
         .then((res) => {
@@ -290,11 +279,7 @@ export default new Vuex.Store({
           console.log(error)
         })
     },
-    getPatientFromChat: async function ({ dispatch, commit }, item) {
-      dispatch('resetChat')
-      await commit('FETCHPATIENT', item)
-      await dispatch('turnPatientPage', item)
-    },
+
     setOverlay: function ({ commit }, val) {
       commit('SETOVERLAY', val)
     },
@@ -302,9 +287,7 @@ export default new Vuex.Store({
       state.chatHistory = []
       state.lastChat = 0
     },
-    setTitle: function ({ state }, title) {
-      state.title = title
-    },
+
     setLoadSystem: function({state, dispatch},system){
       state.loadSystem=system
       if (system) {
@@ -314,57 +297,6 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    /* getChatHistory:function(state){
-      return state.charHistory
-    },
-    /*getHost:function(state){
-      return state.host
-    },
-    getName: function(state){
-      return state.user.name
-    },
-    getPic: function(state){
-      //var path='assets/dr_pic/'+state.user.pic
-      return state.host+'dr_pic/'+state.user.pic
-    },
-    getOrderPage:function(state){
-      return state.orderIndex
-    },
-    test:function(state){
-      return state.patient.name
-    },
-    getPatient:function(state){
-      return state.patient
-    },
-    getAllPatient:function(state){
-      return state.patientList
-    },
-    getPatientID:function(state){
-      return state.patient.id
-    },
-    getOrderList:function(state){
-      return state.orderList
-    },
-    getRecordList:function(state){
-      return state.recordList
-    },
-    getChatHistory:function(state){
-      return state.charHistory
-    },
-    getLastChat:function(state){
-      return state.lastChat
-    },
-    getDark:function(state){
-      return state.isDark
-    },
-    getChatList:function(state){
-      return state.chatList
-    },
-    getCookie:function(state){
-      return state.isLogin
-    },
-    getDiseaseName:function(state){
-      return state.diseaseName
-    } */
+    
   }
 })
