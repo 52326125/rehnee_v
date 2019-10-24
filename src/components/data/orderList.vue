@@ -1,12 +1,6 @@
 <template>
   <v-card>
     <v-card-title><span>Order list</span></v-card-title>
-      <v-tooltip bottom>
-      <template v-slot:activator="{ on }">
-        <v-btn color="primary" dark v-on="on">Button</v-btn>
-      </template>
-      <span>Tooltip</span>
-    </v-tooltip>
 
     <v-card-text>
       <v-data-table
