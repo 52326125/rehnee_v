@@ -138,7 +138,7 @@ export default {
           if (!newVal){
             let container = this.$el.querySelector('.chat')
             console.log(container)
-            container.scrollTop = container.scrollHeight
+            container.scrollTop = container.scrollHeight1
           }
         })
       }
