@@ -116,6 +116,7 @@ export default new Vuex.Store({
     },
     SETDARK: function (state, isDark) {
       state.isDark = isDark
+      console.log(isDark)
     },
     SETCHATLIST: function (state, chatList) {
       state.chatList = chatList

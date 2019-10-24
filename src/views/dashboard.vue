@@ -14,23 +14,21 @@
     <v-data-table
       :headers="headers"
       :items="getAllPatient"
-      :search="search"
-    >
+      :search="search">
 
-    <template v-slot:item.profi="{item}">
+      <template v-slot:item.profi="{item}">
         <v-avatar>
             <img :src="item.profi" alt="avatar">
         </v-avatar>
-    </template>
+      </template>
 
-     <template v-slot:item.action="{ item }">
-      <v-icon
-        class="mr-2"
-        @click="turnPatientPage(item)"
-      >
-        mdi-arrow-right-bold
-      </v-icon>
-    </template>
+      <template v-slot:item.action="{ item }">
+        <v-icon
+          class="mr-2"
+          @click="turnPatientPage(item)">
+          mdi-arrow-right-bold
+        </v-icon>
+      </template>
     </v-data-table>
   </v-card>
 
@@ -56,7 +54,7 @@ export default {
       headers: [
         {
           text: 'Profile picture',
-          align: 'left',
+          align: 'center',
           sortable: false,
           value: 'profi'
         },

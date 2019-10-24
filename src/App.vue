@@ -26,7 +26,7 @@
       <!--<v-btn text v-if="isLogin" @click.stop="open">
         <v-icon>mdi-menu</v-icon>
       </v-btn>-->
-      <v-menu offset-y>
+      <v-menu offset-y :close-on-content-click="false">
         <template v-slot:activator="{on}">
           <v-btn text v-if="isLogin" v-on="on">
             <v-icon>mdi-menu</v-icon>
@@ -56,40 +56,11 @@
       <v-sheet height="100%" class="overflow-hidden" :dark="isDark">
         <v-container class="fill-height background" fluid>
           <v-row align="center" justify="center">
-            <router-view />
+            <router-view/>
           </v-row>
         </v-container>
-
-        <!--<v-navigation-drawer :dark="isDark" v-model="drawer" absolute temporary right clipped>
-          <v-list-item>
-            <v-list-item-avatar>
-              <v-img :src="user.pic"></v-img>
-            </v-list-item-avatar>
-
-            <v-list-item-content>
-              <v-list-item-title>{{user.name}}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-divider></v-divider>
-          <v-card-title>Chat</v-card-title>
-          <v-list-item v-for="(item,index) in chatList" :key="index">
-            <v-list-item-avatar>
-              <v-img :src="item.profi"></v-img>
-            </v-list-item-avatar>
-
-            <v-list-item-content>
-              <v-list-item-title v-text="item.content" @click="chat(item)"></v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-divider></v-divider>
-
-          <v-switch v-model="dark" :label="`dark mode`"></v-switch>
-          <v-btn @click="logout" width="100%">logout</v-btn>
-        </v-navigation-drawer>-->
       </v-sheet>
-      <chat/>
+      <chat v-if="isLogin"/>
     </v-content>
     <!--<v-footer absolute fixed><chat/></v-footer>-->
   </v-app>
@@ -182,5 +153,11 @@ export default {
   .appbarRight{
     width: 300px;
     height: 100%;
+  }
+  td{
+    font-size: 16px !important;
+  }
+  th{
+    font-size: 20px !important;
   }
 </style>

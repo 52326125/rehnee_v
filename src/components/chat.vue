@@ -3,6 +3,7 @@
     <v-btn
       v-if="close"
       fab
+      transition="slide-x-transition"
       :dark="isDark"
       color="primary"
       @click="close=!close">
@@ -14,21 +15,10 @@
       height="500"
       max-height="50vh"
       max-width="40vw"
-      v-else>
-      <!--<v-banner single-line color="primary">
-        <v-chip color="primary">Chat List</v-chip>
-        <template v-slot:actions>
-          <v-btn
-            text
-            fab
-            small
-            @click="close=!close">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </template>
-      </v-banner>-->
+      v-else
+      transition="slide-x-transition">
       <v-app-bar color="primary" @click="close=!close" style="cursor:pointer;">
-        <v-toolbar-title>Chat</v-toolbar-title>
+        <v-toolbar-title style="font-size:24px !important;">Chat</v-toolbar-title>
         <v-spacer/>
         <v-btn
           text
@@ -37,71 +27,61 @@
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-app-bar>
-      <v-row class="test">
-        <v-col cols="5">
-          <!--<v-tabs 
-            vertical
-            color="black">
-            <v-tab 
-              v-for="(item, index) in chatList"
-              :key="index"
-              @click="showChat(item)">
-              <v-list-item-avatar>
-                <v-img :src="item.profi"></v-img>
-              </v-list-item-avatar>
-
-              <v-list-item-content>
-                <v-list-item-title v-text="item.name" class="font-weight-bold subtitle"></v-list-item-title>
-                <pre>{{item.content}}</pre>
-              </v-list-item-content>
-            </v-tab>
-          </v-tabs>-->
-          <v-list>
-            <v-subheader>Recently Chat</v-subheader>
-            <v-list-item-group>
-              <v-list-item 
-                v-for="(item,index) in chatList" 
-                :key="index"
-                 @click="showChat(item)">
-                <v-list-item-avatar>
-                  <v-img :src="item.profi"></v-img>
-                </v-list-item-avatar>
-                <v-list-item-content>
-                  <v-list-item-title v-text="item.name"></v-list-item-title>
-                  <v-list-item-subtitle v-text="item.content"></v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
-        </v-col>
-        <v-divider vertical/>
+      <v-card-text>
         <v-row>
-          <v-col cols="11">
-            <div class="chat">
-              <div v-for="(item,index) in chatHistory" :key="index">
-                <v-avatar>
-                  <img :src="profi" alt="avatar" v-if="item.sender==2"/>
-                </v-avatar>
-                <div v-if="item.sender==2" class="d-inline">
-                    <v-chip>
-                      {{item.content}}
-                    </v-chip>
+          <v-col cols="5">
+            <v-list style="overflow:atuo;">
+              <v-subheader style="font-size:16px !important;">Recently Chat</v-subheader>
+              <v-list-item-group>
+                <v-list-item 
+                  v-for="(item,index) in chatList" 
+                  :key="index"
+                  @click="showChat(item)">
+                  <v-list-item-avatar>
+                    <v-img :src="item.profi"></v-img>
+                  </v-list-item-avatar>
+                  <v-list-item-content>
+                    <v-list-item-title v-text="item.name" style="font-size:20px !important;"></v-list-item-title>
+                    <v-list-item-subtitle v-text="item.content" style="font-size:16px !important;"></v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-col>
+          <v-col cols="1">
+            <v-divider vertical/>
+          </v-col>
+          <v-col cols="6">
+            <v-row>
+              <v-col cols="12">
+                <div class="chat">
+                  <div v-for="(item,index) in chatHistory" :key="index">
+                    <v-avatar>
+                      <img :src="profi" alt="avatar" v-if="item.sender==2"/>
+                    </v-avatar>
+                    <div v-if="item.sender==2" class="d-inline">
+                        <v-chip style="font-size:16px !important;">
+                          {{item.content}}
+                        </v-chip>
+                    </div>
+                    <div class="right" v-else>
+                        <v-chip style="font-size:16px !important;">
+                          {{item.content}}
+                        </v-chip>
+                    </div>
+                  </div>
                 </div>
-                <div class="right" v-else>
-                    <v-chip>
-                      {{item.content}}
-                    </v-chip>
-                </div>
-              </div>
-            </div>
-            <v-text-field
-              v-model="msg"
-              append-icon="mdi-send"
-              @keydown.native.enter="commitChat()"
-              @click:append="commitChat()"></v-text-field>
+                <v-text-field
+                  v-model="msg"
+                  append-icon="mdi-send"
+                  @keydown.native.enter="commitChat()"
+                  @click:append="commitChat()">
+                </v-text-field>
+              </v-col>
+            </v-row>
           </v-col>
         </v-row>
-      </v-row>
+      </v-card-text>
     </v-card>
   </div>
 </template>
@@ -151,6 +131,17 @@ export default {
           container.scrollTop = container.scrollHeight
         })
       }
+    },
+    close:{
+      handler (newVal,oldVal) {
+        this.$nextTick(() => {
+          if (!newVal){
+            let container = this.$el.querySelector('.chat')
+            console.log(container)
+            container.scrollTop = container.scrollHeight
+          }
+        })
+      }
     }
   }
 }
@@ -166,8 +157,8 @@ export default {
   z-index: 2147483647;
 }
 .chat {
-  height: calc(40vh - 57px);
-  max-height: calc(50vh - 57px);
+  height: 300px;
+  max-height: calc(50vh - 200px);
   width: 100%;
   overflow: auto;
   border: black 1px solid;

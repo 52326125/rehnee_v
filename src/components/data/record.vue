@@ -29,7 +29,7 @@
                       prepend-icon="mdi-calendar">
                     </v-text-field>
                   </template>
-                  <v-date-picker v-model="preDate"></v-date-picker>
+                  <v-date-picker v-model="preDate" :dark="isDark"></v-date-picker>
                 </v-menu>
               </v-col>
               <v-col cols="3">
@@ -43,7 +43,7 @@
                       prepend-icon="mdi-calendar">
                     </v-text-field>
                   </template>
-                  <v-date-picker v-model="reDate"></v-date-picker>
+                  <v-date-picker v-model="reDate" :dark="isDark"></v-date-picker>
                 </v-menu>
               </v-col>
               <v-spacer/>
@@ -51,7 +51,7 @@
             <div style="position:relative">
               <ve-line :data="filter"
                 :colors="color"
-                :extend="chartSetting">
+                :extend="chartMode">
               </ve-line>
 
               <v-overlay
@@ -110,6 +110,53 @@ export default {
               show: true
             }
           }
+        },
+        yAxis: {
+          axisLabel: {
+            textStyle: {
+              color: '#000',
+              fontSize: 14
+            }
+          }
+        },
+        xAxis: {
+          axisLabel: {
+            textStyle: {
+              color: '#000',
+              fontSize: 14
+            }
+          }
+        },
+      },
+      chartSettingDark: {
+        series: {
+          label: {
+            normal: {
+              show: true
+            }
+          }
+        },
+        yAxis: {
+          axisLabel: {
+            textStyle: {
+              color: '#fff',
+              fontSize: 14
+            }
+          }
+        },
+        xAxis: {
+          axisLabel: {
+            textStyle: {
+              color: '#fff',
+              fontSize: 14
+            }
+          }
+        },
+        legend: {
+          inactiveColor: '#5a5a5a',
+          textStyle: {
+            color: '#fff'
+          }
         }
       },
       actions: [
@@ -125,7 +172,8 @@ export default {
   },
   computed: {
     ...mapState({
-      list: 'recordList'
+      list: 'recordList',
+      isDark: 'isDark'
     }),
     listTable(){
       let temp = this.list
@@ -137,9 +185,6 @@ export default {
       console.log(temp)
       return temp
     },
-    /* list() {
-      return this.$store.getters.getRecordList; //建立orderlist
-    }, */
     title () {
       return this.graphicMode ? 'Data table' : 'Graphic table'
     },
@@ -159,12 +204,15 @@ export default {
       this.re.rows=this.re.rows.filter((item) => item!=false)
       this.re.empty=this.re.rows.length==0
       return this.re
+    },
+    chartMode(){
+      if(this.isDark) return this.chartSettingDark
+      return this.chartSetting
     }
   },
   methods: {
     change: function () {
       console.log(this.filter)
-      // this.chartData.rows=
       console.log(this.chartData.rows)
       this.graphicMode = !this.graphicMode
     },

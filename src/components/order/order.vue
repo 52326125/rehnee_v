@@ -30,7 +30,7 @@
                   <template v-slot:activator="{ on }">
                     <v-text-field v-on="on" label="Next order date" required v-model="patient.time" :rules="rule"></v-text-field>
                   </template>
-                  <v-date-picker v-model="patient.time"></v-date-picker>
+                  <v-date-picker v-model="patient.time" :dark="isDark"></v-date-picker>
                 </v-menu>
               </v-col>
             </v-row>
@@ -213,7 +213,8 @@ export default {
     ...mapState([
       'patient',
       'diseaseName',
-      'patients'
+      'patients',
+      'isDark'
     ]),
     ...mapState({
       record : state => state.patient.medicalRecord
@@ -238,7 +239,7 @@ export default {
     ]),
     addOrder () {
       this.orders.push(this.order.join(','))
-      this.ordersE.push('Aciton:' + this.actions[this.order[0]].name + ', ' + this.order[1] + ' times per day, each time ' + this.order[2] + 'degrees')
+      this.ordersE.push('Aciton:' + this.actions[this.order[0]].name + ', ' + this.order[1] + ' times per day, each time ' + this.order[2] + ' degrees')
       this.order = []
     },
     validate () {

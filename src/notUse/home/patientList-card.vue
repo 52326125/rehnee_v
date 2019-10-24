@@ -1,18 +1,18 @@
-
 <template>
-  <v-col cols="9">
-  <v-data-table :headers="headers" :items="patients" :items-per-page="5" class="elevation-1">
-
-    <template v-slot:item.action="{ item }">
-      <v-icon @click="openOrder(item)">mdi-arrow-right-bold-hexagon-outline</v-icon>
-
-    </template>
-
-  </v-data-table>
-      <v-overlay :value="overlay" :dark="isDark">
-        <order/>
-      </v-overlay>
-  </v-col>
+  <v-card>
+    <v-data-table 
+      :headers="headers" 
+      :items="patients" 
+      :items-per-page="5" 
+      class="elevation-1">
+      <template v-slot:item.action="{ item }">
+        <v-icon @click="openOrder(item)">mdi-arrow-right-bold-hexagon-outline</v-icon>
+      </template>
+    </v-data-table>
+    <v-overlay :value="overlay" :dark="isDark">
+      <order/>
+    </v-overlay>
+  </v-card>
 </template>
 <script>
 import { mapActions, mapMutations, mapState } from 'vuex'

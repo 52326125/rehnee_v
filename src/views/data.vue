@@ -22,9 +22,9 @@
     </v-row>
   </v-container>-->
   <div>
-    <div v-drag class="drag patient"><patient/></div>
-    <div v-drag class="drag orderList"><orderList/></div>
-    <div v-drag class="drag record"><record/></div>
+    <div v-drag class="drag patient" id="patient"><patient/></div>
+    <div v-drag class="drag orderList" id="orderList"><orderList/></div>
+    <div v-drag class="drag record" id="record"><record/></div>
   </div>
 </template>
 <script>
@@ -42,14 +42,6 @@ export default {
   directives:{
 				drag(el, bindings){
 					el.onmousedown = function(e){
-            /*console.log(el)
-            if (el!=this.lastTouch){
-              console.log(el)
-              console.log(this.lastTouch)
-              el.style.zIndex++
-            } 
-            this.lastTouch=el
-            console.log(this.lastTouch)*/
 						var disx = e.pageX - el.offsetLeft;
 						var disy = e.pageY - el.offsetTop;
 						document.onmousemove = function (e){
