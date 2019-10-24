@@ -12,7 +12,7 @@
       <v-spacer/>
       <div class="appbarRight">
         <v-select
-          v-if="isLogin"
+          v-if="systemSelect"
           v-model="select"
           :items="system"
           item-text="name"
@@ -25,7 +25,7 @@
       <!--<v-btn text v-if="isLogin" @click.stop="open">
         <v-icon>mdi-menu</v-icon>
       </v-btn>-->
-      <v-menu offset-y :close-on-content-click="false">
+      <v-menu offset-y :close-on-content-click="false" v-if="isLogin">
         <template v-slot:activator="{on}">
           <v-btn text v-if="isLogin" v-on="on">
             <v-icon>mdi-menu</v-icon>
@@ -100,8 +100,11 @@ export default {
       chatList: state => state.chatList,
       isLogin: state => state.isLogin,
       title: state => state.title
-    })
-
+    }),
+    systemSelect(){
+      if(this.user.role==0 && this.isLogin) return true
+      return false
+    }
   },
 
   methods: {
