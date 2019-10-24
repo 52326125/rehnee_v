@@ -8,7 +8,19 @@
         :items="filter"
         :items-per-page="5"
         class="elevation-1">
-      
+        <template v-slot:item.order="{item}">
+          <v-tooltip 
+            top
+            v-for="(item, index) in item.order"
+            :key="index">
+            <template v-slot:activator="{ on }">
+              <!--<v-chip>action:{{index}}</v-chip>-->
+              <v-btn  small v-on="on" @click="test(item)">{{item.substring(0,5)}}..</v-btn>
+            </template>
+            <span>{{item}}</span>
+          </v-tooltip>
+
+        </template>
         <template v-slot:item.trans="{item}">
 
           <v-tooltip 
@@ -60,7 +72,7 @@ export default {
           align: 'left',
           value: 'date'
         },
-        { text: 'symptom', sortable: false, value: 'm_order' },
+        { text: 'symptom', sortable: false, value: 'order' },
         { text: 'medical-order', sortable: false, value: 'trans' },
         { text: 'remark', sortable: false, value: 'remark' }
       ],
@@ -75,12 +87,11 @@ export default {
       let temp=this.list
       temp=temp.map((item)=>{
         let orders=item.content.split('-')
+        item.order=item.m_order.split(',')
         item.trans=orders.map((item) => {
           let order=item.split(',')
-          console.log(order[0])
           return 'Aciton:' + this.actions[order[0]-1] + ', ' + order[1] + ' times per day, each time ' + order[2] + ' degrees'
         })
-        console.log(item)
         return item
       })
       return temp

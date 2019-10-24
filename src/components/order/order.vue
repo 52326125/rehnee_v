@@ -87,7 +87,8 @@
                   :key="index"
                   close
                   @click:close="removeOrder(item)"
-                  color="primary">
+                  color="primary"
+                  style="margin-bottom:20px !important;">
                   {{item}}
                 </v-chip>
               </v-col>
@@ -149,7 +150,8 @@
               <v-chip
                 v-for="(item,index) in record[recordIndex].syptom "
                 :key="index"
-                color="primary">
+                color="primary"
+                style="margin-bottom:20px !important;">
                 {{item}}
               </v-chip>
             </v-col>

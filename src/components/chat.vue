@@ -54,7 +54,7 @@
           <v-col cols="6">
             <v-row>
               <v-col cols="12">
-                <div class="chat">
+                <div class="chat"  style="border: black 1px solid;">
                   <div v-for="(item,index) in chatHistory" :key="index">
                     <v-avatar>
                       <img :src="profi" alt="avatar" v-if="item.sender==2"/>
@@ -72,6 +72,7 @@
                   </div>
                 </div>
                 <v-text-field
+                  outlined
                   v-model="msg"
                   append-icon="mdi-send"
                   @keydown.native.enter="commitChat()"
@@ -161,7 +162,6 @@ export default {
   max-height: calc(50vh - 200px);
   width: 100%;
   overflow: auto;
-  border: black 1px solid;
 }
 .chat::-webkit-scrollbar {
   border-radius: 10px;
