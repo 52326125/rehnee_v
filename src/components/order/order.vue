@@ -11,7 +11,7 @@
 
     </v-card-title>
 
-    <v-card-text>
+    <v-card-text class="headline">
       <v-row>
         <v-col cols="6">
           <v-form ref="form" v-model="valid" >
@@ -55,8 +55,7 @@
                       :input-value="data.selected"
                       close
                       @click="data.select"
-                      @click:close="remove(data.item)"
-                    >
+                      @click:close="remove(data.item)">
                       {{ data.item.name }}
                     </v-chip>
                   </template>
@@ -130,15 +129,33 @@
         </v-col>
         <v-divider vertical></v-divider>
         <v-col cols="5">
+          <v-row>
+            <v-col cols="12">
+              <span>Past order</span>
+            </v-col>
+          </v-row>
           <v-row justify="center" align="center">
               <v-btn @click="changeRecord('pre')">
                 <v-icon>mdi-arrow-left-bold</v-icon>
               </v-btn>
-              <v-alert
-                outlined
-              >
-                {{patient.medicalRecord[recordIndex].date}}
-              </v-alert>
+              <v-menu>
+                <template v-slot:activator="{on}">
+                  <v-btn
+                    outlined
+                    v-on="on">
+                    {{patient.medicalRecord[recordIndex].date}}
+                  </v-btn>
+                </template>
+                <v-list>
+                  <v-list-item
+                    v-for="(item,index) in patient.medicalRecord"
+                    :key="index"
+                    @click="changeRecord(index)">
+                    {{patient.medicalRecord[index].date}}
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+
               <v-btn @click="changeRecord('next')">
                 <v-icon>mdi-arrow-right-bold</v-icon>
               </v-btn>
@@ -279,8 +296,10 @@ export default {
     changeRecord (command) {
       if (command === 'pre'){
         if (this.recordIndex > 0) this.recordIndex--
-      } else {
+      } else if(command=== 'next'){
         if (this.recordIndex < this.record.length-1)  this.recordIndex++
+      }else{
+        this.recordIndex=command
       }
       console.log(this.recordIndex)
     }

@@ -165,6 +165,19 @@ export default new Vuex.Store({
         })
     },
 
+    getChatList: function ({ commit, state }) {
+      console.log(state.user)
+      Axios.get('/api/getChatList', { params: state.user })// try not send doctor id
+        .then((res) => {
+          console.log(res.data)
+          for (let i = 0; i < res.data.length; i++) {
+            res.data[i].profi = state.host + 'patient_pic/' + res.data[i].profi
+            console.log()
+          }
+          commit('SETCHATLIST', res.data)
+        })
+    },
+
     setOrderPage: async function ({ commit, dispatch }, patient) {
       await Axios.get('/api/oldPatient', { params: { ID: patient.id } })// now
         .then((res) => {

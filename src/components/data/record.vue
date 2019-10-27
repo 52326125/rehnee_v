@@ -193,7 +193,6 @@ export default {
       this.re.rows = temp.map((item) => {
         if(this.reDate==null) this.getToday()
         if(this.preDate==null) this.getlastMonth()
-        console.log(this.preDate)
         if (item.type == this.action && item.date>=this.preDate && item.date <= this.reDate) {
           let date=item.date + ' ' + item.time
           return {date: date, spend_time: item.spend_time, standard: '120'}
