@@ -16,14 +16,20 @@
         <v-col cols="6">
           <v-form ref="form" v-model="valid" >
             <v-row justify="center">
-              <v-col cols="6">
-                <v-text-field disabled v-model="patient.name" label="Name" required></v-text-field>
+              <v-col cols="4">
+                <v-text-field readonly v-model="patient.name" label="Name" required></v-text-field>
+              </v-col>
+              <v-col cols="4">
+                <v-text-field readonly v-model="patients[patientIndex].sex" label="Sex" required></v-text-field>
+              </v-col>
+              <v-col cols="4">
+                <v-text-field readonly v-model="patients[patientIndex].id" label="ID" required></v-text-field>
               </v-col>
             </v-row>
 
             <v-row>
               <v-col cols="6">
-                <v-text-field disabled v-model="patient.date" label="Last order date" required></v-text-field>
+                <v-text-field readonly v-model="patient.date" label="Last order date" required></v-text-field>
               </v-col>
               <v-col cols="6">
                 <v-menu offset-y>
@@ -194,7 +200,7 @@
                 outlined
                 label="remark"
                 v-model="record[recordIndex].remark"
-                disabled
+                readonly
               ></v-textarea>
             </v-col>
           </v-row>
@@ -233,7 +239,8 @@ export default {
       'patient',
       'diseaseName',
       'patients',
-      'isDark'
+      'isDark',
+      'patientIndex'
     ]),
     ...mapState({
       record : state => state.patient.medicalRecord

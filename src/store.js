@@ -84,7 +84,8 @@ export default new Vuex.Store({
         remark: 'will be ten minutes late!',
         code: 'tes005'
       }
-    ]
+    ],
+    patientIndex:0
   },
   mutations: {
     LOGIN: function (state, user) {
@@ -139,6 +140,9 @@ export default new Vuex.Store({
     RESETCHAT:function(state){
       state.chatHistory=[]
       state.lastChat=0
+    },
+    SETPATIENTINDEX:function(state,index){
+      state.patientIndex=index-1
     }
   },
   actions: {
@@ -191,6 +195,7 @@ export default new Vuex.Store({
         })
         .catch((error) => {
         })
+        commit('SETPATIENTINDEX',patient.index)
         dispatch('getMedicalRecord')
     },
 
