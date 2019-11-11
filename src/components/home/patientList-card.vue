@@ -26,15 +26,15 @@ export default {
     return {
       headers: [
         {
-          text: 'Number',
+          text: '號碼',
           align: 'center',
           value: 'index'
         },
-        { text: 'ID', value: 'id', align: 'center'},
-        { text: 'Name', value: 'name', align: 'center' },
-        { text: 'Sex', value: 'sex', align: 'center' },
-        { text: 'Remark', value: 'remark', sortable: false, align: 'center' },
-        { text: 'Order', value: 'action', sortable: false, align: 'center' }
+        { text: '身份證字號', value: 'id', align: 'center'},
+        { text: '姓名', value: 'name', align: 'center' },
+        { text: '性別', value: 'sex', align: 'center' },
+        { text: '備註', value: 'remark', sortable: false, align: 'center' },
+        { text: '看診', value: 'action', sortable: false, align: 'center' }
       ]
     }
   },

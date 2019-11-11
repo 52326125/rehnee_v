@@ -1,15 +1,15 @@
 <template>
   <v-row align="center">
       <v-card height="500" width="500" max-height="50%" max-width="50%" class="mx-auto" align="center">
-        <v-card-title class="title">Rehnee-login</v-card-title>
+        <v-card-title class="title">登入</v-card-title>
         <v-card-text>
 
           <v-form ref="form" v-model="valid" lazy-validation>
-            <v-text-field autofocus v-model="user.account" type="text" label="Account" required></v-text-field>
+            <v-text-field autofocus v-model="user.account" type="text" label="帳號" required></v-text-field>
 
             <v-text-field
               v-model="user.password"
-              label="Password"
+              label="密碼"
               @keyup.native.enter="set"
               required
               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -17,7 +17,7 @@
               @click:append="showPassword = !showPassword"
             ></v-text-field>
 
-            <v-btn color="#42A5F5" class="mr-4" @click="set">login</v-btn>
+            <v-btn color="#42A5F5" class="mr-4" @click="set">登入</v-btn>
           </v-form>
           
         </v-card-text>

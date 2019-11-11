@@ -1,12 +1,12 @@
 <template>
   <v-card>
     <v-card-title>
-      Nutrition
+      復健系統
       <div class="flex-grow-1"></div>
       <v-text-field
         v-model="search"
         append-icon="mdi-magnify"
-        label="Search"
+        label="搜尋"
         single-line
         hide-details
       ></v-text-field>
@@ -43,6 +43,9 @@ export default {
     })
 
   },
+  created() {
+    this.$store.dispatch('getAllPatient')
+  },
   methods: {
     turnPatientPage: function (patient) {
       this.$store.dispatch('turnPatientPage', patient)
@@ -53,15 +56,15 @@ export default {
       search: '',
       headers: [
         {
-          text: 'Profile picture',
+          text: '',
           align: 'center',
           sortable: false,
           value: 'profi'
         },
-        { text: 'Name', value: 'name' },
-        { text: 'Birth', value: 'birth' },
-        { text: 'last Order', value: 'date' },
-        { text: 'Actions', value: 'action', sortable: false }
+        { text: '姓名', value: 'name' },
+        { text: '生日', value: 'birth' },
+        { text: '上次看診日期', value: 'date' },
+        { text: '動作', value: 'action', sortable: false }
       ]
     }
   }

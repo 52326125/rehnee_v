@@ -4,6 +4,7 @@ import Axios from 'axios'
 import cookies from 'vue-cookies'
 import router from './router'
 import persistedState from 'vuex-persistedstate'
+import { stat } from 'fs'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -81,7 +82,7 @@ export default new Vuex.Store({
         id: 'A123456005',
         name: '測試員005',
         sex: 'Female',
-        remark: 'will be ten minutes late!',
+        remark: '可能遲到10分鐘',
         code: 'tes005'
       }
     ],
@@ -90,6 +91,7 @@ export default new Vuex.Store({
   mutations: {
     LOGIN: function (state, user) {
       state.user = Object.assign({}, user)
+      state.user.dr_ID = 'aaaa'
       state.isLogin = true
     },
     LOGOUT: function (state) {
@@ -229,8 +231,7 @@ export default new Vuex.Store({
     getAllPatient: function ({ commit, state }) {
       Axios.get('/api/getAllPatient')
         .then((res) => {
-          var i
-          for (i = 0; i < res.data.length; i++) {
+          for (let i = 0; i < res.data.length; i++) {
             res.data[i].profi = state.host + 'patient_pic/' + res.data[i].profi
           }
           commit('SETALLPATIENT', res.data)
@@ -307,9 +308,10 @@ export default new Vuex.Store({
     },
 
     setLoadSystem: function({state, dispatch},system){
+      if (router.history.current.path != '/') router.push('/')
       state.loadSystem=system
       if (system) {
-        dispatch('getAllPatient')
+        //dispatch('getAllPatient')
       }
       console.log(system)
     }

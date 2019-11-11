@@ -34,7 +34,7 @@
               <v-subheader style="font-size:16px !important;">Recently Chat</v-subheader>
               <v-list-item-group>
                 <v-list-item 
-                  v-for="(item,index) in chatList" 
+                  v-for="(item,index) in chatList1" 
                   :key="index"
                   @click="showChat(item)">
                   <v-list-item-avatar>
@@ -60,12 +60,12 @@
                       <img :src="profi" alt="avatar" v-if="item.sender==2"/>
                     </v-avatar>
                     <div v-if="item.sender==2" class="d-inline">
-                        <v-chip style="font-size:16px !important;">
+                        <v-chip style="font-size:14px !important; height:40px !important;">
                           {{item.content}}
                         </v-chip>
                     </div>
                     <div class="right" v-else>
-                        <v-chip style="font-size:16px !important;">
+                        <v-chip style="font-size:14px !important; height:40px !important;"  color="primary">
                           {{item.content}}
                         </v-chip>
                     </div>
@@ -104,7 +104,15 @@ export default {
         patient: state => state.patient,
         lastChat: state => state.lastChat,
         isDark: state => state.isDark
-      })
+      }),
+      chatList1(){
+        let array=['小美','阿華','國豪','偉健','嘉盛']
+        let temp=this.chatList.filter( (item,index) =>{
+          item.name = array[index]
+          return item
+        })
+        return temp
+      }
     },
     methods: {
       ...mapActions([

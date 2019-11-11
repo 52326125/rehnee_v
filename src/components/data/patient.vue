@@ -8,8 +8,8 @@
     </v-card-title>
 
     <v-card-text class="text-center display-2">
-        <p>{{patient.name}}</p>
-        <p>{{patient.birth}}</p>
+        <p>姓名 : {{patient.name}}</p>
+        <p>生日 : {{patient.birth}}</p>
     </v-card-text>
   </v-card>
 </template>

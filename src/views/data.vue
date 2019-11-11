@@ -23,7 +23,7 @@
   </v-container>-->
   <div>
     <div v-drag class="drag patient" id="patient"><patient/></div>
-    <div v-drag class="drag orderList" id="orderList"><orderList/></div>
+    <div v-drag class="drag orderList" id="orderList" style="max-width:49vw !important;"><orderList/></div>
     <div v-drag class="drag record" id="record"><record/></div>
   </div>
 </template>

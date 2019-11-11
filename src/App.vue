@@ -17,8 +17,9 @@
           :items="system"
           item-text="name"
           item-value="value"
-          label="System select"
-          :change="setLoadSystem(select)"
+          label="選擇系統"
+          @change="setLoadSystem(select)"
+
           outlined
         ></v-select>
       </div>
@@ -47,21 +48,20 @@
           <v-divider></v-divider>
 
           <v-switch v-model="dark" :label="`dark mode`"></v-switch>
-          <v-btn @click="logout" width="100%">logout</v-btn>
+          <v-btn @click="logout" width="100%">登出</v-btn>
         </v-list>
       </v-menu>
     </v-app-bar>
     <v-content>
-      <v-sheet height="100%" class="overflow-hidden" :dark="isDark">
-        <v-container class="fill-height" fluid>
+      <v-sheet :dark="isDark" class="fill-height">
+        <v-container class="fill-height bg" fluid :dark="isDark">
           <v-row align="center" justify="center">
             <router-view/>
           </v-row>
         </v-container>
       </v-sheet>
-      <chat v-if="isLogin"/>
+      <chat v-if="test"/>
     </v-content>
-    <!--<v-footer absolute fixed><chat/></v-footer>-->
   </v-app>
 </template>
 
@@ -77,8 +77,8 @@ export default {
     drawer: null,
     dark: true,
     system: [
-      {name: 'Medical System', value: false},
-      {name: 'Rehnee System', value: true}
+      {name: '醫囑系統', value: false},
+      {name: '病患資訊系統', value: true}
     ],
     select: false,
     
@@ -103,6 +103,10 @@ export default {
     }),
     systemSelect(){
       if(this.user.role==0 && this.isLogin) return true
+      return false
+    },
+    test(){
+      if(this.user.name=='個案師' && this.isLogin == true ) return true
       return false
     }
   },
@@ -131,9 +135,14 @@ export default {
     height: 100%;
   }
   td{
-    font-size: 16px !important;
+    font-size: 20px !important;
   }
   th{
-    font-size: 20px !important;
+    font-size: 24px !important;
+  }
+  .bg{
+    background-image: url("./assets/Rehnee.png");
+    background-size: 30%;
+    background-position: 5% 50%;
   }
 </style>

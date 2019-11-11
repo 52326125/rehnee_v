@@ -7,7 +7,50 @@
         :headers="headers"
         :items="filter"
         :items-per-page="5"
+        single-expand
+        :expanded.sync="expanded"
+        item-key="date"
+        show-expand
         class="elevation-1">
+
+        <template v-slot:expanded-item="{ item }">
+          <div class="ml-2">
+            <v-row>
+              <v-col cols="12">
+                <span>症狀 : </span>
+                <v-chip
+                  v-for="(item, index) in item.m_order.split(',')" 
+                  :key="index"
+                  class="ma-1"
+                  color="primary">
+                  {{item}}
+                </v-chip>
+              </v-col>
+            </v-row>
+            <v-divider/>
+
+            <v-row>
+              <v-col cols="12">
+              <span>醫囑:</span>
+                <v-chip
+                  v-for="(item, index) in item.trans" 
+                  :key="index"
+                  class="ma-1"
+                  color="primary">
+                  {{item}}
+                </v-chip>
+              </v-col>
+            </v-row>
+            <v-divider/>
+
+            <v-row>
+              <v-col cols="12">
+                <span>備註 : {{item.remark }}</span>
+              </v-col>
+            </v-row>
+          </div>
+        </template>
+
         <template v-slot:item.order="{item}">
           <v-tooltip 
             top
@@ -68,14 +111,14 @@ export default {
     return {
       headers: [
         {
-          text: 'order date',
+          text: '看診日期',
           align: 'left',
           value: 'date'
         },
-        { text: 'symptom', sortable: false, value: 'order' },
-        { text: 'medical-order', sortable: false, value: 'trans' },
-        { text: 'remark', sortable: false, value: 'remark' }
+        { text: '看診醫生', sortable: false, value: 'dr_name' },
+        { text: '', value: 'data-table-expand' },
       ],
+      expanded: [],
       actions: ['屈膝抬腿', '直膝抬腿', '靠牆半蹲'],
     }
   },

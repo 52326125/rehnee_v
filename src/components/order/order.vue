@@ -6,35 +6,35 @@
         <v-icon>mdi-keyboard-backspace</v-icon>
       </v-btn>
       <v-row justify="center">
-        <p>Medical Order system</p>
+        <p class="display-2">醫囑系統</p>
       </v-row>
 
     </v-card-title>
 
-    <v-card-text class="headline">
+    <v-card-text class="display-1">
       <v-row>
         <v-col cols="6">
           <v-form ref="form" v-model="valid" >
             <v-row justify="center">
               <v-col cols="4">
-                <v-text-field readonly v-model="patient.name" label="Name" required></v-text-field>
+                <v-text-field readonly v-model="patient.name" label="姓名" required></v-text-field>
               </v-col>
               <v-col cols="4">
-                <v-text-field readonly v-model="patients[patientIndex].sex" label="Sex" required></v-text-field>
+                <v-text-field readonly v-model="patients[patientIndex].sex" label="性別" required></v-text-field>
               </v-col>
               <v-col cols="4">
-                <v-text-field readonly v-model="patients[patientIndex].id" label="ID" required></v-text-field>
+                <v-text-field readonly v-model="patients[patientIndex].id" label="身份證字號" required></v-text-field>
               </v-col>
             </v-row>
 
             <v-row>
               <v-col cols="6">
-                <v-text-field readonly v-model="patient.date" label="Last order date" required></v-text-field>
+                <v-text-field readonly v-model="patient.date" label="上次看診日期" required></v-text-field>
               </v-col>
               <v-col cols="6">
                 <v-menu offset-y>
                   <template v-slot:activator="{ on }">
-                    <v-text-field v-on="on" label="Next order date" required v-model="patient.time" :rules="rule"></v-text-field>
+                    <v-text-field v-on="on" label="回診日期" required v-model="patient.time" :rules="rule"></v-text-field>
                   </template>
                   <v-date-picker v-model="patient.time" :dark="isDark"></v-date-picker>
                 </v-menu>
@@ -49,7 +49,7 @@
                   filled
                   chips
                   :rules="rule"
-                  label="Syptom"
+                  label="症狀"
                   item-text="name"
                   item-value="name"
                   multiple
@@ -84,7 +84,7 @@
 
             <v-row>
               <v-col cols="12">
-                <p>Medical order</p>
+                <p>醫囑</p>
               </v-col>
               <v-col cols="12">
                 <v-chip
@@ -110,14 +110,14 @@
                   item-text="name"
                   item-value="value"
                   v-model="order[0]"
-                  label="Action">
+                  label="動作">
                 </v-select>
               </v-col>
               <v-col cols="3">
-                <v-text-field label="Angle" v-model="order[1]"></v-text-field>
+                <v-text-field label="角度" v-model="order[1]"></v-text-field>
               </v-col>
               <v-col cols="3">
-                <v-text-field label="Times"
+                <v-text-field label="次數"
                   v-model="order[2]"
                   @keyup.native.enter="addOrder"
                 ></v-text-field>
@@ -128,7 +128,7 @@
                 </v-btn>
               </v-col>
               <v-col cols="6">
-                <v-text-field v-model="patient.remark" label="remark" required></v-text-field>
+                <v-text-field v-model="patient.remark" label="備註" required></v-text-field>
               </v-col>
             </v-row>
           </v-form>
@@ -137,7 +137,7 @@
         <v-col cols="5">
           <v-row>
             <v-col cols="12">
-              <span>Past order</span>
+              <span>就診記錄</span>
             </v-col>
           </v-row>
           <v-row justify="center" align="center">
@@ -167,7 +167,7 @@
               </v-btn>
 
             <v-col cols="12">
-              <p>Syptom</p>
+              <p>症狀</p>
             </v-col>
             <v-col cols="12">
               <v-chip
@@ -181,7 +181,7 @@
             
             <v-col cols="12">
             <v-divider/>
-              <p>Medical Order</p>
+              <p>醫囑</p>
             </v-col>
             <v-col cols="12" class="ma-2">
               <v-chip
@@ -193,12 +193,12 @@
             </v-col>
             <v-col cols="12">
               <v-divider/>
-              <p>Remark</p>
+              <p>備註</p>
             </v-col>
             <v-col cols="12">
               <v-textarea
                 outlined
-                label="remark"
+                label="備註"
                 v-model="record[recordIndex].remark"
                 readonly
               ></v-textarea>
@@ -265,14 +265,13 @@ export default {
     ]),
     addOrder () {
       this.orders.push(this.order.join(','))
-      this.ordersE.push('Aciton:' + this.actions[this.order[0]].name + ', ' + this.order[1] + ' times per day, each time ' + this.order[2] + ' degrees')
+      this.ordersE.push('動作 : ' + this.actions[this.order[0]].name + '， 一天 ' + this.order[1] + ' 次，每次 ' + this.order[2] + ' 度')
       this.order = []
     },
     validate () {
       if (this.$refs.form.validate()) {
-        // this.patient.code=btoa(this.patient.ID)
         if(this.patient.remark==null) this.patient.remark=''
-        if(this.orders.length==0) return alert('not order yet')
+        if(this.orders.length==0) return alert('尚未輸入醫囑')
         let temp = new Date()
         this.patient.date =
           temp.getFullYear() +
@@ -281,10 +280,8 @@ export default {
           '-' +
           temp.getDate()
         this.patient.content = this.orders.join('-')
-        console.log(this.patient)
-        this.$store.dispatch('order', this.patient) // error是因為db中沒有P_code
+        this.$store.dispatch('order', this.patient)
         let currentPatient=this.patients.filter(item => item.code==this.patient.code)
-        console.log(currentPatient)
         this.patients.splice(this.patients.indexOf(currentPatient[0]),1)
         this.back()
       }
