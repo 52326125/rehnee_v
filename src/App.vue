@@ -77,11 +77,11 @@ export default {
     drawer: null,
     dark: true,
     system: [
-      {name: '醫囑系統', value: false},
-      {name: '病患資訊系統', value: true}
+      { name: '醫囑系統', value: false },
+      { name: '病患資訊系統', value: true }
     ],
-    select: false,
-    
+    select: false
+
   }),
   created: function () {
     this.dark = this.isDark
@@ -101,12 +101,12 @@ export default {
       isLogin: state => state.isLogin,
       title: state => state.title
     }),
-    systemSelect(){
-      if(this.user.role==0 && this.isLogin) return true
+    systemSelect () {
+      if (this.user.role == 0 && this.isLogin) return true
       return false
     },
-    test(){
-      if(this.user.name=='個案師' && this.isLogin == true ) return true
+    test () {
+      if (this.user.name == '個案師' && this.isLogin == true) return true
       return false
     }
   },

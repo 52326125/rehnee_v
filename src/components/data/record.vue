@@ -21,11 +21,11 @@
               <v-col cols="3">
                 <v-menu offset-y>
                   <template v-slot:activator="{ on }">
-                    <v-text-field 
+                    <v-text-field
                       v-on="on"
-                      label="Start Date" 
-                      v-model="preDate" 
-                      readonly 
+                      label="Start Date"
+                      v-model="preDate"
+                      readonly
                       prepend-icon="mdi-calendar">
                     </v-text-field>
                   </template>
@@ -35,11 +35,11 @@
               <v-col cols="3">
                 <v-menu offset-y>
                   <template v-slot:activator="{ on }">
-                    <v-text-field 
+                    <v-text-field
                       v-on="on"
-                      label="End Date" 
-                      v-model="reDate" 
-                      readonly 
+                      label="End Date"
+                      v-model="reDate"
+                      readonly
                       prepend-icon="mdi-calendar">
                     </v-text-field>
                   </template>
@@ -126,7 +126,7 @@ export default {
               fontSize: 14
             }
           }
-        },
+        }
       },
       chartSettingDark: {
         series: {
@@ -160,10 +160,10 @@ export default {
         }
       },
       actions: [
-        {name: '屈膝抬腿', value: 1},
-        {name: '直膝抬腿', value: 2},
-        {name: '靠牆半蹲', value: 3},
-        //{name: '不指定', value: 4}
+        { name: '屈膝抬腿', value: 1 },
+        { name: '直膝抬腿', value: 2 },
+        { name: '靠牆半蹲', value: 3 }
+        // {name: '不指定', value: 4}
       ],
       action: null,
       preDate: '2019-09-08',
@@ -175,37 +175,37 @@ export default {
       list: 'recordList',
       isDark: 'isDark'
     }),
-    listTable(){
+    listTable () {
       let temp = this.list
-      temp=temp.map((item)=>{
-        item.action=this.actions[item.type-1].name
+      temp = temp.map((item) => {
+        item.action = this.actions[item.type - 1].name
         return item
       })
-      //temp.action=temp.map((item) => this.actions[item.type-1].name)
+      // temp.action=temp.map((item) => this.actions[item.type-1].name)
       console.log(temp)
       return temp
     },
     title () {
       return this.graphicMode ? 'Data table' : 'Graphic table'
     },
-    filter(){
+    filter () {
       let temp = this.list
       this.re.rows = temp.map((item) => {
-        if(this.reDate==null) this.getToday()
-        if(this.preDate==null) this.getlastMonth()
-        if (item.type == this.action && item.date>=this.preDate && item.date <= this.reDate) {
-          let date=item.date + ' ' + item.time
-          return {date: date, spend_time: item.spend_time, standard: '120'}
+        if (this.reDate == null) this.getToday()
+        if (this.preDate == null) this.getlastMonth()
+        if (item.type == this.action && item.date >= this.preDate && item.date <= this.reDate) {
+          let date = item.date + ' ' + item.time
+          return { date: date, spend_time: item.spend_time, standard: '120' }
         } else {
           return false
         }
       })
-      this.re.rows=this.re.rows.filter((item) => item!=false)
-      this.re.empty=this.re.rows.length==0
+      this.re.rows = this.re.rows.filter((item) => item != false)
+      this.re.empty = this.re.rows.length == 0
       return this.re
     },
-    chartMode(){
-      if(this.isDark) return this.chartSettingDark
+    chartMode () {
+      if (this.isDark) return this.chartSettingDark
       return this.chartSetting
     }
   },
@@ -215,9 +215,9 @@ export default {
       console.log(this.chartData.rows)
       this.graphicMode = !this.graphicMode
     },
-    getToday:function(){
-      let temp=new Date()
-      this.reDate=temp.getFullYear() +
+    getToday: function () {
+      let temp = new Date()
+      this.reDate = temp.getFullYear() +
           '-' +
           (temp.getMonth() + 1) +
           '-' +

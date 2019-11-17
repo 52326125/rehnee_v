@@ -1,9 +1,9 @@
 <template>
   <v-card>
-    <v-data-table 
-      :headers="headers" 
-      :items="patients" 
-      :items-per-page="5" 
+    <v-data-table
+      :headers="headers"
+      :items="patientsRewrite"
+      :items-per-page="5"
       class="elevation-1">
       <template v-slot:item.action="{ item }">
         <v-icon @click="openOrder(item)">mdi-arrow-right-bold-hexagon-outline</v-icon>
@@ -30,9 +30,9 @@ export default {
           align: 'center',
           value: 'index'
         },
-        { text: '身份證字號', value: 'id', align: 'center'},
+        { text: '身份證字號', value: 'idRewrite', align: 'center' },
         { text: '姓名', value: 'name', align: 'center' },
-        { text: '性別', value: 'sex', align: 'center' },
+        { text: '性別', value: 'sexRewrite', align: 'center' },
         { text: '備註', value: 'remark', sortable: false, align: 'center' },
         { text: '看診', value: 'action', sortable: false, align: 'center' }
       ]
@@ -43,7 +43,15 @@ export default {
       'isDark',
       'overlay',
       'patients'
-    ])
+    ]),
+    patientsRewrite(){
+      let temp = this.patients.filter( item => {
+        item.sexRewrite = (item.sex == 'Male') ? '男' : '女'
+        item.idRewrite = item.id.replace(item.id.substring(3, 7), '****')
+        return item
+      })
+      return temp
+    }
   },
   methods: {
     ...mapActions([
@@ -51,7 +59,6 @@ export default {
     ]),
     openOrder: function (patient) {
       this.setOrderPage(patient)
-      
     }
   }
 }

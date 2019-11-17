@@ -33,8 +33,8 @@
             <v-list style="overflow:atuo;">
               <v-subheader style="font-size:16px !important;">Recently Chat</v-subheader>
               <v-list-item-group>
-                <v-list-item 
-                  v-for="(item,index) in chatList1" 
+                <v-list-item
+                  v-for="(item,index) in chatList"
                   :key="index"
                   @click="showChat(item)">
                   <v-list-item-avatar>
@@ -87,51 +87,51 @@
   </div>
 </template>
 <script>
-import {mapState, mapActions} from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
-    data() {
-      return {
-        close:true,
-        profi:null,
-        id:null,
-        msg: null
-      }
+  data () {
+    return {
+      close: true,
+      profi: null,
+      id: null,
+      msg: null
+    }
+  },
+  computed: {
+    ...mapState({
+      chatList: state => state.chatList,
+      chatHistory: state => state.chatHistory,
+      patient: state => state.patient,
+      lastChat: state => state.lastChat,
+      isDark: state => state.isDark
+    }),
+    chatList1 () {
+      let array = ['小美', '阿華', '國豪', '偉健', '嘉盛']
+      let temp = this.chatList.filter((item, index) => {
+        item.name = array[index]
+        return item
+      })
+      return temp
+    }
+  },
+  methods: {
+    ...mapActions([
+      'getChat',
+      'chatCommit'
+    ]),
+    showChat (item) {
+      this.profi = item.profi
+      this.id = item.id
+      this.msg = null
+      this.getChat({ code: item.id, lastChat: 0 })
     },
-    computed: {
-      ...mapState({
-        chatList: state =>state.chatList,
-        chatHistory: state => state.chatHistory,
-        patient: state => state.patient,
-        lastChat: state => state.lastChat,
-        isDark: state => state.isDark
-      }),
-      chatList1(){
-        let array=['小美','阿華','國豪','偉健','嘉盛']
-        let temp=this.chatList.filter( (item,index) =>{
-          item.name = array[index]
-          return item
-        })
-        return temp
-      }
-    },
-    methods: {
-      ...mapActions([
-        'getChat',
-        'chatCommit'
-      ]),
-      showChat(item) {
-        this.profi=item.profi
-        this.id=item.id
-        this.msg=null
-        this.getChat({code: item.id,lastChat: 0})
-      },
-      commitChat(){
-        if (this.msg==null || this.msg=='' || this.id==null)return
-        this.chatCommit({id: this.id, content: this.msg})
-        this.msg=''
-      }
-    },
-    watch: {
+    commitChat () {
+      if (this.msg == null || this.msg == '' || this.id == null) return
+      this.chatCommit({ id: this.id, content: this.msg })
+      this.msg = ''
+    }
+  },
+  watch: {
     lastChat: {
       handler (newVal, oldVal) {
         this.$nextTick(() => {
@@ -141,10 +141,10 @@ export default {
         })
       }
     },
-    close:{
-      handler (newVal,oldVal) {
+    close: {
+      handler (newVal, oldVal) {
         this.$nextTick(() => {
-          if (!newVal){
+          if (!newVal) {
             let container = this.$el.querySelector('.chat')
             console.log(container)
             container.scrollTop = container.scrollHeight1

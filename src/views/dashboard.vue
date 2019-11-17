@@ -40,10 +40,17 @@ export default {
   computed: {
     ...mapState({
       getAllPatient: 'patientList'
-    })
-
+    }),
+    getAllPatient1 () {
+      let array = ['小美', '阿華', '國豪', '偉健', '嘉盛']
+      let temp = this.getAllPatient.filter((item, index) => {
+        item.name = array[index]
+        return item
+      })
+      return temp
+    }
   },
-  created() {
+  created () {
     this.$store.dispatch('getAllPatient')
   },
   methods: {

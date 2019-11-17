@@ -19,7 +19,7 @@
 
             <v-btn color="#42A5F5" class="mr-4" @click="set">登入</v-btn>
           </v-form>
-          
+
         </v-card-text>
       </v-card>
   </v-row>

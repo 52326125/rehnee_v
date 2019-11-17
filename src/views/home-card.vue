@@ -5,7 +5,7 @@
 <script>
 import patientList from '../components/home/patientList-card'
 import dashboard from './dashboard'
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -14,7 +14,7 @@ export default {
   },
   computed: {
     ...mapState([
-        'loadSystem'
+      'loadSystem'
     ])
   }
 }

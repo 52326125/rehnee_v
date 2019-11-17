@@ -17,7 +17,7 @@
     </v-row>
     <v-row>
       <v-col cols="6">
-        
+
       </v-col>
     </v-row>
   </v-container>-->
@@ -38,22 +38,22 @@ export default {
     patient,
     record
   },
-  
-  directives:{
-				drag(el, bindings){
-					el.onmousedown = function(e){
-						var disx = e.pageX - el.offsetLeft;
-						var disy = e.pageY - el.offsetTop;
-						document.onmousemove = function (e){
-							el.style.left = e.pageX - disx + 'px';
-							el.style.top = e.pageY - disy + 'px';
-						}
-						document.onmouseup = function(){
-							document.onmousemove = document.onmouseup = null;
-						}
-					}
-				}
-			},
+
+  directives: {
+    drag (el, bindings) {
+      el.onmousedown = function (e) {
+        var disx = e.pageX - el.offsetLeft
+        var disy = e.pageY - el.offsetTop
+        document.onmousemove = function (e) {
+          el.style.left = e.pageX - disx + 'px'
+          el.style.top = e.pageY - disy + 'px'
+        }
+        document.onmouseup = function () {
+          document.onmousemove = document.onmouseup = null
+        }
+      }
+    }
+  },
 
   data () {
     return {

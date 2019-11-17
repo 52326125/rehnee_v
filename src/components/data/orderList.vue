@@ -19,7 +19,7 @@
               <v-col cols="12">
                 <span>症狀 : </span>
                 <v-chip
-                  v-for="(item, index) in item.m_order.split(',')" 
+                  v-for="(item, index) in item.m_order.split(',')"
                   :key="index"
                   class="ma-1"
                   color="primary">
@@ -33,7 +33,7 @@
               <v-col cols="12">
               <span>醫囑:</span>
                 <v-chip
-                  v-for="(item, index) in item.trans" 
+                  v-for="(item, index) in item.trans"
                   :key="index"
                   class="ma-1"
                   color="primary">
@@ -52,7 +52,7 @@
         </template>
 
         <template v-slot:item.order="{item}">
-          <v-tooltip 
+          <v-tooltip
             top
             v-for="(item, index) in item.order"
             :key="index">
@@ -66,7 +66,7 @@
         </template>
         <template v-slot:item.trans="{item}">
 
-          <v-tooltip 
+          <v-tooltip
             right
             v-for="(item, index) in item.trans"
             :key="index">
@@ -76,7 +76,7 @@
             </template>
             <span>{{item}}</span>
           </v-tooltip>
-          
+
         </template>
 
       </v-data-table>
@@ -116,32 +116,32 @@ export default {
           value: 'date'
         },
         { text: '看診醫生', sortable: false, value: 'dr_name' },
-        { text: '', value: 'data-table-expand' },
+        { text: '', value: 'data-table-expand' }
       ],
       expanded: [],
-      actions: ['屈膝抬腿', '直膝抬腿', '靠牆半蹲'],
+      actions: ['屈膝抬腿', '直膝抬腿', '靠牆半蹲']
     }
   },
   computed: {
     ...mapState({
       list: 'orderList'
     }),
-    filter(){
-      let temp=this.list
-      temp=temp.map((item)=>{
-        let orders=item.content.split('-')
-        item.order=item.m_order.split(',')
-        item.trans=orders.map((item) => {
-          let order=item.split(',')
-          return 'Aciton:' + this.actions[order[0]-1] + ', ' + order[1] + ' times per day, each time ' + order[2] + ' degrees'
+    filter () {
+      let temp = this.list
+      temp = temp.map((item) => {
+        let orders = item.content.split('-')
+        item.order = item.m_order.split(',')
+        item.trans = orders.map((item) => {
+          let order = item.split(',')
+          return 'Aciton:' + this.actions[order[0] - 1] + ', ' + order[1] + ' times per day, each time ' + order[2] + ' degrees'
         })
         return item
       })
       return temp
     }
   },
-  methods:{
-    test:function(item){
+  methods: {
+    test: function (item) {
       console.log(item)
     }
   }

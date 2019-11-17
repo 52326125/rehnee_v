@@ -178,7 +178,7 @@
                 {{item}}
               </v-chip>
             </v-col>
-            
+
             <v-col cols="12">
             <v-divider/>
               <p>醫囑</p>
@@ -188,7 +188,7 @@
                 v-for="(item,index) in record[recordIndex].medical_order "
                 :key="index"
                 color="primary">
-                {{item}}
+                {{'動作 : ' + actions[parseInt(item.split(',')[0])-1].name + '， 一天 ' + item.split(',')[1] + ' 次，每次 ' + item.split(',')[2] + ' 度'}}
               </v-chip>
             </v-col>
             <v-col cols="12">
@@ -209,7 +209,7 @@
     </v-card-text>
     <v-card-actions class="justify-center">
       <v-btn :disabled="!valid" color="primary" class="mr-4" @click="validate">Save</v-btn>
-    </v-card-actions> 
+    </v-card-actions>
   </v-card>
 </template>
 <script>
@@ -221,17 +221,17 @@ export default {
     ordersE: [],
     order: [],
     rule: [v => !!v || 'Cannot be null'],
-    //ruleA: [v=> v.length>0 || 'Cannot be null'],
-    recordIndex:-1,
+    // ruleA: [v=> v.length>0 || 'Cannot be null'],
+    recordIndex: -1,
     actions: [
-      {name: '屈膝抬腿', value: 1},
-      {name: '直膝抬腿', value: 2},
-      {name: '靠牆半蹲', value: 3}
+      { name: '屈膝抬腿', value: 1 },
+      { name: '直膝抬腿', value: 2 },
+      { name: '靠牆半蹲', value: 3 }
     ]
   }),
   created () {
     this.getDiseaseName()
-    this.recordIndex=this.patient.medicalRecord.length-1
+    this.recordIndex = this.patient.medicalRecord.length - 1
     console.log(this.recordIndex)
   },
   computed: {
@@ -243,7 +243,7 @@ export default {
       'patientIndex'
     ]),
     ...mapState({
-      record : state => state.patient.medicalRecord
+      record: state => state.patient.medicalRecord
     }),
     overlay: {
       get: function () {
@@ -264,14 +264,15 @@ export default {
       'getDiseaseName'
     ]),
     addOrder () {
+      console.log(this.order)
       this.orders.push(this.order.join(','))
-      this.ordersE.push('動作 : ' + this.actions[this.order[0]].name + '， 一天 ' + this.order[1] + ' 次，每次 ' + this.order[2] + ' 度')
+      this.ordersE.push('動作 : ' + this.actions[this.order[0]-1].name + '， 一天 ' + this.order[1] + ' 次，每次 ' + this.order[2] + ' 度')
       this.order = []
     },
     validate () {
       if (this.$refs.form.validate()) {
-        if(this.patient.remark==null) this.patient.remark=''
-        if(this.orders.length==0) return alert('尚未輸入醫囑')
+        if (this.patient.remark == null) this.patient.remark = ''
+        if (this.orders.length == 0) return alert('尚未輸入醫囑')
         let temp = new Date()
         this.patient.date =
           temp.getFullYear() +
@@ -281,8 +282,8 @@ export default {
           temp.getDate()
         this.patient.content = this.orders.join('-')
         this.$store.dispatch('order', this.patient)
-        let currentPatient=this.patients.filter(item => item.code==this.patient.code)
-        this.patients.splice(this.patients.indexOf(currentPatient[0]),1)
+        let currentPatient = this.patients.filter(item => item.code == this.patient.code)
+        this.patients.splice(this.patients.indexOf(currentPatient[0]), 1)
         this.back()
       }
     },
@@ -294,16 +295,16 @@ export default {
       if (index >= 0) this.patient.medicalOrder.splice(index, 1)
     },
     removeOrder (item) {
-      this.orders.splice(this.orders.indexOf(item),1)
-      this.ordersE.splice(this.ordersE.indexOf(item),1)
+      this.orders.splice(this.orders.indexOf(item), 1)
+      this.ordersE.splice(this.ordersE.indexOf(item), 1)
     },
     changeRecord (command) {
-      if (command === 'pre'){
+      if (command === 'pre') {
         if (this.recordIndex > 0) this.recordIndex--
-      } else if(command=== 'next'){
-        if (this.recordIndex < this.record.length-1)  this.recordIndex++
-      }else{
-        this.recordIndex=command
+      } else if (command === 'next') {
+        if (this.recordIndex < this.record.length - 1) this.recordIndex++
+      } else {
+        this.recordIndex = command
       }
       console.log(this.recordIndex)
     }

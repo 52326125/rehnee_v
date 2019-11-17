@@ -48,7 +48,7 @@ export default new Vuex.Store({
       {
         index: 1,
         id: 'A123456001',
-        name: '測試員001',
+        name: '小美',
         sex: 'Male',
         remark: '',
         code: 'tes001'
@@ -56,7 +56,7 @@ export default new Vuex.Store({
       {
         index: 2,
         id: 'A123456002',
-        name: '測試員002',
+        name: '佳偉',
         sex: 'Male',
         remark: '',
         code: 'tes002'
@@ -64,7 +64,7 @@ export default new Vuex.Store({
       {
         index: 3,
         id: 'A123456003',
-        name: '測試員003',
+        name: '大同',
         sex: 'Male',
         remark: '',
         code: 'tes003'
@@ -72,7 +72,7 @@ export default new Vuex.Store({
       {
         index: 4,
         id: 'A123456004',
-        name: '測試員004',
+        name: '柏林',
         sex: 'Female',
         remark: '',
         code: 'tes004'
@@ -80,13 +80,13 @@ export default new Vuex.Store({
       {
         index: 5,
         id: 'A123456005',
-        name: '測試員005',
+        name: '祈佳',
         sex: 'Female',
         remark: '可能遲到10分鐘',
         code: 'tes005'
       }
     ],
-    patientIndex:0
+    patientIndex: 0
   },
   mutations: {
     LOGIN: function (state, user) {
@@ -133,18 +133,18 @@ export default new Vuex.Store({
     SETOVERLAY: function (state, overlay) {
       state.overlay = overlay
     },
-    SETMEDICALRECORD:function (state, medicalRecord){
-      state.patient.medicalRecord=medicalRecord
+    SETMEDICALRECORD: function (state, medicalRecord) {
+      state.patient.medicalRecord = medicalRecord
     },
-    SETOVERLAY:function(state){
-      state.overlay=!state.overlay
+    SETOVERLAY: function (state) {
+      state.overlay = !state.overlay
     },
-    RESETCHAT:function(state){
-      state.chatHistory=[]
-      state.lastChat=0
+    RESETCHAT: function (state) {
+      state.chatHistory = []
+      state.lastChat = 0
     },
-    SETPATIENTINDEX:function(state,index){
-      state.patientIndex=index-1
+    SETPATIENTINDEX: function (state, index) {
+      state.patientIndex = index - 1
     }
   },
   actions: {
@@ -197,24 +197,24 @@ export default new Vuex.Store({
         })
         .catch((error) => {
         })
-        commit('SETPATIENTINDEX',patient.index)
-        dispatch('getMedicalRecord')
+      commit('SETPATIENTINDEX', patient.index)
+      dispatch('getMedicalRecord')
     },
 
-    getMedicalRecord: function({state, commit}) {
-      Axios.get('/api/getMedicalRecord', 
-      {params: {P_code: state.patient.code, dr_ID: state.user.dr_ID}})
-      .then((res) => {
-        for (let i=0;i<res.data.length;i++){
-          res.data[i].syptom = res.data[i].syptom.split(',')
-          res.data[i].medical_order = res.data[i].medical_order.split('-')
-        }
-        commit('SETMEDICALRECORD',res.data)
-        commit('SETOVERLAY')
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+    getMedicalRecord: function ({ state, commit }) {
+      Axios.get('/api/getMedicalRecord',
+        { params: { P_code: state.patient.code, dr_ID: state.user.dr_ID } })
+        .then((res) => {
+          for (let i = 0; i < res.data.length; i++) {
+            res.data[i].syptom = res.data[i].syptom.split(',')
+            res.data[i].medical_order = res.data[i].medical_order.split('-')
+          }
+          commit('SETMEDICALRECORD', res.data)
+          commit('SETOVERLAY')
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     },
 
     order: function ({ dispatch }, patient) {
@@ -266,7 +266,6 @@ export default new Vuex.Store({
       }, 500)
     },
 
-
     chatCommit: function ({ commit }, data) {
       Axios.get('/api/chatCommit', { params: data })
         .then((res) => {
@@ -307,11 +306,11 @@ export default new Vuex.Store({
       state.lastChat = 0
     },
 
-    setLoadSystem: function({state, dispatch},system){
+    setLoadSystem: function ({ state, dispatch }, system) {
       if (router.history.current.path != '/') router.push('/')
-      state.loadSystem=system
+      state.loadSystem = system
       if (system) {
-        //dispatch('getAllPatient')
+        // dispatch('getAllPatient')
       }
       console.log(system)
     }
