@@ -133,7 +133,7 @@ export default {
         item.order = item.m_order.split(',')
         item.trans = orders.map((item) => {
           let order = item.split(',')
-          return 'Aciton:' + this.actions[order[0] - 1] + ', ' + order[1] + ' times per day, each time ' + order[2] + ' degrees'
+          return '動作:' + this.actions[order[0] - 1] + '，一天' + order[1] + '次，每次' + order[2] + '度'
         })
         return item
       })
