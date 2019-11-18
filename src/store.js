@@ -266,11 +266,12 @@ export default new Vuex.Store({
       }, 500)
     },
 
-    chatCommit: function ({ commit }, data) {
+    chatCommit: function ({ commit, dispatch}, data) {
       Axios.get('/api/chatCommit', { params: data })
         .then((res) => {
           console.log(res)
           commit('SETCHATHISTORY', res.data)
+          dispatch('getChatList')
         })
     },
 
