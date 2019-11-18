@@ -4,7 +4,7 @@
       <v-toolbar-title class="headline text-uppercase">
 
         <v-card class="mx-auto" hover @click="backHome">
-          <v-card-title>Rehnee_v3</v-card-title>
+          <v-card-title>Rehnee醫資平台</v-card-title>
         </v-card>
 
       </v-toolbar-title>
